@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
@@ -22,7 +24,7 @@ namespace TouristWebSite.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -34,9 +36,9 @@ namespace TouristWebSite.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -86,7 +88,7 @@ namespace TouristWebSite.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
+                    ModelState.AddModelError("", "Користувача із такою комбінацією електронної пошти та пароля не існує.");
                     return View(model);
             }
         }
@@ -120,7 +122,7 @@ namespace TouristWebSite.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -155,8 +157,8 @@ namespace TouristWebSite.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -165,10 +167,48 @@ namespace TouristWebSite.Controllers
 
                     return RedirectToAction("Index", "Home");
                 }
+
+                // Custom errors
+
+                // Password
+                var errorWrongPassword1 = result.Errors.FirstOrDefault(x => x == "Passwords must have at least one non letter or digit character. Passwords must have at least one lowercase ('a'-'z'). Passwords must have at least one uppercase ('A'-'Z').");
+                var errorWrongPassword2 = result.Errors.FirstOrDefault(x => x == "Passwords must have at least one non letter or digit character.");
+                var errorWrongPassword3 = result.Errors.FirstOrDefault(x => x == "Passwords must have at least one non letter or digit character. Passwords must have at least one digit ('0'-'9'). Passwords must have at least one uppercase ('A'-'Z').");
+                var errorWrongPassword4 = result.Errors.FirstOrDefault(x => x == "Passwords must have at least one non letter or digit character. Passwords must have at least one uppercase ('A'-'Z').");
+                var errorWrongPassword5 = result.Errors.FirstOrDefault(x => x == "Passwords must have at least one non letter or digit character. Passwords must have at least one lowercase ('a'-'z').");
+                var errorWrongPassword6 = result.Errors.FirstOrDefault(x => x == "Passwords must have at least one non letter or digit character. Passwords must have at least one digit ('0'-'9').");
+                var errorWrongPassword7 = result.Errors.FirstOrDefault(x => x == "Passwords must have at least one non letter or digit character. Passwords must have at least one digit ('0'-'9'). Passwords must have at least one lowercase ('a'-'z').");
+                var errorWrongPassword8 = result.Errors.FirstOrDefault(x => x == "Passwords must have at least one digit ('0'-'9'). Passwords must have at least one lowercase ('a'-'z'). Passwords must have at least one uppercase ('A'-'Z').");
+                var errorWrongPassword9 = result.Errors.FirstOrDefault(x => x == "Passwords must have at least one lowercase ('a'-'z'). Passwords must have at least one uppercase ('A'-'Z').");
+                var errorWrongPassword10 = result.Errors.FirstOrDefault(x => x == "Passwords must have at least one digit ('0'-'9'). Passwords must have at least one uppercase ('A'-'Z').");
+                var errorWrongPassword11 = result.Errors.FirstOrDefault(x => x == "Passwords must have at least one digit ('0'-'9'). Passwords must have at least one lowercase ('a'-'z').");
+                var errorWrongPassword12 = result.Errors.FirstOrDefault(x => x == "Passwords must have at least one uppercase ('A'-'Z').");
+                var errorWrongPassword13 = result.Errors.FirstOrDefault(x => x == "Passwords must have at least one lowercase ('a'-'z').");
+                var errorWrongPassword14 = result.Errors.FirstOrDefault(x => x == "Passwords must have at least one digit ('0'-'9').");
+                if (errorWrongPassword1 != null || errorWrongPassword2 != null || errorWrongPassword3 != null || errorWrongPassword4 != null || errorWrongPassword5 != null || errorWrongPassword6 != null || errorWrongPassword7 != null || errorWrongPassword8 != null || errorWrongPassword9 != null || errorWrongPassword10 != null || errorWrongPassword11 != null || errorWrongPassword12 != null || errorWrongPassword13 != null || errorWrongPassword14 != null)
+                {
+                    string[] Errors = new string[1];
+                    Errors[0] = "У паролі повинен бути хоча б один символ або цифра, хоча б одна велика літера a-z та одна мала літера A-Z.";
+                    var rez = new IdentityResult(Errors);
+                    AddErrors(rez);
+                    return View(model);
+                }
+
+                // Email already registered
+                var errorEmailTaken1 = result.Errors.FirstOrDefault(x => x == "Name " + model.Email + " is already taken.");
+                var errorEmailTaken2 = result.Errors.FirstOrDefault(x => x == "Email " + model.Email + " is already taken.");
+                if (errorEmailTaken1 != null || errorEmailTaken2 != null)
+                {
+                    string[] Errors = new string[1];
+                    Errors[0] = "Користувач із введеною адресою електронної пошти вже існує.";
+                    var rez = new IdentityResult(Errors);
+                    AddErrors(rez);
+                    return View(model);
+                }
+
                 AddErrors(result);
             }
 
-            // If we got this far, something failed, redisplay form
             return View(model);
         }
 

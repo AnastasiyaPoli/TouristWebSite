@@ -48,36 +48,36 @@ namespace TouristWebSite.Models
 
     public class LoginViewModel
     {
-        [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
+        [Required(ErrorMessage = "Необхідно заповнити поле \"Електронна пошта\".")]
+        [Display(Name = "Електронна пошта:")]
+        [EmailAddress(ErrorMessage = "Поле \"Електронна пошта\" повинно бути заповненим адресою електронної пошти у правильному форматі.")]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Необхідно заповнити поле \"Пароль\".")]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Пароль:")]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "Запам'ятати мене?")]
         public bool RememberMe { get; set; }
     }
 
     public class RegisterViewModel
     {
-        [Required]
-        [EmailAddress]
-        [Display(Name = "Email")]
+        [Required(ErrorMessage = "Необхідно заповнити поле \"Електронна пошта\".")]
+        [EmailAddress(ErrorMessage = "Поле \"Електронна пошта\" повинно бути заповненим адресою електронної пошти у правильному форматі.")]
+        [Display(Name = "Електронна пошта:")]
         public string Email { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [Required(ErrorMessage = "Необхідно заповнити поле \"Пароль\".")]
+        [StringLength(100, ErrorMessage = "Мінімальна довжина пароля: {2} символів.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Пароль:")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "Підтвердіть пароль:")]
+        [Compare("Password", ErrorMessage = "Пароль та підтвердження пароля не співпадають.")]
         public string ConfirmPassword { get; set; }
     }
 
