@@ -1,11 +1,10 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
 using TouristWebSite.Models;
 
 namespace TouristWebSite.Controllers
@@ -50,15 +49,14 @@ namespace TouristWebSite.Controllers
             }
         }
 
-        //
         // GET: /Manage/Index
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
+                message == ManageMessageId.ChangePasswordSuccess ? "Пароль було успішно змінено."
                 : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
                 : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
-                : message == ManageMessageId.Error ? "An error has occurred."
+                : message == ManageMessageId.Error ? "Під час оновлення інформації сталась помилка."
                 : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
                 : "";
@@ -74,6 +72,91 @@ namespace TouristWebSite.Controllers
             };
             return View(model);
         }
+
+        // GET: /Manage/ChangePassword
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        // POST: /Manage/ChangePassword
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+            if (result.Succeeded)
+            {
+                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+                if (user != null)
+                {
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                }
+                return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
+            }
+
+            // Custom errors
+
+            //Old password
+            var errorWrongPassword = result.Errors.FirstOrDefault(x => x == "Incorrect password.");
+            if (errorWrongPassword != null)
+            {
+                string[] Errors = new string[1];
+                Errors[0] = "Поточний пароль введено неправильно.";
+                var rez = new IdentityResult(Errors);
+                AddErrors(rez);
+                return View(model);
+            }
+
+            // New password
+            var errorWrongPassword1 = result.Errors.FirstOrDefault(x => x == "Passwords must have at least one non letter or digit character. Passwords must have at least one lowercase ('a'-'z'). Passwords must have at least one uppercase ('A'-'Z').");
+            var errorWrongPassword2 = result.Errors.FirstOrDefault(x => x == "Passwords must have at least one non letter or digit character.");
+            var errorWrongPassword3 = result.Errors.FirstOrDefault(x => x == "Passwords must have at least one non letter or digit character. Passwords must have at least one digit ('0'-'9'). Passwords must have at least one uppercase ('A'-'Z').");
+            var errorWrongPassword4 = result.Errors.FirstOrDefault(x => x == "Passwords must have at least one non letter or digit character. Passwords must have at least one uppercase ('A'-'Z').");
+            var errorWrongPassword5 = result.Errors.FirstOrDefault(x => x == "Passwords must have at least one non letter or digit character. Passwords must have at least one lowercase ('a'-'z').");
+            var errorWrongPassword6 = result.Errors.FirstOrDefault(x => x == "Passwords must have at least one non letter or digit character. Passwords must have at least one digit ('0'-'9').");
+            var errorWrongPassword7 = result.Errors.FirstOrDefault(x => x == "Passwords must have at least one non letter or digit character. Passwords must have at least one digit ('0'-'9'). Passwords must have at least one lowercase ('a'-'z').");
+            var errorWrongPassword8 = result.Errors.FirstOrDefault(x => x == "Passwords must have at least one digit ('0'-'9'). Passwords must have at least one lowercase ('a'-'z'). Passwords must have at least one uppercase ('A'-'Z').");
+            var errorWrongPassword9 = result.Errors.FirstOrDefault(x => x == "Passwords must have at least one lowercase ('a'-'z'). Passwords must have at least one uppercase ('A'-'Z').");
+            var errorWrongPassword10 = result.Errors.FirstOrDefault(x => x == "Passwords must have at least one digit ('0'-'9'). Passwords must have at least one uppercase ('A'-'Z').");
+            var errorWrongPassword11 = result.Errors.FirstOrDefault(x => x == "Passwords must have at least one digit ('0'-'9'). Passwords must have at least one lowercase ('a'-'z').");
+            var errorWrongPassword12 = result.Errors.FirstOrDefault(x => x == "Passwords must have at least one uppercase ('A'-'Z').");
+            var errorWrongPassword13 = result.Errors.FirstOrDefault(x => x == "Passwords must have at least one lowercase ('a'-'z').");
+            var errorWrongPassword14 = result.Errors.FirstOrDefault(x => x == "Passwords must have at least one digit ('0'-'9').");
+            if (errorWrongPassword1 != null || errorWrongPassword2 != null || errorWrongPassword3 != null || errorWrongPassword4 != null || errorWrongPassword5 != null || errorWrongPassword6 != null || errorWrongPassword7 != null || errorWrongPassword8 != null || errorWrongPassword9 != null || errorWrongPassword10 != null || errorWrongPassword11 != null || errorWrongPassword12 != null || errorWrongPassword13 != null || errorWrongPassword14 != null)
+            {
+                string[] Errors = new string[1];
+                Errors[0] = "У паролі повинен бути хоча б один символ або цифра, хоча б одна велика літера a-z та одна мала літера A-Z.";
+                var rez = new IdentityResult(Errors);
+                AddErrors(rez);
+                return View(model);
+            }
+
+            AddErrors(result);
+            return View(model);
+        }
+
+        // GET: /Manage/Subscription
+        [AllowAnonymous]
+        public ActionResult Subscription(string returnUrl)
+        {
+            ViewBag.ReturnUrl = returnUrl;
+            return View();
+        }
+
+        // GET: /Manage/Statistics
+        [AllowAnonymous]
+        public ActionResult Statistics(string returnUrl)
+        {
+            ViewBag.ReturnUrl = returnUrl;
+            return View();
+        }
+
+
 
         //
         // POST: /Manage/RemoveLogin
@@ -214,37 +297,6 @@ namespace TouristWebSite.Controllers
         }
 
         //
-        // GET: /Manage/ChangePassword
-        public ActionResult ChangePassword()
-        {
-            return View();
-        }
-
-        //
-        // POST: /Manage/ChangePassword
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-            var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
-            if (result.Succeeded)
-            {
-                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-                if (user != null)
-                {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                }
-                return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
-            }
-            AddErrors(result);
-            return View(model);
-        }
-
-        //
         // GET: /Manage/SetPassword
         public ActionResult SetPassword()
         {
@@ -316,18 +368,13 @@ namespace TouristWebSite.Controllers
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync(XsrfKey, User.Identity.GetUserId());
             if (loginInfo == null)
             {
-                return RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
+                return RedirectToAction("ManageLogins", new {Message = ManageMessageId.Error});
             }
-            var result = await UserManager.AddLoginAsync(User.Identity.GetUserId(), loginInfo.Login);
-            return result.Succeeded ? RedirectToAction("ManageLogins") : RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
-        }
 
-        // GET: /Manage/Subscription
-        [AllowAnonymous]
-        public ActionResult Subscription(string returnUrl)
-        {
-            ViewBag.ReturnUrl = returnUrl;
-            return View();
+            var result = await UserManager.AddLoginAsync(User.Identity.GetUserId(), loginInfo.Login);
+            return result.Succeeded
+                ? RedirectToAction("ManageLogins")
+                : RedirectToAction("ManageLogins", new {Message = ManageMessageId.Error});
         }
 
         protected override void Dispose(bool disposing)
@@ -341,7 +388,7 @@ namespace TouristWebSite.Controllers
             base.Dispose(disposing);
         }
 
-#region Helpers
+        #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 

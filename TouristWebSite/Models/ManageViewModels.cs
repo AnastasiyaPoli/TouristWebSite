@@ -27,34 +27,34 @@ namespace TouristWebSite.Models
 
     public class SetPasswordViewModel
     {
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [Required(ErrorMessage = "Необхідно заповнити поле \"Новий пароль\".")]
+        [StringLength(100, ErrorMessage = "Мінімальна довжина пароля: {2} символів.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "New password")]
+        [Display(Name = "Новий пароль:")]
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm new password")]
-        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+        [Display(Name = "Підтвердіть новий пароль:")]
+        [Compare("NewPassword", ErrorMessage = "Пароль та підтвердження пароля не співпадають.")]
         public string ConfirmPassword { get; set; }
     }
 
     public class ChangePasswordViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Необхідно заповнити поле \"Поточний пароль\".")]
         [DataType(DataType.Password)]
-        [Display(Name = "Current password")]
+        [Display(Name = "Поточний пароль:")]
         public string OldPassword { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [Required(ErrorMessage = "Необхідно заповнити поле \"Новий пароль\".")]
+        [StringLength(100, ErrorMessage = "Мінімальна довжина пароля: {2} символів.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "New password")]
+        [Display(Name = "Новий пароль:")]
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm new password")]
-        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+        [Display(Name = "Підтвердіть новий пароль:")]
+        [Compare("NewPassword", ErrorMessage = "Пароль та підтвердження пароля не співпадають.")]
         public string ConfirmPassword { get; set; }
     }
 
