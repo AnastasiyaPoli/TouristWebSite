@@ -14,7 +14,6 @@ namespace TouristWebSite.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        private ApplicationDbContext context = new ApplicationDbContext();
 
         public AccountController()
         {
