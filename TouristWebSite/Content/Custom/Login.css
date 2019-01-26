@@ -1,32 +1,25 @@
 ﻿.rememberme {
-    float: right;
-    margin-right: 18%;
+    float: left;
+    margin-left: 10%;
 }
 
 @media (min-width: 400px) {
     .rememberme {
         float: left;
-        margin-left: 35%;
+        margin-left: 7%;
     }
 }
 
-@media (min-width: 720px) {
+@media (min-width: 700px) {
     .rememberme {
-        float: right;
-        margin-right: 61%;
+        float: left;
+        margin-left: 5%;
     }
 }
 
 @media (min-width: 1000px) {
     .rememberme {
-        float: right;
-        margin-right: 30%;
-    }
-}
-
-@media (min-width: 1200px) {
-    .rememberme {
-        float: right;
-        margin-right: 37%;
+        float: left;
+        margin-left: 20%;
     }
 }
