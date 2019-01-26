@@ -269,6 +269,7 @@
     <Content Include="Views\Manage\Subscription.cshtml" />
     <Content Include="Views\Home\Helper.cshtml" />
     <Content Include="Views\Manage\Statistics.cshtml" />
+    <Content Include="Views\Home\Contacts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
