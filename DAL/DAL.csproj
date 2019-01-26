@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationDbContext.cs" />
     <Compile Include="Migrations\201901200959531_initial.cs" />
     <Compile Include="Migrations\201901200959531_initial.Designer.cs">
       <DependentUpon>201901200959531_initial.cs</DependentUpon>
