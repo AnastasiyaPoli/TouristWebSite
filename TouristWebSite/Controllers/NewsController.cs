@@ -8,7 +8,11 @@ namespace TouristWebSite.Controllers
     {
         public ActionResult Index()
         {
-            var model = new ActiveNewsViewModel() {ActiveNews = NewsDBHelper.GetActive()};
+            var model = new ActiveNewsViewModel()
+            {
+                ActiveNews = NewsDBHelper.GetActive(),
+                ActiveDiscounts = DiscountsDBHelper.GetActive()
+            };
 
             return View(model);
         }

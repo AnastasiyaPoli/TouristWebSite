@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationDbContext.cs" />
+    <Compile Include="DBHelpers\DiscountsDBHelper.cs" />
     <Compile Include="DBHelpers\NewsDBHelper.cs" />
     <Compile Include="Migrations\201901200959531_initial.cs" />
     <Compile Include="Migrations\201901200959531_initial.Designer.cs">
@@ -79,6 +80,10 @@
     <Compile Include="Migrations\201901271303166_5.cs" />
     <Compile Include="Migrations\201901271303166_5.Designer.cs">
       <DependentUpon>201901271303166_5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901271326094_6.cs" />
+    <Compile Include="Migrations\201901271326094_6.Designer.cs">
+      <DependentUpon>201901271326094_6.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -108,6 +113,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901271303166_5.resx">
       <DependentUpon>201901271303166_5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901271326094_6.resx">
+      <DependentUpon>201901271326094_6.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

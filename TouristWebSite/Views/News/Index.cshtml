@@ -16,3 +16,16 @@
 }
 
 <h2>Наші акції</h2>
+
+@foreach (var item in Model.ActiveDiscounts)
+{
+    <div class="jumbotron transparent newscontainer">
+        <h3>@item.Name</h3>
+        <h5>@item.Content</h5>
+        @if (item.Link != null && item.Link != string.Empty)
+        {
+            <h5><a href=@item.Link>Детальніше за посиланням...</a></h5>
+        }
+        <label style="float: right"><i>@item.StartDate.ToShortDateString() - @item.EndDate.ToShortDateString() </i></label>
+    </div>
+}
