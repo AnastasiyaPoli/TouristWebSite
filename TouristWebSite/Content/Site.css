@@ -112,3 +112,11 @@ h, h1, h2, h3, h4, h5, h6, p, label {
 .no-underline {
     text-decoration: none;
 }
+
+.icon-color {
+    color: #2C4A55;
+}
+
+    .icon-color:hover {
+        color: #7A898C;
+    }
