@@ -35,6 +35,13 @@
 @foreach (var item in Model.ActiveDiscounts)
 {
     <div class="jumbotron transparent newscontainer">
+        @if (User.IsInRole("Admin"))
+        {
+            <a href="@Url.Action("EditDiscount", "News", new {itemId = item.Id})">
+                <i class="fas fa-edit fa-lg" style="float:right; margin-right: 5px"></i>
+            </a>
+        }
+
         <h3>@item.Name</h3>
         <h5>@item.Content</h5>
         @if (item.Link != null && item.Link != string.Empty)
@@ -47,5 +54,5 @@
 
 @if (User.IsInRole("Admin"))
 {
-    <a class="btn btn-default no-underline" href="@Url.Action("Tours", "Home")"> <span> <i class="fas fa-plus"></i> Додати нову акцію </span> </a>
+    <a class="btn btn-default no-underline" href="@Url.Action("AddDiscount", "News")"> <span> <i class="fas fa-plus"></i> Додати нову акцію </span> </a>
 }

@@ -1,11 +1,11 @@
 ﻿@using TouristWebSite.Models
-@model NewViewModel
+@model DiscountViewModel
 
-<h2>Додати новину</h2>
-@using (Html.BeginForm("AddNew", "News", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+<h2>Додати акцію</h2>
+@using (Html.BeginForm("AddDiscount", "News", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {
         @Html.AntiForgeryToken()
-        <h4>Додайте нову новину для сайту</h4>
+        <h4>Додайте нову акцію для сайту</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -20,6 +20,13 @@
             <div class="col-md-9">
                 @Html.TextAreaFor(m => m.Content, new { @class = "form-control", @style = "min-height: 150px" })
                 @Html.ValidationMessageFor(m => m.Content, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.EndDate, new { @class = "col-md-2 control-label" })
+            <div class="col-md-9">
+                @Html.TextBoxFor(m => m.EndDate, new { @class = "form-control", @type = "date" })
+                @Html.ValidationMessageFor(m => m.EndDate, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">

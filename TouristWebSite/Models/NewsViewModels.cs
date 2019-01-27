@@ -27,4 +27,25 @@ namespace TouristWebSite.Models
         [RegularExpression("^http(s)?://([\\w-]+.)+[\\w-]+(/[\\w- ./?%&=])?$", ErrorMessage="Необхідно ввести коректне посилання.")]
         public string Link { get; set; }
     }
+
+    public class DiscountViewModel
+    {
+        public long Id { get; set; }
+
+        [Display(Name = "Назва акції: ")]
+        [Required(ErrorMessage = "Необхідно заповнити поле \"Назва акції\".")]
+        public string Name { get; set; }
+
+        [Display(Name = "Текст акції: ")]
+        [Required(ErrorMessage = "Необхідно заповнити поле \"Текст акції\".")]
+        public string Content { get; set; }
+
+        [Display(Name = "Кінцева дата акції: ")]
+        [Required(ErrorMessage = "Необхідно заповнити поле \"Кінцева дата акції\".")]
+        public DateTime EndDate { get; set; }
+
+        [Display(Name = "Посилання на додаткову інформацію: ")]
+        [RegularExpression("^http(s)?://([\\w-]+.)+[\\w-]+(/[\\w- ./?%&=])?$", ErrorMessage = "Необхідно ввести коректне посилання.")]
+        public string Link { get; set; }
+    }
 }

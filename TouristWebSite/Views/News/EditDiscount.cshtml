@@ -1,13 +1,14 @@
 ﻿@using TouristWebSite.Models
-@model NewViewModel
+@model DiscountViewModel
 
-<h2>Додати новину</h2>
-@using (Html.BeginForm("AddNew", "News", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+<h2>Редагувати акцію</h2>
+@using (Html.BeginForm("EditDiscount", "News", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {
         @Html.AntiForgeryToken()
-        <h4>Додайте нову новину для сайту</h4>
+        <h4>Редагуйте акцію для сайту</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(m => m.Id)
         <div class="form-group">
             @Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
             <div class="col-md-9">
@@ -23,6 +24,13 @@
             </div>
         </div>
         <div class="form-group">
+            @Html.LabelFor(m => m.EndDate, new { @class = "col-md-2 control-label" })
+            <div class="col-md-9">
+                @Html.TextBoxFor(m => m.EndDate, new { @class = "form-control", @type = "date", @Value = Model.EndDate.ToString("yyyy-MM-dd") })
+                @Html.ValidationMessageFor(m => m.EndDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
             @Html.LabelFor(m => m.Link, new { @class = "col-md-2 control-label" })
             <div class="col-md-9">
                 @Html.TextAreaFor(m => m.Link, new { @class = "form-control", @style = "min-height: 50px" })
@@ -31,7 +39,7 @@
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-9">
-                <button type="submit" class="btn btn-success"> <i class="fas fa-plus"></i> Додати </button>
+                <button type="submit" class="btn btn-success"> <i class="fas fa-check"></i> Зберегти </button>
             </div>
         </div>
 }

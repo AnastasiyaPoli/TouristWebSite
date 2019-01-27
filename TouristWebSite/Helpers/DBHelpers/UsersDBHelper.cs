@@ -2,18 +2,19 @@
 using DAL.Models;
 using System.Collections.Generic;
 using System.Linq;
+using TouristWebSite.Models;
 
 namespace DAL.DBHelpers
 {
-    public static class DiscountsDBHelper
+    public static class UsersDBHelper
     {
         private static ApplicationDbContext context;
 
-        public static List<Discount> GetActive()
+        public static List<ApplicationUser> GetAll()
         {
             using (context = new ApplicationDbContext())
             {
-                return context.Discounts.Where(x => x.EndDate >= DateTime.Now).ToList();
+                return context.Users.ToList();
             }
         }
     }
