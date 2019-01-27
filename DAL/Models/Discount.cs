@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Models
 {
-    public class New
+    public class Discount
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -14,10 +14,8 @@ namespace DAL.Models
 
         public string Content { get; set; }
 
-        public bool IsActive { get; set; }
+        public DateTime StartDate { get; set; }
 
-        public DateTime Date { get; set; }
-
-        public string Link { get; set; }
+        public DateTime EndDate { get; set; }
     }
 }

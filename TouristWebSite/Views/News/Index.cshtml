@@ -1,0 +1,18 @@
+﻿@model TouristWebSite.Models.ActiveNewsViewModel
+
+<h2>Найсвіжіші новини</h2>
+
+@foreach (var item in Model.ActiveNews)
+{
+    <div class="jumbotron transparent newscontainer">
+        <h3>@item.Name</h3>
+        <h5>@item.Content</h5>
+        @if (item.Link != null && item.Link != string.Empty)
+        {
+            <h5><a href=@item.Link>Детальніше за посиланням...</a></h5>
+        }
+        <label style="float: right"><i>@item.Date.ToShortDateString()</i></label>
+    </div>
+}
+
+<h2>Наші акції</h2>

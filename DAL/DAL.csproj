@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationDbContext.cs" />
+    <Compile Include="DBHelpers\NewsDBHelper.cs" />
     <Compile Include="Migrations\201901200959531_initial.cs" />
     <Compile Include="Migrations\201901200959531_initial.Designer.cs">
       <DependentUpon>201901200959531_initial.cs</DependentUpon>
@@ -63,8 +64,25 @@
     <Compile Include="Migrations\201901262155049_1.Designer.cs">
       <DependentUpon>201901262155049_1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901271216057_2.cs" />
+    <Compile Include="Migrations\201901271216057_2.Designer.cs">
+      <DependentUpon>201901271216057_2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901271223566_3.cs" />
+    <Compile Include="Migrations\201901271223566_3.Designer.cs">
+      <DependentUpon>201901271223566_3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901271229302_4.cs" />
+    <Compile Include="Migrations\201901271229302_4.Designer.cs">
+      <DependentUpon>201901271229302_4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901271303166_5.cs" />
+    <Compile Include="Migrations\201901271303166_5.Designer.cs">
+      <DependentUpon>201901271303166_5.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Discount.cs" />
     <Compile Include="Models\New.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -79,6 +97,19 @@
     <EmbeddedResource Include="Migrations\201901262155049_1.resx">
       <DependentUpon>201901262155049_1.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901271216057_2.resx">
+      <DependentUpon>201901271216057_2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901271223566_3.resx">
+      <DependentUpon>201901271223566_3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901271229302_4.resx">
+      <DependentUpon>201901271229302_4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901271303166_5.resx">
+      <DependentUpon>201901271303166_5.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
