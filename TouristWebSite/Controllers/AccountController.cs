@@ -54,6 +54,11 @@ namespace TouristWebSite.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToRoute(new { controller = "Home", action = "Index" });
+            }
+
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -65,6 +70,12 @@ namespace TouristWebSite.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToRoute(new { controller = "Home", action = "Index" });
+            }
+
+
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -136,6 +147,12 @@ namespace TouristWebSite.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToRoute(new { controller = "Home", action = "Index" });
+            }
+
+
             return View();
         }
 
@@ -146,6 +163,12 @@ namespace TouristWebSite.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToRoute(new { controller = "Home", action = "Index" });
+            }
+
+
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };

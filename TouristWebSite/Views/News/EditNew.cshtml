@@ -1,0 +1,42 @@
+﻿@using TouristWebSite.Models
+@model NewViewModel
+
+<h2>Редагувати новину</h2>
+@using (Html.BeginForm("EditNew", "News", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <h4>Редагуйте новину для сайту</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(m => m.Id)
+        <div class="form-group">
+            @Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
+            <div class="col-md-9">
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Content, new { @class = "col-md-2 control-label" })
+            <div class="col-md-9">
+                @Html.TextAreaFor(m => m.Content, new { @class = "form-control", @style = "min-height: 150px" })
+                @Html.ValidationMessageFor(m => m.Content, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Link, new { @class = "col-md-2 control-label" })
+            <div class="col-md-9">
+                @Html.TextAreaFor(m => m.Link, new { @class = "form-control", @style = "min-height: 50px" })
+                @Html.ValidationMessageFor(m => m.Link, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-9">
+                <button type="submit" class="btn btn-success"> <i class="fas fa-check"></i> Зберегти </button>
+            </div>
+        </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

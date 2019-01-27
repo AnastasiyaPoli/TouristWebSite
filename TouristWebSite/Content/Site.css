@@ -47,32 +47,32 @@ body {
 
 /* Buttons */
 .btn-success {
-    background-color: #2C4A55;
+    background-color: #2C4A55 !important;
     border: 1px solid white;
 }
 
     .btn-success:hover {
-        background-color: #7A898C;
+        background-color: #7A898C !important;
         border: 1px solid white;
     }
 
     .btn-success:active:focus {
-        background-color: #7A898C;
+        background-color: #7A898C !important;
         border: 1px solid white;
     }
 
 .btn-default {
-    background-color: #8aa3a8;
+    background-color: #8aa3a8 !important;
     border: 1px solid #333;
 }
 
     .btn-default:hover {
-        background-color: #d68180;
+        background-color: #d68180 !important;
         border: 1px solid #333;
     }
 
     .btn-default:active:focus {
-        background-color: #d68180;
+        background-color: #d68180 !important;
         border: 1px solid #333;
     }
 

@@ -198,6 +198,8 @@
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="DBHelpers\DiscountsDBHelper.cs" />
+    <Compile Include="DBHelpers\NewsDBHelper.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -273,6 +275,8 @@
     <Content Include="Views\Home\Helper.cshtml" />
     <Content Include="Views\Manage\Statistics.cshtml" />
     <Content Include="Views\Home\Contacts.cshtml" />
+    <Content Include="Views\News\AddNew.cshtml" />
+    <Content Include="Views\News\EditNew.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
