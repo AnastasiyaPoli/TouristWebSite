@@ -26,7 +26,8 @@ namespace TouristWebSite
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
                       "~/Content/Custom/login.css",
-                      "~/Content/Custom/news.css"));
+                      "~/Content/Custom/news.css",
+                      "~/Content/Custom/tours.css"));
         }
     }
 }

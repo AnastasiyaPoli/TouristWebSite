@@ -16,10 +16,10 @@
             </a>
         }
         <h3>@item.Name</h3>
-        <h5>@item.Content</h5>
+        <h4>@item.Content</h4>
         @if (item.Link != null && item.Link != string.Empty)
         {
-            <h5><a href=@item.Link>Детальніше за посиланням...</a></h5>
+            <h4><a href=@item.Link>Детальніше за посиланням...</a></h4>
         }
         <label style="float: right"><i>@item.Date.ToShortDateString()</i></label>
     </div>
@@ -43,10 +43,10 @@
         }
 
         <h3>@item.Name</h3>
-        <h5>@item.Content</h5>
+        <h4>@item.Content</h4>
         @if (item.Link != null && item.Link != string.Empty)
         {
-            <h5><a href=@item.Link>Детальніше за посиланням...</a></h5>
+            <h4><a href=@item.Link>Детальніше за посиланням...</a></h4>
         }
         <label style="float: right"><i>@item.StartDate.ToShortDateString() - @item.EndDate.ToShortDateString() </i></label>
     </div>

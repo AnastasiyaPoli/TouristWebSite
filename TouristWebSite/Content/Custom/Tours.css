@@ -1,0 +1,18 @@
+﻿
+.flex-container {
+    display: flex;
+    flex-direction: row;
+}
+
+@media(max-width: 700px) {
+    .flex-container {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.img-style {
+    width: 305px;
+    margin-top: 6%;
+    border-radius: 10%;
+}

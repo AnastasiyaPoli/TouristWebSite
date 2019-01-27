@@ -18,5 +18,6 @@ namespace DAL
 
         public DbSet<New> News { get; set; }
         public DbSet<Discount> Discounts { get; set; }
+        public DbSet<Tour> Tours { get; set; }
     }
 }
