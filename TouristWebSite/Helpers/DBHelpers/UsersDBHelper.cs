@@ -17,5 +17,23 @@ namespace DAL.DBHelpers
                 return context.Users.ToList();
             }
         }
+
+        public static ApplicationUser GetById(string id)
+        {
+            using (context = new ApplicationDbContext())
+            {
+                return context.Users.FirstOrDefault(x => x.Id == id);
+            }
+        }
+
+        public static void ChangeSubscription(string id)
+        {
+            using (context = new ApplicationDbContext())
+            {
+                context.Users.FirstOrDefault(x => x.Id == id).IsSubscribed = !context.Users.FirstOrDefault(x => x.Id == id).IsSubscribed;
+                context.SaveChanges();
+
+            }
+        }
     }
 }

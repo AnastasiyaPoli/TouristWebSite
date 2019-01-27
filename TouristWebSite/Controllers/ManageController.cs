@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using DAL.DBHelpers;
 using TouristWebSite.Models;
 
 namespace TouristWebSite.Controllers
@@ -56,6 +57,7 @@ namespace TouristWebSite.Controllers
                 message == ManageMessageId.ChangePasswordSuccess ? "Пароль було успішно змінено."
                 : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
                 : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
+                : message == ManageMessageId.Changes ? "Зміни були успішно внесені."
                 : message == ManageMessageId.Error ? "Під час оновлення інформації сталась помилка."
                 : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
@@ -65,6 +67,7 @@ namespace TouristWebSite.Controllers
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),
+                IsSubscribed = UsersDBHelper.GetById(userId).IsSubscribed,
                 PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
                 Logins = await UserManager.GetLoginsAsync(userId),
@@ -142,17 +145,17 @@ namespace TouristWebSite.Controllers
 
         // GET: /Manage/Subscription
         [AllowAnonymous]
-        public ActionResult Subscription(string returnUrl)
+        public ActionResult Subscription()
         {
-            ViewBag.ReturnUrl = returnUrl;
-            return View();
+            var userId = User.Identity.GetUserId();
+            UsersDBHelper.ChangeSubscription(userId);
+            return RedirectToAction("Index", new { Message = ManageMessageId.Changes });
         }
 
         // GET: /Manage/Statistics
         [AllowAnonymous]
-        public ActionResult Statistics(string returnUrl)
+        public ActionResult Statistics()
         {
-            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
@@ -436,6 +439,7 @@ namespace TouristWebSite.Controllers
             SetPasswordSuccess,
             RemoveLoginSuccess,
             RemovePhoneSuccess,
+            Changes,
             Error
         }
 
