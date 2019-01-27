@@ -16,5 +16,11 @@ namespace TouristWebSite.Controllers
 
             return View(model);
         }
+
+        public ActionResult DeleteNew(int itemId)
+        {
+            NewsDBHelper.Deactivate(itemId);
+            return RedirectToRoute(new { controller = "News", action = "Index" });
+        }
     }
 }

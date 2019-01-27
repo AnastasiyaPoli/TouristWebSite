@@ -5,6 +5,12 @@
 @foreach (var item in Model.ActiveNews)
 {
     <div class="jumbotron transparent newscontainer">
+        @if (User.IsInRole("Admin"))
+        {
+            <a href="@Url.Action("DeleteNew", "News", new {itemId = item.Id})">
+                <i class="fas fa-times fa-lg" style="float:right;"></i>
+            </a>
+        }
         <h3>@item.Name</h3>
         <h5>@item.Content</h5>
         @if (item.Link != null && item.Link != string.Empty)

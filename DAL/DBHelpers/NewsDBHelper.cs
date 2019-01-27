@@ -15,5 +15,14 @@ namespace DAL.DBHelpers
                 return context.News.Where(x => x.IsActive).ToList();
             }
         }
+
+        public static void Deactivate(int id)
+        {
+            using (context = new ApplicationDbContext())
+            {
+                context.News.FirstOrDefault(x => x.Id == id).IsActive = false;
+                context.SaveChanges();
+            }
+        }
     }
 }
