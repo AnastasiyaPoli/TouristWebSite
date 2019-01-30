@@ -34,7 +34,7 @@
 
 @foreach (var item in Model.ActiveDiscounts)
 {
-    <div class="jumbotron transparent newscontainer">
+    <div class="jumbotron transparent transp-container">
         @if (User.IsInRole("Admin"))
         {
             <a href="@Url.Action("EditDiscount", "News", new {itemId = item.Id})">
