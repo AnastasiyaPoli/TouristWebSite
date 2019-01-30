@@ -44,5 +44,19 @@ namespace TouristWebSite.Controllers
                 return RedirectToRoute(new { controller = "Tours", action = "Index" });
             }
         }
+
+        [HttpGet]
+        public ActionResult Delete(int itemId)
+        {
+            try
+            {
+                ToursDBHelper.Deactivate(itemId);
+                return RedirectToRoute(new { controller = "Tours", action = "Index" });
+            }
+            catch (Exception e)
+            {
+                return RedirectToRoute(new { controller = "Tours", action = "Index" });
+            }
+        }
     }
 }

@@ -23,5 +23,14 @@ namespace DAL.DBHelpers
                 return context.Tours.FirstOrDefault(x => x.IsActive && x.Id == id);
             }
         }
+
+        public static void Deactivate(int id)
+        {
+            using (context = new ApplicationDbContext())
+            {
+                context.Tours.FirstOrDefault(x => x.Id == id).IsActive = false;
+                context.SaveChanges();
+            }
+        }
     }
 }

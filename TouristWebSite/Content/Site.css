@@ -120,3 +120,11 @@ h, h1, h2, h3, h4, h5, h6, p, label {
     .icon-color:hover {
         color: #7A898C;
     }
+
+.transp-container {
+    padding-left: 20px !important;
+    padding-top: 10px !important;
+    padding-bottom: 25px !important;
+    padding-right: 10px !important;
+    margin-bottom: 5px !important;
+}
