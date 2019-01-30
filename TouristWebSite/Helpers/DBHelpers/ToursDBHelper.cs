@@ -15,5 +15,13 @@ namespace DAL.DBHelpers
                 return context.Tours.Where(x => x.IsActive).ToList();
             }
         }
+
+        public static Tour GetTour(int id)
+        {
+            using (context = new ApplicationDbContext())
+            {
+                return context.Tours.FirstOrDefault(x => x.IsActive && x.Id == id);
+            }
+        }
     }
 }

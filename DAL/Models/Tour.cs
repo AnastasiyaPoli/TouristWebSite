@@ -24,5 +24,8 @@ namespace DAL.Models
 
         public long Price { get; set; }
 
+        public int NumberOfPhotos { get; set; }
+
+        public string RouteLink { get; set; }
     }
 }

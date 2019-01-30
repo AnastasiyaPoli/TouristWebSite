@@ -8,6 +8,11 @@ namespace TouristWebSite.Models
         public List<Tour> ActiveTours { get; set; }
     }
 
+    public class ChosenTourViewModel
+    {
+        public Tour ChosenTour { get; set; }
+    }
+
     public partial class Image
     {
         public int ID { get; set; }

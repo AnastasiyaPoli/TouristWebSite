@@ -25,5 +25,24 @@ namespace TouristWebSite.Controllers
                 return RedirectToRoute(new { controller = "Tours", action = "Index" });
             }
         }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public ActionResult Details(int itemId)
+        {
+            try
+            {
+                var model = new ChosenTourViewModel()
+                {
+                    ChosenTour = ToursDBHelper.GetTour(itemId),
+                };
+
+                return View(model);
+            }
+            catch (Exception e)
+            {
+                return RedirectToRoute(new { controller = "Tours", action = "Index" });
+            }
+        }
     }
 }
