@@ -1,10 +1,9 @@
 ﻿using DAL.DBHelpers;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using TouristWebSite.Models;
 using TouristWebSite.Helpers;
-using System.Web.Hosting;
+using TouristWebSite.Models;
 
 namespace TouristWebSite.Controllers
 {
@@ -16,19 +15,12 @@ namespace TouristWebSite.Controllers
         {
             ViewBag.StatusMessage = message;
 
-            try
+            var model = new ActiveToursViewModel()
             {
-                var model = new ActiveToursViewModel()
-                {
-                    ActiveTours = ToursDBHelper.GetActive(),
-                };
+                ActiveTours = ToursDBHelper.GetActive(),
+            };
 
-                return View(model);
-            }
-            catch (Exception e)
-            {
-                return RedirectToRoute(new { controller = "Tours", action = "Index" });
-            }
+            return View(model);
         }
 
         [AllowAnonymous]

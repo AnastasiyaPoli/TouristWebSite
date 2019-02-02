@@ -51,7 +51,6 @@ namespace TouristWebSite.Controllers
             }
         }
 
-        // GET: /Manage/Index
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
@@ -77,13 +76,11 @@ namespace TouristWebSite.Controllers
             return View(model);
         }
 
-        // GET: /Manage/ChangePassword
         public ActionResult ChangePassword()
         {
             return View();
         }
 
-        // POST: /Manage/ChangePassword
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
@@ -144,8 +141,6 @@ namespace TouristWebSite.Controllers
             return View(model);
         }
 
-        // GET: /Manage/Subscription
-        [AllowAnonymous]
         public ActionResult Subscription()
         {
             try
@@ -160,14 +155,11 @@ namespace TouristWebSite.Controllers
             }
         }
 
-        // GET: /Manage/Statistics
-        [AllowAnonymous]
         public ActionResult Statistics()
         {
             return View();
         }
 
-        // GET: /Manage/UserInfo
         public ActionResult UserInfo(string itemId)
         {
             try
@@ -196,9 +188,7 @@ namespace TouristWebSite.Controllers
             }
         }
 
-        // POST: /Manage/UserInfo
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult UserInfo(UserInfoViewModel model)
         {
             try
@@ -223,8 +213,6 @@ namespace TouristWebSite.Controllers
             }
         }
 
-        //
-        // POST: /Manage/RemoveLogin
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> RemoveLogin(string loginProvider, string providerKey)
@@ -247,15 +235,11 @@ namespace TouristWebSite.Controllers
             return RedirectToAction("ManageLogins", new { Message = message });
         }
 
-        //
-        // GET: /Manage/AddPhoneNumber
         public ActionResult AddPhoneNumber()
         {
             return View();
         }
 
-        //
-        // POST: /Manage/AddPhoneNumber
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> AddPhoneNumber(AddPhoneNumberViewModel model)
@@ -278,8 +262,6 @@ namespace TouristWebSite.Controllers
             return RedirectToAction("VerifyPhoneNumber", new { PhoneNumber = model.Number });
         }
 
-        //
-        // POST: /Manage/EnableTwoFactorAuthentication
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EnableTwoFactorAuthentication()
@@ -293,8 +275,6 @@ namespace TouristWebSite.Controllers
             return RedirectToAction("Index", "Manage");
         }
 
-        //
-        // POST: /Manage/DisableTwoFactorAuthentication
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DisableTwoFactorAuthentication()

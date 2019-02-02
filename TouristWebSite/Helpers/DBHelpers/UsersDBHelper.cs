@@ -1,6 +1,4 @@
-﻿using System;
-using DAL.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using TouristWebSite.Models;
 
@@ -9,6 +7,14 @@ namespace DAL.DBHelpers
     public static class UsersDBHelper
     {
         private static ApplicationDbContext context;
+
+        public static List<ApplicationUser> GetAllActive()
+        {
+            using (context = new ApplicationDbContext())
+            {
+                return context.Users.Where(x => x.IsActive).ToList();
+            }
+        }
 
         public static List<ApplicationUser> GetAll()
         {
@@ -32,7 +38,15 @@ namespace DAL.DBHelpers
             {
                 context.Users.FirstOrDefault(x => x.Id == id).IsSubscribed = !context.Users.FirstOrDefault(x => x.Id == id).IsSubscribed;
                 context.SaveChanges();
+            }
+        }
 
+        public static void ChangeBlockStatus(string id)
+        {
+            using (context = new ApplicationDbContext())
+            {
+                context.Users.FirstOrDefault(x => x.Id == id).IsActive = !context.Users.FirstOrDefault(x => x.Id == id).IsActive;
+                context.SaveChanges();
             }
         }
 

@@ -12,20 +12,13 @@ namespace TouristWebSite.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {
-            try
+            var model = new ActiveNewsViewModel()
             {
-                var model = new ActiveNewsViewModel()
-                {
-                    ActiveNews = NewsDBHelper.GetActive(),
-                    ActiveDiscounts = DiscountsDBHelper.GetActive()
-                };
+                ActiveNews = NewsDBHelper.GetActive(),
+                ActiveDiscounts = DiscountsDBHelper.GetActive()
+            };
 
-                return View(model);
-            }
-            catch (Exception e)
-            {
-                return RedirectToRoute(new { controller = "News", action = "Index" });
-            }
+            return View(model);
         }
 
         [HttpGet]
@@ -60,7 +53,7 @@ namespace TouristWebSite.Controllers
 
                 NewsDBHelper.Add(model);
 
-                foreach (var user in UsersDBHelper.GetAll())
+                foreach (var user in UsersDBHelper.GetAllActive())
                 {
                     if (user.IsSubscribed)
                     {
@@ -155,14 +148,14 @@ namespace TouristWebSite.Controllers
 
                 DiscountsDBHelper.Add(model);
 
-                foreach (var user in UsersDBHelper.GetAll())
+                foreach (var user in UsersDBHelper.GetAllActive())
                 {
                     if (user.IsSubscribed)
                     {
                         try
                         {
                             string text = model.Name + ": " + model.Content + " Акція дійсна до " + model.EndDate + ". ";
-                            if (model.Link!= null && model.Link != string.Empty)
+                            if (model.Link != null && model.Link != string.Empty)
                             {
                                 text += "Детальніше за посиланням: " + model.Link;
                             }

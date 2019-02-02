@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace TouristWebSite.Models
@@ -33,5 +34,10 @@ namespace TouristWebSite.Models
 
         [Display(Name = "Коротка біографія: ")]
         public string Biography { get; set; }
+    }
+
+    public class AllUsersViewModel
+    {
+        public List<ApplicationUser> Users { get; set; }
     }
 }

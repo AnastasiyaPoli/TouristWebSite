@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using DAL.DBHelpers;
 using TouristWebSite.Models;
 
 namespace TouristWebSite.Controllers
@@ -78,6 +79,16 @@ namespace TouristWebSite.Controllers
 
             if (!ModelState.IsValid)
             {
+                return View(model);
+            }
+
+            // User blocked
+            if (!this.UserManager.FindByEmailAsync(model.Email).Result.IsActive)
+            {
+                string[] Errors = new string[1];
+                Errors[0] = "Ваш акаунт заблоковано. Зверніться до адміністрації сайту.";
+                var rez = new IdentityResult(Errors);
+                AddErrors(rez);
                 return View(model);
             }
 

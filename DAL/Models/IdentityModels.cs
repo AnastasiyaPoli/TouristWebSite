@@ -19,6 +19,7 @@ namespace TouristWebSite.Models
         public string City { get; set; }
         public string Profession { get; set; }
         public string Biography { get; set; }
+        public bool IsActive { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
