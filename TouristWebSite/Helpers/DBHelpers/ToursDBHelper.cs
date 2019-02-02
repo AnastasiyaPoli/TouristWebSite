@@ -16,7 +16,7 @@ namespace DAL.DBHelpers
             }
         }
 
-        public static Tour GetTour(int id)
+        public static Tour GetTour(long id)
         {
             using (context = new ApplicationDbContext())
             {
@@ -24,7 +24,7 @@ namespace DAL.DBHelpers
             }
         }
 
-        public static void Deactivate(int id)
+        public static void Deactivate(long id)
         {
             using (context = new ApplicationDbContext())
             {

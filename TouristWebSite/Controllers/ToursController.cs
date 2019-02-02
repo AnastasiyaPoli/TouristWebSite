@@ -28,7 +28,7 @@ namespace TouristWebSite.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public ActionResult Details(int itemId)
+        public ActionResult Details(long itemId)
         {
             try
             {
@@ -46,7 +46,7 @@ namespace TouristWebSite.Controllers
         }
 
         [HttpGet]
-        public ActionResult Delete(int itemId)
+        public ActionResult Delete(long itemId)
         {
             try
             {

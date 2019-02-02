@@ -18,7 +18,7 @@ namespace DAL.DBHelpers
             }
         }
 
-        public static Discount GetById(int id)
+        public static Discount GetById(long id)
         {
             using (context = new ApplicationDbContext())
             {

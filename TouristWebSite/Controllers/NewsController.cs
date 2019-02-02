@@ -29,7 +29,7 @@ namespace TouristWebSite.Controllers
         }
 
         [HttpGet]
-        public ActionResult DeleteNew(int itemId)
+        public ActionResult DeleteNew(long itemId)
         {
             try
             {
@@ -90,7 +90,7 @@ namespace TouristWebSite.Controllers
         }
 
         [HttpGet]
-        public ActionResult EditNew(int itemId)
+        public ActionResult EditNew(long itemId)
         {
             try
             {
@@ -185,7 +185,7 @@ namespace TouristWebSite.Controllers
         }
 
         [HttpGet]
-        public ActionResult EditDiscount(int itemId)
+        public ActionResult EditDiscount(long itemId)
         {
             try
             {

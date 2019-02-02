@@ -18,7 +18,7 @@ namespace DAL.DBHelpers
             }
         }
 
-        public static New GetById(int id)
+        public static New GetById(long id)
         {
             using (context = new ApplicationDbContext())
             {
@@ -26,7 +26,7 @@ namespace DAL.DBHelpers
             }
         }
 
-        public static void Deactivate(int id)
+        public static void Deactivate(long id)
         {
             using (context = new ApplicationDbContext())
             {
