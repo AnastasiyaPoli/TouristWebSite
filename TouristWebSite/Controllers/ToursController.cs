@@ -1,16 +1,21 @@
 ﻿using DAL.DBHelpers;
 using System;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using TouristWebSite.Models;
+using TouristWebSite.Helpers;
+using System.Web.Hosting;
 
 namespace TouristWebSite.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize]
     public class ToursController : Controller
     {
         [AllowAnonymous]
-        public ActionResult Index()
+        public ActionResult Index(string message = "")
         {
+            ViewBag.StatusMessage = message;
+
             try
             {
                 var model = new ActiveToursViewModel()
@@ -34,7 +39,7 @@ namespace TouristWebSite.Controllers
             {
                 var model = new ChosenTourViewModel()
                 {
-                    ChosenTour = ToursDBHelper.GetTour(itemId),
+                    ChosenTour = ToursDBHelper.GetById(itemId),
                 };
 
                 return View(model);
@@ -45,6 +50,7 @@ namespace TouristWebSite.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public ActionResult Delete(long itemId)
         {
@@ -52,6 +58,50 @@ namespace TouristWebSite.Controllers
             {
                 ToursDBHelper.Deactivate(itemId);
                 return RedirectToRoute(new { controller = "Tours", action = "Index" });
+            }
+            catch (Exception e)
+            {
+                return RedirectToRoute(new { controller = "Tours", action = "Index" });
+            }
+        }
+
+        public ActionResult TourBooking(long itemId)
+        {
+            try
+            {
+                var chosenTour = ToursDBHelper.GetById(itemId);
+
+                TourBookingViewModel model = new TourBookingViewModel()
+                {
+                    TourId = chosenTour.Id,
+                    Price = chosenTour.Price,
+                    PeopleCount = 1,
+                    Description = "Введіть деталі для бронювання туру \"" + chosenTour.Name + "\" (" + chosenTour.Place + "). Дати: " + chosenTour.DateStart.ToShortDateString() + " - " + chosenTour.DateEnd.ToShortDateString() + "."
+                };
+
+                return View(model);
+            }
+            catch (Exception e)
+            {
+                return RedirectToRoute(new { controller = "Manage", action = "Index" });
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult TourBooking(TourBookingViewModel model)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return View(model);
+                }
+
+                var newId = BookedToursDBHelper.BookTour(model, User.Identity.GetUserId());
+                string filename = PDFGeneratorHelper.GeneratePDF(ToursDBHelper.GetById(model.TourId), model.PeopleCount, model.Comment, newId);
+                EmailSenderHelper.SendEmail(UsersDBHelper.GetById(User.Identity.GetUserId()).Email, "Підтвердження бронювання туру.", "Тур було успішно заброньовано, деталі можна переглянути у прикріпленому документі.", filename);
+                return RedirectToAction("Index", new { Message = "Тур було успішно заброньовано. Документ про бронювання відправлено на електронну пошту." });
             }
             catch (Exception e)
             {

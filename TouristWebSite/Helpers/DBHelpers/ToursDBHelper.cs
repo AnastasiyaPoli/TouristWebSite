@@ -1,6 +1,7 @@
 ﻿using DAL.Models;
 using System.Collections.Generic;
 using System.Linq;
+using TouristWebSite.Models;
 
 namespace DAL.DBHelpers
 {
@@ -16,7 +17,7 @@ namespace DAL.DBHelpers
             }
         }
 
-        public static Tour GetTour(long id)
+        public static Tour GetById(long id)
         {
             using (context = new ApplicationDbContext())
             {

@@ -1,0 +1,47 @@
+﻿@using TouristWebSite.Models
+@model TourBookingViewModel
+
+<h2>Додати акцію</h2>
+@using (Html.BeginForm("TourBooking", "Tours", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>@Model.Description</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(m => m.TourId)
+    @Html.HiddenFor(m => m.Price, new { @id = "Price" })
+    <div class="form-group">
+        @Html.LabelFor(m => m.PeopleCount, new { @class = "col-md-2 control-label" })
+        <div class="col-md-9">
+            @Html.TextBoxFor(m => m.PeopleCount, new { @class = "form-control", @type = "number", @min = "1", @oninput = "onchangeevent();", @id = "PeopleCount" })
+            @Html.ValidationMessageFor(m => m.PeopleCount, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Comment, new { @class = "col-md-2 control-label" })
+        <div class="col-md-9">
+            @Html.TextAreaFor(m => m.Comment, new { @class = "form-control", @style = "min-height: 150px" })
+            @Html.ValidationMessageFor(m => m.Comment, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-offset-2 col-md-9" id="PriceCount">Вартість туру на обрану кількість людей: @(Model.Price) грн.</label>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-9">
+            <button type="submit" class="btn btn-success"> <i class="fas fa-check"></i> Забронювати </button>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        function onchangeevent() {
+            var count = document.getElementById("PeopleCount").value;
+            var price = document.getElementById("Price").value;
+            document.getElementById("PriceCount").innerHTML = "Вартість туру на обрану кількість людей: " + count * price + " грн.";
+        }
+    </script>
+}

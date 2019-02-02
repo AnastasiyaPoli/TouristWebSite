@@ -1,6 +1,8 @@
 ﻿@model TouristWebSite.Models.ActiveToursViewModel
 <h2>Пакетні тури</h2>
 
+<p class="text-success">@ViewBag.StatusMessage</p>
+
 @foreach (var item in Model.ActiveTours)
 {
     <div class="jumbotron transparent transp-container">
@@ -26,6 +28,11 @@
                 <img class="img-style" src="~/Content/Img/Tours/@(item.Id).jpg" />
             </div>
         </div>
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            <a class="btn btn-default no-underline" href="@Url.Action("TourBooking", "Tours", new {itemId = item.Id})"> <span> <i class="fas fa-check"></i> Забронювати тур </span> </a>
+        }
     </div>
 }
 

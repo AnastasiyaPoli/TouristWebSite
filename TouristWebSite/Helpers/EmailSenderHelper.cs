@@ -8,7 +8,7 @@ namespace TouristWebSite.Helpers
     {
         public static int numberOfRetrials = 3;
 
-        public static void SendEmail(string to, string subject, string body)
+        public static void SendEmail(string to, string subject, string body, string filename = "")
         {
             using (var mailClient = new SmtpClient())
             {
@@ -20,6 +20,10 @@ namespace TouristWebSite.Helpers
                 msg.Subject = subject;
                 msg.Body = body;
                 msg.IsBodyHtml = true;
+                if (filename != string.Empty)
+                {
+                    msg.Attachments.Add(new Attachment(filename));
+                }
 
                 mailClient.Host = "smtp.gmail.com";
                 mailClient.Port = 587;
