@@ -1,5 +1,4 @@
 ﻿using DAL.DBHelpers;
-using Microsoft.AspNet.Identity;
 using System;
 using System.Web.Mvc;
 using TouristWebSite.Models;
@@ -27,7 +26,7 @@ namespace TouristWebSite.Controllers
             try
             {
                 UsersDBHelper.ChangeBlockStatus(userId);
-                return RedirectToAction("Index", new { Message = "Зміни були успішно внесені" });
+                return RedirectToAction("Index", new { Message = "Зміни було успішно внесено." });
             }
             catch (Exception e)
             {

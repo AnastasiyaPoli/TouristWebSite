@@ -57,7 +57,7 @@ namespace TouristWebSite.Controllers
                 message == ManageMessageId.ChangePasswordSuccess ? "Пароль було успішно змінено."
                 : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
                 : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
-                : message == ManageMessageId.Changes ? "Зміни були успішно внесені."
+                : message == ManageMessageId.Changes ? "Зміни було успішно внесено."
                 : message == ManageMessageId.Error ? "Під час оновлення інформації сталась помилка."
                 : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."

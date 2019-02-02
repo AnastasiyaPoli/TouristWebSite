@@ -80,7 +80,6 @@ namespace TouristWebSite.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult TourBooking(TourBookingViewModel model)
         {
             try
