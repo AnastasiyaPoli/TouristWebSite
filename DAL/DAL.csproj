@@ -107,6 +107,10 @@
     <Compile Include="Migrations\201901302129304_12.Designer.cs">
       <DependentUpon>201901302129304_12.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902021307195_13.cs" />
+    <Compile Include="Migrations\201902021307195_13.Designer.cs">
+      <DependentUpon>201902021307195_13.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Discount.cs" />
@@ -157,6 +161,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901302129304_12.resx">
       <DependentUpon>201901302129304_12.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902021307195_13.resx">
+      <DependentUpon>201902021307195_13.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

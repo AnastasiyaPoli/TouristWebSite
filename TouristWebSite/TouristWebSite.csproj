@@ -207,6 +207,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\EmailSenderHelper.cs" />
+    <Compile Include="Models\UserViewModels.cs" />
     <Compile Include="Models\TourViewModels.cs" />
     <Compile Include="Models\NewsViewModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />

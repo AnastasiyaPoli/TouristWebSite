@@ -50,4 +50,7 @@
 
 <iframe src="@Model.ChosenTour.RouteLink" style="width: 100%; height: 600px" frameborder="0" allowfullscreen></iframe>
 
-<a class="btn btn-default no-underline" href="@Url.Action("Delete", "Tours", new {itemId = Model.ChosenTour.Id})"> <span> <i class="fas fa-times"></i> Видалити тур </span> </a>
+@if (User.IsInRole("Admin"))
+{
+    <a class="btn btn-default no-underline" href="@Url.Action("Delete", "Tours", new {itemId = Model.ChosenTour.Id})"> <span> <i class="fas fa-times"></i> Видалити тур </span> </a>
+}
