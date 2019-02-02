@@ -35,5 +35,25 @@ namespace DAL.DBHelpers
 
             }
         }
+
+        public static void UpdateUser(UserInfoViewModel user)
+        {
+            using (context = new ApplicationDbContext())
+            {
+                var userForUpdate = context.Users.FirstOrDefault(x => x.Id == user.Id);
+
+                userForUpdate.Name = user.Name;
+                userForUpdate.Surname = user.Surname;
+                userForUpdate.Gender = user.Gender;
+                userForUpdate.DateOfBirth = user.DateOfBirth;
+                userForUpdate.MaritalStatus = user.MaritalStatus;
+                userForUpdate.Country = user.Country;
+                userForUpdate.City = user.City;
+                userForUpdate.Profession = user.Profession;
+                userForUpdate.Biography = user.Biography;
+
+                context.SaveChanges();
+            }
+        }
     }
 }

@@ -287,6 +287,7 @@
     <Content Include="Views\News\AddDiscount.cshtml" />
     <Content Include="Views\News\EditDiscount.cshtml" />
     <Content Include="Views\Tours\Details.cshtml" />
+    <Content Include="Views\Manage\UserInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

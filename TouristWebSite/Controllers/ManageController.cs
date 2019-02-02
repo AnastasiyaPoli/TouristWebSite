@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using DAL.DBHelpers;
 using TouristWebSite.Models;
+using System;
 
 namespace TouristWebSite.Controllers
 {
@@ -32,9 +33,9 @@ namespace TouristWebSite.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -147,9 +148,16 @@ namespace TouristWebSite.Controllers
         [AllowAnonymous]
         public ActionResult Subscription()
         {
-            var userId = User.Identity.GetUserId();
-            UsersDBHelper.ChangeSubscription(userId);
-            return RedirectToAction("Index", new { Message = ManageMessageId.Changes });
+            try
+            {
+                var userId = User.Identity.GetUserId();
+                UsersDBHelper.ChangeSubscription(userId);
+                return RedirectToAction("Index", new { Message = ManageMessageId.Changes });
+            }
+            catch (Exception e)
+            {
+                return RedirectToRoute(new { controller = "Manage", action = "Index" });
+            }
         }
 
         // GET: /Manage/Statistics
@@ -159,7 +167,61 @@ namespace TouristWebSite.Controllers
             return View();
         }
 
+        // GET: /Manage/UserInfo
+        public ActionResult UserInfo(string itemId)
+        {
+            try
+            {
+                var userForEdit = UsersDBHelper.GetById(itemId);
 
+                UserInfoViewModel model = new UserInfoViewModel()
+                {
+                    Id = itemId,
+                    Name = userForEdit.Name,
+                    Surname = userForEdit.Surname,
+                    Gender = userForEdit.Gender,
+                    DateOfBirth = userForEdit.DateOfBirth,
+                    MaritalStatus = userForEdit.MaritalStatus,
+                    Country = userForEdit.Country,
+                    City = userForEdit.City,
+                    Profession = userForEdit.Profession,
+                    Biography = userForEdit.Biography
+                };
+
+                return View(model);
+            }
+            catch (Exception e)
+            {
+                return RedirectToRoute(new { controller = "Manage", action = "Index" });
+            }
+        }
+
+        // POST: /Manage/UserInfo
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UserInfo(UserInfoViewModel model)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return View(model);
+                }
+
+                if (model.DateOfBirth >= DateTime.Now)
+                {
+                    ModelState.AddModelError("DateOfBirth", "Необхідно вказати коректну дату народження.");
+                    return View(model);
+                }
+
+                UsersDBHelper.UpdateUser(model);
+                return RedirectToAction("Index", new { Message = ManageMessageId.Changes });
+            }
+            catch (Exception e)
+            {
+                return RedirectToRoute(new { controller = "Manage", action = "Index" });
+            }
+        }
 
         //
         // POST: /Manage/RemoveLogin
@@ -371,13 +433,13 @@ namespace TouristWebSite.Controllers
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync(XsrfKey, User.Identity.GetUserId());
             if (loginInfo == null)
             {
-                return RedirectToAction("ManageLogins", new {Message = ManageMessageId.Error});
+                return RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
             }
 
             var result = await UserManager.AddLoginAsync(User.Identity.GetUserId(), loginInfo.Login);
             return result.Succeeded
                 ? RedirectToAction("ManageLogins")
-                : RedirectToAction("ManageLogins", new {Message = ManageMessageId.Error});
+                : RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
         }
 
         protected override void Dispose(bool disposing)
@@ -443,6 +505,6 @@ namespace TouristWebSite.Controllers
             Error
         }
 
-#endregion
+        #endregion
     }
 }
