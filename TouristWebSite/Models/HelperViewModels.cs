@@ -36,7 +36,7 @@ namespace TouristWebSite.Models
         [Display(Name = "Домашні улюбленці: ")]
         public string PetsDescription { get; set; }
 
-        [Display(Name = "Додаткова інформація: ")]
+        [Display(Name = "Коментарі: ")]
         public string OtherInfo { get; set; }
     }
 }
