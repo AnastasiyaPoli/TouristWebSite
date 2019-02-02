@@ -10,11 +10,6 @@ namespace TouristWebSite.Controllers
             return View();
         }
 
-        public ActionResult Helper()
-        {
-            return View();
-        }
-
         public ActionResult Contacts()
         {
             return View();

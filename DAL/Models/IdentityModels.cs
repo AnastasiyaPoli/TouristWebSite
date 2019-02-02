@@ -21,6 +21,18 @@ namespace TouristWebSite.Models
         public string Biography { get; set; }
         public bool IsActive { get; set; }
 
+        public string TypeOfStudies { get; set; }
+        public string StudiesDescription { get; set; }
+        public string TypeOfWork { get; set; }
+        public string WorkDescription { get; set; }
+        public string SportsDescription { get; set; }
+        public string MusicDescription { get; set; }
+        public string FilmsDescription { get; set; }
+        public string BooksDescription { get; set; }
+        public string HobbiesDescription { get; set; }
+        public string PetsDescription { get; set; }
+        public string OtherInfo { get; set; }
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

@@ -69,5 +69,27 @@ namespace DAL.DBHelpers
                 context.SaveChanges();
             }
         }
+
+        public static void UpdateUserAdditional(AdditionalInfoViewModel user)
+        {
+            using (context = new ApplicationDbContext())
+            {
+                var userForUpdate = context.Users.FirstOrDefault(x => x.Id == user.Id);
+
+                userForUpdate.TypeOfStudies = user.TypeOfStudies;
+                userForUpdate.StudiesDescription = user.StudiesDescription;
+                userForUpdate.TypeOfWork = user.TypeOfWork;
+                userForUpdate.WorkDescription = user.WorkDescription;
+                userForUpdate.SportsDescription = user.SportsDescription;
+                userForUpdate.MusicDescription = user.MusicDescription;
+                userForUpdate.FilmsDescription = user.FilmsDescription;
+                userForUpdate.BooksDescription = user.BooksDescription;
+                userForUpdate.HobbiesDescription = user.HobbiesDescription;
+                userForUpdate.PetsDescription = user.PetsDescription;
+                userForUpdate.OtherInfo = user.OtherInfo;
+
+                context.SaveChanges();
+            }
+        }
     }
 }

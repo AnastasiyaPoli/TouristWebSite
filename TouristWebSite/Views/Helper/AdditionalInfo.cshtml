@@ -1,0 +1,95 @@
+﻿@using TouristWebSite.Models
+@model AdditionalInfoViewModel
+<h2>Додаткова інформація</h2>
+
+@using (Html.BeginForm("AdditionalInfo", "Helper", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <div>
+        <h4>Редагуйте додаткову інформацію, що допоможе нам скласти кращий туристичний маршрут.</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(m => m.Id)
+        <div class="form-group">
+            @Html.LabelFor(m => m.TypeOfStudies, new { @class = "col-md-2 control-label" })
+            <div class="col-md-9">
+                @Html.DropDownListFor(model => model.TypeOfStudies, new SelectList(new string[] { "Вища освіта", "Подальша невища освіта", "Повна середня освіта", "Середня освіта", "Базова середня освіта", "Початкова освіта", "Нижче початкової освіти" }), new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.TypeOfStudies, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.StudiesDescription, new { @class = "col-md-2 control-label" })
+            <div class="col-md-9">
+                @Html.TextAreaFor(model => model.StudiesDescription, new { @class = "form-control", @style = "min-height: 150px" })
+                @Html.ValidationMessageFor(m => m.StudiesDescription, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.TypeOfWork, new { @class = "col-md-2 control-label" })
+            <div class="col-md-9">
+                @Html.DropDownListFor(model => model.TypeOfWork, new SelectList(new string[] { "Повна занятість", "Неповна занятість", "Фріланс", "Тимчасова" }), new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.TypeOfWork, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.WorkDescription, new { @class = "col-md-2 control-label" })
+            <div class="col-md-9">
+                @Html.TextAreaFor(model => model.WorkDescription, new { @class = "form-control", @style = "min-height: 150px" })
+                @Html.ValidationMessageFor(m => m.WorkDescription, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.SportsDescription, new { @class = "col-md-2 control-label" })
+            <div class="col-md-9">
+                @Html.TextAreaFor(model => model.SportsDescription, new { @class = "form-control", @style = "min-height: 150px" })
+                @Html.ValidationMessageFor(m => m.SportsDescription, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.MusicDescription, new { @class = "col-md-2 control-label" })
+            <div class="col-md-9">
+                @Html.TextAreaFor(model => model.MusicDescription, new { @class = "form-control", @style = "min-height: 150px" })
+                @Html.ValidationMessageFor(m => m.MusicDescription, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.FilmsDescription, new { @class = "col-md-2 control-label" })
+            <div class="col-md-9">
+                @Html.TextAreaFor(model => model.FilmsDescription, new { @class = "form-control", @style = "min-height: 150px" })
+                @Html.ValidationMessageFor(m => m.FilmsDescription, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.BooksDescription, new { @class = "col-md-2 control-label" })
+            <div class="col-md-9">
+                @Html.TextAreaFor(model => model.BooksDescription, new { @class = "form-control", @style = "min-height: 150px" })
+                @Html.ValidationMessageFor(m => m.BooksDescription, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.HobbiesDescription, new { @class = "col-md-2 control-label" })
+            <div class="col-md-9">
+                @Html.TextAreaFor(model => model.HobbiesDescription, new { @class = "form-control", @style = "min-height: 150px" })
+                @Html.ValidationMessageFor(m => m.HobbiesDescription, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.PetsDescription, new { @class = "col-md-2 control-label" })
+            <div class="col-md-9">
+                @Html.TextAreaFor(model => model.PetsDescription, new { @class = "form-control", @style = "min-height: 150px" })
+                @Html.ValidationMessageFor(m => m.PetsDescription, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.OtherInfo, new { @class = "col-md-2 control-label" })
+            <div class="col-md-9">
+                @Html.TextAreaFor(model => model.OtherInfo, new { @class = "form-control", @style = "min-height: 150px" })
+                @Html.ValidationMessageFor(m => m.OtherInfo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-9">
+                <button type="submit" class="btn btn-success"> <i class="fas fa-check"></i> Зберегти </button>
+            </div>
+        </div>
+    </div>
+}

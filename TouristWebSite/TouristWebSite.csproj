@@ -201,6 +201,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\HelperController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ToursController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
@@ -217,6 +218,7 @@
     <Compile Include="Helpers\EmailSenderHelper.cs" />
     <Compile Include="Helpers\PDFGeneratorHelper.cs" />
     <Compile Include="Models\TourBookingViewModel.cs" />
+    <Compile Include="Models\HelperViewModels.cs" />
     <Compile Include="Models\UserViewModels.cs" />
     <Compile Include="Models\TourViewModels.cs" />
     <Compile Include="Models\NewsViewModels.cs" />
@@ -291,7 +293,7 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Home\Helper.cshtml" />
+    <Content Include="Views\Helper\Index.cshtml" />
     <Content Include="Views\Manage\Statistics.cshtml" />
     <Content Include="Views\Home\Contacts.cshtml" />
     <Content Include="Views\News\AddNew.cshtml" />
@@ -302,6 +304,7 @@
     <Content Include="Views\Manage\UserInfo.cshtml" />
     <Content Include="Views\Tours\TourBooking.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\Helper\AdditionalInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
