@@ -58,4 +58,72 @@
     <a class="btn btn-default no-underline" href="@Url.Action("Delete", "Tours", new {itemId = Model.ChosenTour.Id})"> <span> <i class="fas fa-times"></i> Видалити тур </span> </a>
     <a class="btn btn-default no-underline" href="@Url.Action("Update", "Tours", new {itemId = Model.ChosenTour.Id})"> <span> <i class="fas fa-edit"></i> Змінити тур </span> </a>
     <a class="btn btn-default no-underline" href="@Url.Action("Photos", "Tours", new {itemId = Model.ChosenTour.Id})"> <span> <i class="fas fa-images"></i> Змінити фото туру </span> </a>
+    <br />
+}
+
+<br />
+
+<h2>Коментарі до туру</h2>
+
+@foreach (var item in Model.Comments)
+{
+    <div class="jumbotron transparent transp-container">
+        @if (User.IsInRole("Admin"))
+            {
+                <a href="@Url.Action("DeleteComment", "Tours", new {itemId = item.Id, tourId = Model.ChosenTour.Id})">
+                    <i class="fas fa-times fa-lg" style="float:right;"></i>
+                </a>
+            }
+        @if ((item.User.Name != null && item.User.Name != string.Empty) || (item.User.Surname != null && item.User.Surname != string.Empty))
+        {
+            <h3>@item.User.Name @item.User.Surname</h3>
+        }
+        else
+        {
+            <h3>Анонім</h3>
+        }
+
+        <h4>@item.Text</h4>
+
+        @if (item.WasBooked)
+        {
+            if (item.User.Gender == "Жіноча")
+            {
+                <label style="float: right"><i>Замовляла даний тур</i></label>
+            }
+            else
+            {
+                <label style="float: right"><i>Замовляв даний тур</i></label>
+            }
+        }
+
+    </div>
+}
+
+<br />
+
+@if (User.Identity.IsAuthenticated)
+{
+    using (Html.BeginForm("AddComment", "Tours", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.HiddenFor(m => m.ChosenTourId)
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Text, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(m => m.Text, new { @class = "form-control", @style = "min-width: 100% !important" })
+                @Html.ValidationMessageFor(m => m.Text, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-9">
+                <button type="submit" class="btn btn-success"> <i class="fas fa-plus"></i> Додати </button>
+            </div>
+        </div>
+    }
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
 }

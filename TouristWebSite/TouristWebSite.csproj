@@ -209,6 +209,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Helpers\DBHelpers\DiscountsDBHelper.cs" />
     <Compile Include="Helpers\DBHelpers\BookedToursDBHelper.cs" />
+    <Compile Include="Helpers\DBHelpers\CommentsDBHelper.cs" />
     <Compile Include="Helpers\DBHelpers\ToursDBHelper.cs" />
     <Compile Include="Helpers\DBHelpers\UsersDBHelper.cs" />
     <Compile Include="Helpers\DBHelpers\NewsDBHelper.cs" />

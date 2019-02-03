@@ -13,6 +13,12 @@ namespace TouristWebSite.Models
     public class ChosenTourViewModel
     {
         public Tour ChosenTour { get; set; }
+        public long ChosenTourId { get; set; }
+        public List<CommentViewModel> Comments { get; set; }
+
+        [Display(Name = "Додайте коментар: ")]
+        [Required(ErrorMessage = "Необхідно заповнити поле \"Коментар\".")]
+        public string Text { get; set; }
     }
 
     public class TourViewModel
@@ -58,5 +64,19 @@ namespace TouristWebSite.Models
 
         [Display(Name = "Оберіть фото: ")]
         public string ImagePath { get; set; }
+    }
+
+    public class CommentViewModel
+    {
+        public long Id { get; set; }
+
+        [Display(Name = "Додайте коментар: ")]
+        [Required(ErrorMessage = "Необхідно заповнити поле \"Коментар\".")]
+        [MinLength(1, ErrorMessage = "Необхідно заповнити поле \"Коментар\".")]
+        public string Text { get; set; }
+
+        public bool WasBooked { get; set; }
+
+        public ApplicationUser User { get; set; }
     }
 }

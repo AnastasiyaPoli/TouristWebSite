@@ -1,4 +1,5 @@
 ﻿using DAL.Models;
+using System.Linq;
 using TouristWebSite.Models;
 
 namespace DAL.DBHelpers
@@ -22,6 +23,14 @@ namespace DAL.DBHelpers
                 var newTour = context.BookedTours.Add(tour);
                 context.SaveChanges();
                 return newTour.Id;
+            }
+        }
+
+        public static bool Check(string userId, long tourId)
+        {
+            using (context = new ApplicationDbContext())
+            {
+                return (context.BookedTours.FirstOrDefault(x => x.ApplicationUserId == userId && x.TourId == tourId) != null);
             }
         }
     }

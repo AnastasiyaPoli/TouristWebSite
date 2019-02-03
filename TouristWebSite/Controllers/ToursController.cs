@@ -1,6 +1,7 @@
 ﻿using DAL.DBHelpers;
 using Microsoft.AspNet.Identity;
 using System;
+using System.Collections.Generic;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
@@ -31,9 +32,24 @@ namespace TouristWebSite.Controllers
         {
             try
             {
+                List<CommentViewModel> list = new List<CommentViewModel>();
+
+                foreach (var item in CommentsDBHelper.GetActiveForTour(itemId))
+                {
+                    list.Add(new CommentViewModel()
+                    {
+                        Id = item.Id,
+                        User = item.User,
+                        Text = item.Text,
+                        WasBooked = BookedToursDBHelper.Check(item.User.Id, itemId)
+                    });
+                }
+
                 var model = new ChosenTourViewModel()
                 {
                     ChosenTour = ToursDBHelper.GetById(itemId),
+                    ChosenTourId = itemId,
+                    Comments = list
                 };
 
                 return View(model);
@@ -279,6 +295,34 @@ namespace TouristWebSite.Controllers
                 return RedirectToRoute(new { controller = "Tours", action = "Photos", itemId = img.TourId, successMessage = "Зміни було успішно внесено." });
             }
             return View(img);
+        }
+
+        public ActionResult AddComment(ChosenTourViewModel model)
+        {
+            try
+            {
+                CommentsDBHelper.Add(model.Text, User.Identity.GetUserId(), model.ChosenTourId);
+                return RedirectToRoute(new { controller = "Tours", action = "Details", itemId = model.ChosenTourId });
+            }
+            catch (Exception e)
+            {
+                return RedirectToRoute(new { controller = "Tours", action = "Details", itemId = model.ChosenTourId});
+            }
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public ActionResult DeleteComment(long itemId, long tourId)
+        {
+            try
+            {
+                CommentsDBHelper.Deactivate(itemId);
+                return RedirectToRoute(new { controller = "Tours", action = "Details", itemId = tourId });
+            }
+            catch (Exception e)
+            {
+                return RedirectToRoute(new { controller = "Tours", action = "Index" });
+            }
         }
 
         private void AddErrors(IdentityResult result)
