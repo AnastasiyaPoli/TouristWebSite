@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity;
 using System;
 using System.IO;
+using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using TouristWebSite.Helpers;
@@ -187,7 +188,7 @@ namespace TouristWebSite.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public ActionResult Photos(long itemId)
+        public ActionResult Photos(long itemId, string message = "")
         {
             try
             {
@@ -195,8 +196,17 @@ namespace TouristWebSite.Controllers
 
                 ImageViewModel model = new ImageViewModel()
                 {
-                    Tour = chosenTour
+                    Tour = chosenTour,
+                    TourId = chosenTour.Id
                 };
+
+                if (message != string.Empty)
+                {
+                    string[] Errors = new string[1];
+                    Errors[0] = message;
+                    var rez = new IdentityResult(Errors);
+                    AddErrors(rez);
+                }
 
                 return View(model);
             }
@@ -234,6 +244,44 @@ namespace TouristWebSite.Controllers
             catch (Exception e)
             {
                 return RedirectToRoute(new { controller = "Tours", action = "Index" });
+            }
+        }
+
+        public ActionResult AddPhoto(ImageViewModel img, HttpPostedFileBase file)
+        {
+            if (ModelState.IsValid)
+            {
+                if (file != null)
+                {
+                    var tour = ToursDBHelper.GetById(img.TourId);
+
+                    if (ToursDBHelper.GetById(img.TourId).NumberOfPhotos == 0)
+                    {
+                        file.SaveAs(HttpContext.Server.MapPath("~/Content/Img/Tours/" + img.TourId + ".jpg"));
+                        img.ImagePath = file.FileName;
+                    }
+                    else
+                    {
+                        file.SaveAs(HttpContext.Server.MapPath("~/Content/Img/Tours/" + img.TourId + "_" + (tour.NumberOfPhotos) + ".jpg"));
+                        img.ImagePath = file.FileName;
+                    }
+                }
+                else
+                {
+                    return RedirectToRoute(new { controller = "Tours", action = "Photos", itemId = img.TourId, message = "Додайте фото для завантаження." });
+                }
+                ToursDBHelper.AddNewPhoto(img.TourId);
+
+                return RedirectToRoute(new { controller = "Tours", action = "Index", message = "Зміни було успішно внесено." });
+            }
+            return View(img);
+        }
+
+        private void AddErrors(IdentityResult result)
+        {
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error);
             }
         }
     }

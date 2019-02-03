@@ -29,6 +29,7 @@ namespace TouristWebSite.Models
 
         [Display(Name = "Опис туру: ")]
         [Required(ErrorMessage = "Необхідно заповнити поле \"Опис туру\".")]
+        [MinLength(100, ErrorMessage = "Довжина опису туру повинна бути не менше 100 символів.")]
         public string Description { get; set; }
 
         [Display(Name = "Дата початку туру: ")]
@@ -53,6 +54,9 @@ namespace TouristWebSite.Models
     public partial class ImageViewModel
     {
         public Tour Tour { get; set; }
+        public long TourId { get; set; }
+
+        [Display(Name = "Оберіть фото: ")]
         public string ImagePath { get; set; }
     }
 }

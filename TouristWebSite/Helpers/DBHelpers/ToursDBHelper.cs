@@ -82,5 +82,14 @@ namespace DAL.DBHelpers
                 context.SaveChanges();
             }
         }
+
+        public static void AddNewPhoto(long id)
+        {
+            using (context = new ApplicationDbContext())
+            {
+                context.Tours.FirstOrDefault(x => x.Id == id).NumberOfPhotos = context.Tours.FirstOrDefault(x => x.Id == id).NumberOfPhotos + 1;
+                context.SaveChanges();
+            }
+        }
     }
 }
