@@ -307,6 +307,7 @@
     <Content Include="Views\Helper\AdditionalInfo.cshtml" />
     <Content Include="Views\Tours\Add.cshtml" />
     <Content Include="Views\Tours\Update.cshtml" />
+    <Content Include="Views\Tours\Photos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

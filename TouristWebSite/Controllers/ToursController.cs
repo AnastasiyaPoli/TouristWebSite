@@ -1,6 +1,8 @@
 ﻿using DAL.DBHelpers;
 using Microsoft.AspNet.Identity;
 using System;
+using System.IO;
+using System.Web.Hosting;
 using System.Web.Mvc;
 using TouristWebSite.Helpers;
 using TouristWebSite.Models;
@@ -177,6 +179,57 @@ namespace TouristWebSite.Controllers
                 string filename = PDFGeneratorHelper.GeneratePDF(ToursDBHelper.GetById(model.TourId), model.PeopleCount, model.Comment, newId);
                 EmailSenderHelper.SendEmail(UsersDBHelper.GetById(User.Identity.GetUserId()).Email, "Підтвердження бронювання туру.", "Тур було успішно заброньовано, деталі можна переглянути у прикріпленому документі.", filename);
                 return RedirectToAction("Index", new { Message = "Тур було успішно заброньовано. Документ про бронювання відправлено на електронну пошту." });
+            }
+            catch (Exception e)
+            {
+                return RedirectToRoute(new { controller = "Tours", action = "Index" });
+            }
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult Photos(long itemId)
+        {
+            try
+            {
+                var chosenTour = ToursDBHelper.GetById(itemId);
+
+                ImageViewModel model = new ImageViewModel()
+                {
+                    Tour = chosenTour
+                };
+
+                return View(model);
+            }
+            catch (Exception e)
+            {
+                return RedirectToRoute(new { controller = "Tours", action = "Index" });
+            }
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult DeleteAll(long itemId)
+        {
+            try
+            {
+                var tour = ToursDBHelper.GetById(itemId);
+
+                var path = HostingEnvironment.ApplicationPhysicalPath + "\\Content\\Img\\Tours\\" + itemId + ".jpg";
+                if (System.IO.File.Exists(path))
+                {
+                    System.IO.File.Delete(path);
+                }
+
+                for (int i = 1; i <= tour.NumberOfPhotos; i++)
+                {
+                    path = HostingEnvironment.ApplicationPhysicalPath + "\\Content\\Img\\Tours\\" + itemId + "_" + i + ".jpg";
+                    if (System.IO.File.Exists(path))
+                    {
+                        System.IO.File.Delete(path);
+                    }
+                }
+
+                ToursDBHelper.DeleteAllPhotos(itemId);
+                return RedirectToRoute(new { controller = "Tours", action = "Index", message = "Зміни було успішно внесено." });
             }
             catch (Exception e)
             {

@@ -50,9 +50,9 @@ namespace TouristWebSite.Models
         public string RouteLink { get; set; }
     }
 
-    public partial class Image
+    public partial class ImageViewModel
     {
-        public int ID { get; set; }
+        public Tour Tour { get; set; }
         public string ImagePath { get; set; }
     }
 }

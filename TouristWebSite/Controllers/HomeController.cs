@@ -15,7 +15,7 @@ namespace TouristWebSite.Controllers
             return View();
         }
 
-        public ActionResult Create(TouristWebSite.Models.Image img, HttpPostedFileBase file)
+        public ActionResult Create(TouristWebSite.Models.ImageViewModel img, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {

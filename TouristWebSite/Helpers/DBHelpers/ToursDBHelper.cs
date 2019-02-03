@@ -73,5 +73,14 @@ namespace DAL.DBHelpers
                 context.SaveChanges();
             }
         }
+
+        public static void DeleteAllPhotos(long id)
+        {
+            using (context = new ApplicationDbContext())
+            {
+                context.Tours.FirstOrDefault(x => x.Id == id).NumberOfPhotos = 0;
+                context.SaveChanges();
+            }
+        }
     }
 }

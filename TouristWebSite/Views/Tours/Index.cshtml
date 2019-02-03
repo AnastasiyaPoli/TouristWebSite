@@ -15,8 +15,12 @@
                 <a href="@Url.Action("Update", "Tours", new {itemId = item.Id})">
                     <i class="fas fa-edit fa-lg" style="float:right; margin-right: 5px"></i>
                 </a>
+                <a href="@Url.Action("Photos", "Tours", new {itemId = item.Id})">
+                    <i class="fas fa-images fa-lg" style="float:right; margin-right: 5px"></i>
+                </a>
             }
         </div>
+        <br/>
         <div class="flex-container">
             <div>
                 <h3><a href="@Url.Action("Details", "Tours", new {itemId = item.Id})"><strong>@item.Name (@item.Place)</strong></a></h3>
@@ -51,28 +55,3 @@
 {
     <a class="btn btn-default no-underline" href="@Url.Action("Add", "Tours")"> <span> <i class="fas fa-plus"></i> Додати новий тур </span> </a>
 }
-
-
-
-
-
-
-
-@*<h2>Create</h2>
-    @using (Html.BeginForm("Create", "Home", null, FormMethod.Post,
-        new { enctype = "multipart/form-data" }))
-    {
-        @Html.AntiForgeryToken()
-        @Html.ValidationSummary(true)
-        <fieldset>
-            <legend>Image</legend>
-            <div class="editor-label">
-                @Html.LabelFor(model => model.ImagePath)
-            </div>
-            <div class="editor-field">
-                <input id="ImagePath" title="Upload a product image"
-                       type="file" name="file" />
-            </div>
-            <p><input type="submit" value="Create" /></p>
-        </fieldset>
-    }*@
