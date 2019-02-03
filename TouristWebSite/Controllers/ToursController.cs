@@ -57,6 +57,90 @@ namespace TouristWebSite.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public ActionResult Add()
+        {
+            try
+            {
+                return View();
+            }
+            catch (Exception e)
+            {
+                return RedirectToRoute(new { controller = "Tours", action = "Index" });
+            }
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public ActionResult Add(TourViewModel model)
+        {
+            try
+            {
+                if (model.DateStart > model.DateEnd)
+                {
+                    ModelState.AddModelError("DateEnd", "Дата початку туру не може бути меншою, ніж дата закінчення туру.");
+                    return View(model);
+                }
+
+                ToursDBHelper.Add(model);
+                return RedirectToRoute(new { controller = "Tours", action = "Index" });
+            }
+            catch (Exception e)
+            {
+                return RedirectToRoute(new { controller = "Tours", action = "Index" });
+            }
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public ActionResult Update(long itemId)
+        {
+            try
+            {
+                var tour = ToursDBHelper.GetById(itemId);
+
+                TourViewModel model = new TourViewModel()
+                {
+                    Id = itemId,
+                    Name = tour.Name,
+                    Place = tour.Place,
+                    Description = tour.Description,
+                    Price = tour.Price,
+                    DateStart = tour.DateStart,
+                    DateEnd = tour.DateEnd,
+                    RouteLink = tour.RouteLink
+                };
+
+                return View(model);
+            }
+            catch (Exception e)
+            {
+                return RedirectToRoute(new { controller = "Tours", action = "Index" });
+            }
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public ActionResult Update(TourViewModel model)
+        {
+            try
+            {
+                if (model.DateStart > model.DateEnd)
+                {
+                    ModelState.AddModelError("DateEnd", "Дата початку туру не може бути меншою, ніж дата закінчення туру.");
+                    return View(model);
+                }
+
+                ToursDBHelper.Update(model);
+                return RedirectToRoute(new { controller = "Tours", action = "Index" });
+            }
+            catch (Exception e)
+            {
+                return RedirectToRoute(new { controller = "Tours", action = "Index" });
+            }
+        }
+
         public ActionResult TourBooking(long itemId)
         {
             try

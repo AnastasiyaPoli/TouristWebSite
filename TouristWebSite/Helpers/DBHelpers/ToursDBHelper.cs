@@ -33,5 +33,45 @@ namespace DAL.DBHelpers
                 context.SaveChanges();
             }
         }
+
+        public static void Add(TourViewModel tour)
+        {
+            using (context = new ApplicationDbContext())
+            {
+                var newTour = new Tour()
+                {
+                    Name = tour.Name,
+                    Place = tour.Place,
+                    Description = tour.Description,
+                    DateStart = tour.DateStart,
+                    DateEnd = tour.DateEnd,
+                    Price = tour.Price,
+                    RouteLink = tour.RouteLink,
+                    IsActive = true,
+                    NumberOfPhotos = 0
+                };
+
+                context.Tours.Add(newTour);
+                context.SaveChanges();
+            }
+        }
+
+        public static void Update(TourViewModel tour)
+        {
+            using (context = new ApplicationDbContext())
+            {
+                var tourForUpdating = context.Tours.FirstOrDefault(x => x.Id == tour.Id);
+
+                tourForUpdating.Name = tour.Name;
+                tourForUpdating.Place = tour.Place;
+                tourForUpdating.Description = tour.Description;
+                tourForUpdating.DateStart = tour.DateStart;
+                tourForUpdating.DateEnd = tour.DateEnd;
+                tourForUpdating.Price = tour.Price;
+                tourForUpdating.RouteLink = tour.RouteLink;
+
+                context.SaveChanges();
+            }
+        }
     }
 }

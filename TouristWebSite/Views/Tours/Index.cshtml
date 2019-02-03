@@ -12,9 +12,9 @@
                 <a href="@Url.Action("Delete", "Tours", new {itemId = item.Id})">
                     <i class="fas fa-times fa-lg" style="float:right;"></i>
                 </a>
-                @*<a href="@Url.Action("EditNew", "News", new {itemId = item.Id})">
-                        <i class="fas fa-edit fa-lg" style="float:right; margin-right: 5px"></i>
-                    </a>*@
+                <a href="@Url.Action("Update", "Tours", new {itemId = item.Id})">
+                    <i class="fas fa-edit fa-lg" style="float:right; margin-right: 5px"></i>
+                </a>
             }
         </div>
         <div class="flex-container">
@@ -22,18 +22,34 @@
                 <h3><a href="@Url.Action("Details", "Tours", new {itemId = item.Id})"><strong>@item.Name (@item.Place)</strong></a></h3>
                 <h4><strong>Дати: </strong> @item.DateStart.ToShortDateString() - @item.DateEnd.ToShortDateString()</h4>
                 <h4><strong>Ціна: </strong> @item.Price грн.</h4>
-                <h4>@string.Concat(item.Description.Substring(0, 200), "...")</h4>
+
+                @if (item.Description.Length > 200)
+                {
+                    <h4>@string.Concat(item.Description.Substring(0, 200), "...")</h4>
+                }
+                else
+                {
+                    <h4>@item.Description</h4>
+                }
             </div>
-            <div>
-                <img class="img-style" src="~/Content/Img/Tours/@(item.Id).jpg" />
-            </div>
+            @if (item.NumberOfPhotos > 0)
+            {
+                <div>
+                    <img class="img-style" src="~/Content/Img/Tours/@(item.Id).jpg" />
+                </div>
+            }
         </div>
 
         @if (User.Identity.IsAuthenticated)
         {
-            <a class="btn btn-default no-underline" href="@Url.Action("TourBooking", "Tours", new {itemId = item.Id})"> <span> <i class="fas fa-check"></i> Забронювати тур </span> </a>
+            <a style="margin-top: 5px" class="btn btn-default no-underline" href="@Url.Action("TourBooking", "Tours", new {itemId = item.Id})"> <span> <i class="fas fa-check"></i> Забронювати тур </span> </a>
         }
     </div>
+}
+
+@if (User.IsInRole("Admin"))
+{
+    <a class="btn btn-default no-underline" href="@Url.Action("Add", "Tours")"> <span> <i class="fas fa-plus"></i> Додати новий тур </span> </a>
 }
 
 

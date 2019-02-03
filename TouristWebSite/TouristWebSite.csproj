@@ -305,6 +305,8 @@
     <Content Include="Views\Tours\TourBooking.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Helper\AdditionalInfo.cshtml" />
+    <Content Include="Views\Tours\Add.cshtml" />
+    <Content Include="Views\Tours\Update.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
