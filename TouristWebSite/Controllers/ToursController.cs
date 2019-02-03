@@ -1,7 +1,6 @@
 ﻿using DAL.DBHelpers;
 using Microsoft.AspNet.Identity;
 using System;
-using System.IO;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
@@ -52,7 +51,7 @@ namespace TouristWebSite.Controllers
             try
             {
                 ToursDBHelper.Deactivate(itemId);
-                return RedirectToRoute(new { controller = "Tours", action = "Index" });
+                return RedirectToRoute(new { controller = "Tours", action = "Index", message = "Зміни було успішно внесено." });
             }
             catch (Exception e)
             {
@@ -136,7 +135,7 @@ namespace TouristWebSite.Controllers
                 }
 
                 ToursDBHelper.Update(model);
-                return RedirectToRoute(new { controller = "Tours", action = "Index" });
+                return RedirectToRoute(new { controller = "Tours", action = "Index", message = "Зміни було успішно внесено." });
             }
             catch (Exception e)
             {
@@ -188,7 +187,7 @@ namespace TouristWebSite.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public ActionResult Photos(long itemId, string message = "")
+        public ActionResult Photos(long itemId, string message = "", string successMessage = "")
         {
             try
             {
@@ -206,6 +205,11 @@ namespace TouristWebSite.Controllers
                     Errors[0] = message;
                     var rez = new IdentityResult(Errors);
                     AddErrors(rez);
+                }
+
+                if (successMessage != String.Empty)
+                {
+                    ViewBag.StatusMessage = successMessage;
                 }
 
                 return View(model);
@@ -239,7 +243,7 @@ namespace TouristWebSite.Controllers
                 }
 
                 ToursDBHelper.DeleteAllPhotos(itemId);
-                return RedirectToRoute(new { controller = "Tours", action = "Index", message = "Зміни було успішно внесено." });
+                return RedirectToRoute(new { controller = "Tours", action = "Photos", itemId = itemId, successMessage = "Зміни було успішно внесено." });
             }
             catch (Exception e)
             {
@@ -270,9 +274,9 @@ namespace TouristWebSite.Controllers
                 {
                     return RedirectToRoute(new { controller = "Tours", action = "Photos", itemId = img.TourId, message = "Додайте фото для завантаження." });
                 }
-                ToursDBHelper.AddNewPhoto(img.TourId);
 
-                return RedirectToRoute(new { controller = "Tours", action = "Index", message = "Зміни було успішно внесено." });
+                ToursDBHelper.AddNewPhoto(img.TourId);
+                return RedirectToRoute(new { controller = "Tours", action = "Photos", itemId = img.TourId, successMessage = "Зміни було успішно внесено." });
             }
             return View(img);
         }

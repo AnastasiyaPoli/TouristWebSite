@@ -2,6 +2,7 @@
 @model TouristWebSite.Models.ImageViewModel
 
 <h2>Фотографії туру @Model.Tour.Name (@Model.Tour.Place)</h2>
+
 <p class="text-success">@ViewBag.StatusMessage</p>
 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 

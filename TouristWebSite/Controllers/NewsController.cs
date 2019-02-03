@@ -10,13 +10,15 @@ namespace TouristWebSite.Controllers
     public class NewsController : Controller
     {
         [AllowAnonymous]
-        public ActionResult Index()
+        public ActionResult Index(string message = "")
         {
             var model = new ActiveNewsViewModel()
             {
                 ActiveNews = NewsDBHelper.GetActive(),
                 ActiveDiscounts = DiscountsDBHelper.GetActive()
             };
+
+            ViewBag.StatusMessage = message;
 
             return View(model);
         }
@@ -27,7 +29,7 @@ namespace TouristWebSite.Controllers
             try
             {
                 NewsDBHelper.Deactivate(itemId);
-                return RedirectToRoute(new { controller = "News", action = "Index" });
+                return RedirectToRoute(new { controller = "News", action = "Index", message = "Зміни було успішно внесено." });
             }
             catch (Exception e)
             {
@@ -116,7 +118,7 @@ namespace TouristWebSite.Controllers
                 }
 
                 NewsDBHelper.Edit(model);
-                return RedirectToRoute(new { controller = "News", action = "Index" });
+                return RedirectToRoute(new { controller = "News", action = "Index", message = "Зміни було успішно внесено." });
             }
             catch (Exception e)
             {
@@ -219,7 +221,7 @@ namespace TouristWebSite.Controllers
                 }
 
                 DiscountsDBHelper.Edit(model);
-                return RedirectToRoute(new { controller = "News", action = "Index" });
+                return RedirectToRoute(new { controller = "News", action = "Index", message = "Зміни було успішно внесено." });
             }
             catch (Exception e)
             {
