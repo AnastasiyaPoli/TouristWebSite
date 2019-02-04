@@ -41,6 +41,11 @@
         <dd>
             @Html.ActionLink("Переглянути статистику", "Statistics")
         </dd>
+
+        <dt>Запитання адміністратору:</dt>
+        <dd>
+            @Html.ActionLink("Переглянути та запитати", "Questions")
+        </dd>
     </dl>
 
     <br />
@@ -53,6 +58,11 @@
             <dt>Список користувачів:</dt>
             <dd>
                 @Html.ActionLink("Переглянути та редагувати", "Index", "Users" )
+            </dd>
+            
+            <dt>Запитання користувачів:</dt>
+            <dd>
+                @Html.ActionLink("Переглянути та відповісти", "AllQuestions")
             </dd>
         </dl>
     }

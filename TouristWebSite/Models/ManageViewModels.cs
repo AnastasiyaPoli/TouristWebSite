@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using DAL.Models;
+using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -13,6 +14,19 @@ namespace TouristWebSite.Models
         public string PhoneNumber { get; set; }
         public bool TwoFactor { get; set; }
         public bool BrowserRemembered { get; set; }
+    }
+
+    public class QuestionsViewModel
+    {
+        public List<Question> Questions { get; set; }
+
+        [Display(Name = "Оберіть тему запитання: ")]
+        [Required(ErrorMessage = "Необхідно заповнити поле \"Тема питання\".")]
+        public string Theme { get; set; }
+
+        [Display(Name = "Задайте питання: ")]
+        [Required(ErrorMessage = "Необхідно заповнити поле \"Питання\".")]
+        public string Text { get; set; }
     }
 
     public class ManageLoginsViewModel

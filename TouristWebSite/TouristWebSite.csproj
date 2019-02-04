@@ -207,6 +207,7 @@
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Helpers\DBHelpers\QuestionsDBHelper.cs" />
     <Compile Include="Helpers\DBHelpers\DiscountsDBHelper.cs" />
     <Compile Include="Helpers\DBHelpers\BookedToursDBHelper.cs" />
     <Compile Include="Helpers\DBHelpers\CommentsDBHelper.cs" />
@@ -309,6 +310,8 @@
     <Content Include="Views\Tours\Add.cshtml" />
     <Content Include="Views\Tours\Update.cshtml" />
     <Content Include="Views\Tours\Photos.cshtml" />
+    <Content Include="Views\Manage\Questions.cshtml" />
+    <Content Include="Views\Manage\AllQuestions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

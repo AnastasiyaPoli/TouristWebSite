@@ -21,5 +21,6 @@ namespace DAL
         public DbSet<Tour> Tours { get; set; }
         public DbSet<BookedTour> BookedTours { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Question> Questions { get; set; }
     }
 }

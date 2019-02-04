@@ -1,0 +1,25 @@
+﻿@model TouristWebSite.Models.QuestionsViewModel
+<h2>Запитання користувачів сайту</h2>
+<h4>Переглядайте запитання користувачів та відповідайте на них.</h4>
+<hr />
+
+@foreach (var item in Model.Questions)
+{
+    <div class="jumbotron transparent transp-container">
+        @if ((item.User.Name != null && item.User.Name != string.Empty) || (item.User.Surname != null && item.User.Surname != string.Empty))
+        {
+            <h3>@item.User.Name @item.User.Surname</h3>
+        }
+        else
+        {
+            <h3>Анонім</h3>
+        }
+        <h4><strong>Тема: </strong>@item.Theme</h4>
+        <h4><strong>Запитання: </strong>@item.Text</h4>
+        <h4><strong>Відповідь: </strong>@item.Answer</h4>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

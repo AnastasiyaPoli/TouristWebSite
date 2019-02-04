@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using DAL.DBHelpers;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using DAL.DBHelpers;
 using TouristWebSite.Models;
-using System;
 
 namespace TouristWebSite.Controllers
 {
@@ -158,6 +158,57 @@ namespace TouristWebSite.Controllers
         public ActionResult Statistics()
         {
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult Questions()
+        {
+            try
+            {
+                QuestionsViewModel model = new QuestionsViewModel()
+                {
+                    Questions = QuestionsDBHelper.GetForUser(User.Identity.GetUserId())
+                };
+
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                return RedirectToRoute(new { controller = "Manage", action = "Index" });
+            }
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public ActionResult AllQuestions()
+        {
+            try
+            {
+                QuestionsViewModel model = new QuestionsViewModel()
+                {
+                    Questions = QuestionsDBHelper.GetAll()
+                };
+
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                return RedirectToRoute(new { controller = "Manage", action = "Index" });
+            }
+        }
+
+        [HttpPost]
+        public ActionResult AddQuestions(QuestionsViewModel model)
+        {
+            try
+            {
+                QuestionsDBHelper.Add(model.Text, model.Theme, User.Identity.GetUserId());
+                return RedirectToRoute(new { controller = "Manage", action = "Questions" });
+            }
+            catch (Exception ex)
+            {
+                return RedirectToRoute(new { controller = "Manage", action = "Index" });
+            }
         }
 
         public ActionResult UserInfo(string itemId)

@@ -1,0 +1,44 @@
+﻿@model TouristWebSite.Models.QuestionsViewModel
+<h2>Запитання до адміністратрів сайту</h2>
+<h4>Переглядайте ваші запитання до адміністраторів сайту та відповіді на них.</h4>
+<hr />
+
+@foreach (var item in Model.Questions)
+{
+    <div class="jumbotron transparent transp-container">
+        <h4><strong>Тема: </strong>@item.Theme</h4>
+        <h4><strong>Запитання: </strong>@item.Text</h4>
+        <h4><strong>Відповідь: </strong>@item.Answer</h4>
+    </div>
+}
+
+<br />
+
+<h2>Додайте запитання</h2>
+
+@using (Html.BeginForm("AddQuestions", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.Theme, new { @class = "col-md-2 control-label" })
+        <div class="col-md-9">
+            @Html.DropDownListFor(model => model.Theme, new SelectList(new string[] { "Загальне", "Замовлення турів", "Акції", "Новини" }), new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Theme, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Text, new { @class = "col-md-2 control-label" })
+        <div class="col-md-9">
+            @Html.TextAreaFor(m => m.Text, new { @class = "form-control", @style="min-height: 150px" })
+            @Html.ValidationMessageFor(m => m.Text, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-9">
+            <button type="submit" class="btn btn-success"> <i class="fas fa-plus"></i> Додати </button>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

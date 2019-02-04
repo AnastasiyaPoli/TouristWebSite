@@ -143,7 +143,16 @@
     <Compile Include="Migrations\201902032106560_21.Designer.cs">
       <DependentUpon>201902032106560_21.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902042055305_22.cs" />
+    <Compile Include="Migrations\201902042055305_22.Designer.cs">
+      <DependentUpon>201902042055305_22.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902042114318_23.cs" />
+    <Compile Include="Migrations\201902042114318_23.Designer.cs">
+      <DependentUpon>201902042114318_23.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Question.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Discount.cs" />
     <Compile Include="Models\BookedTour.cs" />
@@ -222,6 +231,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902032106560_21.resx">
       <DependentUpon>201902032106560_21.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902042055305_22.resx">
+      <DependentUpon>201902042055305_22.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902042114318_23.resx">
+      <DependentUpon>201902042114318_23.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
