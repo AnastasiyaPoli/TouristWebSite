@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using TouristWebSite.Models;
 
 namespace DAL.DBHelpers
 {
@@ -27,7 +26,7 @@ namespace DAL.DBHelpers
             }
         }
 
-        public static void Add(string text, string userId, long tourId)
+        public static void Add(string text, string userId, long tourId, string mark)
         {
             using (context = new ApplicationDbContext())
             {
@@ -36,6 +35,7 @@ namespace DAL.DBHelpers
                     ApplicationUserId = userId,
                     TourId = tourId,
                     Text = text,
+                    Mark = mark,
                     IsActive = true
                 };
 

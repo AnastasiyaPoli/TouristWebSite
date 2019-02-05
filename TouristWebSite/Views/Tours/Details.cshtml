@@ -74,6 +74,7 @@
                     <i class="fas fa-times fa-lg" style="float:right;"></i>
                 </a>
             }
+
         @if ((item.User.Name != null && item.User.Name != string.Empty) || (item.User.Surname != null && item.User.Surname != string.Empty))
         {
             <h3>@item.User.Name @item.User.Surname</h3>
@@ -82,7 +83,8 @@
         {
             <h3>Анонім</h3>
         }
-
+        
+        <h4><strong>Оцінка: </strong> @item.Mark</h4>
         <h4>@item.Text</h4>
 
         @if (item.WasBooked)
@@ -107,6 +109,14 @@
     using (Html.BeginForm("AddComment", "Tours", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {
         @Html.HiddenFor(m => m.ChosenTourId)
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Mark, new { @class = "col-md-2 control-label" })
+            <div class="col-md-9">
+                @Html.DropDownListFor(model => model.Mark, new SelectList(new string[] { "Не обрана", "Ідеально", "Добре", "Задовільно", "Погано" }), new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Mark, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
         <div class="form-group">
             @Html.LabelFor(m => m.Text, new { @class = "col-md-2 control-label" })

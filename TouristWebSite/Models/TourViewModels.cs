@@ -16,6 +16,11 @@ namespace TouristWebSite.Models
         public long ChosenTourId { get; set; }
         public List<CommentViewModel> Comments { get; set; }
 
+        [Display(Name = "Оберіть оцінку: ")]
+        [Required(ErrorMessage = "Необхідно заповнити поле \"Оцінка\".")]
+        public string Mark { get; set; }
+
+
         [Display(Name = "Додайте коментар: ")]
         [Required(ErrorMessage = "Необхідно заповнити поле \"Коментар\".")]
         public string Text { get; set; }
@@ -72,8 +77,11 @@ namespace TouristWebSite.Models
 
         [Display(Name = "Додайте коментар: ")]
         [Required(ErrorMessage = "Необхідно заповнити поле \"Коментар\".")]
-        [MinLength(1, ErrorMessage = "Необхідно заповнити поле \"Коментар\".")]
         public string Text { get; set; }
+
+        [Display(Name = "Оберіть оцінку: ")]
+        [Required(ErrorMessage = "Необхідно заповнити поле \"Оцінка\".")]
+        public string Mark { get; set; }
 
         public bool WasBooked { get; set; }
 

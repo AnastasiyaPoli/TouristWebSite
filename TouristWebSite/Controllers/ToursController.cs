@@ -41,6 +41,7 @@ namespace TouristWebSite.Controllers
                         Id = item.Id,
                         User = item.User,
                         Text = item.Text,
+                        Mark = item.Mark,
                         WasBooked = BookedToursDBHelper.Check(item.User.Id, itemId)
                     });
                 }
@@ -301,7 +302,7 @@ namespace TouristWebSite.Controllers
         {
             try
             {
-                CommentsDBHelper.Add(model.Text, User.Identity.GetUserId(), model.ChosenTourId);
+                CommentsDBHelper.Add(model.Text, User.Identity.GetUserId(), model.ChosenTourId, model.Mark);
                 return RedirectToRoute(new { controller = "Tours", action = "Details", itemId = model.ChosenTourId });
             }
             catch (Exception e)
