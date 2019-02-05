@@ -20,12 +20,25 @@ namespace TouristWebSite.Models
     {
         public List<Question> Questions { get; set; }
 
-        [Display(Name = "Оберіть тему запитання: ")]
+        [Display(Name = "Оберіть тему питання: ")]
         [Required(ErrorMessage = "Необхідно заповнити поле \"Тема питання\".")]
         public string Theme { get; set; }
 
         [Display(Name = "Задайте питання: ")]
         [Required(ErrorMessage = "Необхідно заповнити поле \"Питання\".")]
+        public string Text { get; set; }
+    }
+
+    public class QuestionViewModel
+    {
+        public Question Question { get; set; }
+
+        public long QuestionId { get; set; }
+
+        public string UserId { get; set; }
+
+        [Display(Name = "Відповідь на питання: ")]
+        [Required(ErrorMessage = "Необхідно заповнити поле \"Відповідь на запитання\".")]
         public string Text { get; set; }
     }
 

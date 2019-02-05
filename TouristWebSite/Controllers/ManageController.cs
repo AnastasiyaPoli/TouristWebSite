@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using TouristWebSite.Helpers;
 using TouristWebSite.Models;
 
 namespace TouristWebSite.Controllers
@@ -259,6 +260,44 @@ namespace TouristWebSite.Controllers
                 return RedirectToAction("Index", new { Message = ManageMessageId.Changes });
             }
             catch (Exception e)
+            {
+                return RedirectToRoute(new { controller = "Manage", action = "Index" });
+            }
+        }
+
+        [HttpGet]
+        public ActionResult Answer(long questionId)
+        {
+            try
+            {
+                var question = QuestionsDBHelper.GetById(questionId);
+
+                QuestionViewModel model = new QuestionViewModel()
+                {
+                    Question = question,
+                    QuestionId = questionId,
+                    UserId = question.User.Id,
+                    Text = question.Answer
+                };
+
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                return RedirectToRoute(new { controller = "Manage", action = "Index" });
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Answer(QuestionViewModel Question)
+        {
+            try
+            {
+                QuestionsDBHelper.Answer(Question.Text, Question.QuestionId);
+                EmailSenderHelper.SendEmail(UsersDBHelper.GetById(Question.UserId).Email, "Відповідь на запитання", "На Ваше запитання на сайті туристичної фірми \"Формула відпочинку \" надано відповідь. Ви можете переглянути її в особистому кабінеті.");
+                return RedirectToRoute(new { controller = "Manage", action = "AllQuestions" });
+            }
+            catch (Exception ex)
             {
                 return RedirectToRoute(new { controller = "Manage", action = "Index" });
             }

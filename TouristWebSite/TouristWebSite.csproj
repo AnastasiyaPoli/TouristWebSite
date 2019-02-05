@@ -312,6 +312,7 @@
     <Content Include="Views\Tours\Photos.cshtml" />
     <Content Include="Views\Manage\Questions.cshtml" />
     <Content Include="Views\Manage\AllQuestions.cshtml" />
+    <Content Include="Views\Manage\Answer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

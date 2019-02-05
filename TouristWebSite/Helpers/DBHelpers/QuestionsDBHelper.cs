@@ -25,6 +25,14 @@ namespace DAL.DBHelpers
             }
         }
 
+        public static Question GetById(long questionId)
+        {
+            using (context = new ApplicationDbContext())
+            {
+                return context.Questions.Include(y => y.User).FirstOrDefault(x => x.Id == questionId);
+            }
+        }
+
         public static void Add(string text, string theme, string userId)
         {
             using (context = new ApplicationDbContext())
@@ -38,6 +46,15 @@ namespace DAL.DBHelpers
                 };
 
                 context.Questions.Add(newQuestion);
+                context.SaveChanges();
+            }
+        }
+
+        public static void Answer(string text, long questionId)
+        {
+            using (context = new ApplicationDbContext())
+            {
+                context.Questions.FirstOrDefault(x => x.Id == questionId).Answer = text;
                 context.SaveChanges();
             }
         }

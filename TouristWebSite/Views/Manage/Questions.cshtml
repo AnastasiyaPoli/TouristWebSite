@@ -28,7 +28,7 @@
     <div class="form-group">
         @Html.LabelFor(m => m.Text, new { @class = "col-md-2 control-label" })
         <div class="col-md-9">
-            @Html.TextAreaFor(m => m.Text, new { @class = "form-control", @style="min-height: 150px" })
+            @Html.TextAreaFor(m => m.Text, new { @class = "form-control", @style = "min-height: 150px" })
             @Html.ValidationMessageFor(m => m.Text, "", new { @class = "text-danger" })
         </div>
     </div>
