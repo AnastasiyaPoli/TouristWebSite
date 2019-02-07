@@ -8,6 +8,7 @@ namespace TouristWebSite.Models
     public class ActiveToursViewModel
     {
         public List<Tour> ActiveTours { get; set; }
+        public List<Favourite> Favourites { get; set; }
     }
 
     public class ChosenTourViewModel

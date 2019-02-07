@@ -21,6 +21,7 @@ namespace TouristWebSite.Controllers
             var model = new ActiveToursViewModel()
             {
                 ActiveTours = ToursDBHelper.GetActive(),
+                Favourites = FavouritesDBHelper.GetForUser(User.Identity.GetUserId())
             };
 
             return View(model);
@@ -325,6 +326,52 @@ namespace TouristWebSite.Controllers
                 return RedirectToRoute(new { controller = "Tours", action = "Index" });
             }
         }
+
+        [HttpGet]
+        public ActionResult Favourite(long itemId)
+        {
+            try
+            {
+                FavouritesDBHelper.Add(User.Identity.GetUserId(), itemId);
+
+                return RedirectToRoute(new { controller = "Tours", action = "Index", message = "Тур було успішно додано до списку улюблених." });
+            }
+            catch (Exception e)
+            {
+                return RedirectToRoute(new { controller = "Tours", action = "Index" });
+            }
+        }
+
+        [HttpGet]
+        public ActionResult RemoveFavourite(long itemId)
+        {
+            try
+            {
+                FavouritesDBHelper.Delete(itemId);
+
+                return RedirectToRoute(new { controller = "Tours", action = "Index", message = "Тур було успішно видалено зі списку улюблених." });
+            }
+            catch (Exception e)
+            {
+                return RedirectToRoute(new { controller = "Tours", action = "Index" });
+            }
+        }
+
+        [HttpGet]
+        public ActionResult RemoveFavouriteCab(long itemId)
+        {
+            try
+            {
+                FavouritesDBHelper.Delete(itemId);
+
+                return RedirectToRoute(new { controller = "Manage", action = "FavouriteTours", message = "Тур було успішно видалено зі списку улюблених." });
+            }
+            catch (Exception e)
+            {
+                return RedirectToRoute(new { controller = "Tours", action = "Index" });
+            }
+        }
+
 
         private void AddErrors(IdentityResult result)
         {

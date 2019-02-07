@@ -1,0 +1,50 @@
+﻿@using Microsoft.AspNet.Identity
+@model TouristWebSite.Models.FavouritesViewModel
+
+<h2>Улюблені тури</h2>
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+<div>
+    <h4>Переглядайте та редагуйте список улюблених турів.</h4>
+    <hr />
+
+    @foreach (var item in Model.Favourites)
+    {
+        <div class="jumbotron transparent transp-container">
+            <div>
+                <a href="@Url.Action("RemoveFavouriteCab", "Tours", new {itemId = item.Id})">
+                    <i class="fas fa-times fa-lg" style="float:right;"></i>
+                </a>
+            </div>
+            <br />
+            <div class="flex-container">
+                <div>
+                    <h3><a href="@Url.Action("Details", "Tours", new {itemId = item.Id})"><strong>@item.Tour.Name (@item.Tour.Place)</strong></a></h3>
+                    <h4><strong>Дати: </strong> @item.Tour.DateStart.ToShortDateString() - @item.Tour.DateEnd.ToShortDateString()</h4>
+                    <h4><strong>Ціна: </strong> @item.Tour.Price грн.</h4>
+
+                    @if (item.Tour.Description.Length > 200)
+                    {
+                        <h4>@string.Concat(item.Tour.Description.Substring(0, 200), "...")</h4>
+                    }
+                    else
+                    {
+                        <h4>@item.Tour.Description</h4>
+                    }
+                </div>
+                @if (item.Tour.NumberOfPhotos > 0)
+                {
+                    <div>
+                        <img class="img-style" src="~/Content/Img/Tours/@(item.TourId).jpg" />
+                    </div>
+                }
+            </div>
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a style="margin-top: 5px" class="btn btn-default no-underline" href="@Url.Action("TourBooking", "Tours", new {itemId = item.TourId})"> <span> <i class="fas fa-check"></i> Забронювати тур </span> </a>
+            }
+        </div>
+    }
+
+</div>

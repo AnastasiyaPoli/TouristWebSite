@@ -155,7 +155,12 @@
     <Compile Include="Migrations\201902052139116_24.Designer.cs">
       <DependentUpon>201902052139116_24.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902072253334_25.cs" />
+    <Compile Include="Migrations\201902072253334_25.Designer.cs">
+      <DependentUpon>201902072253334_25.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Favourite.cs" />
     <Compile Include="Models\Question.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Discount.cs" />
@@ -244,6 +249,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902052139116_24.resx">
       <DependentUpon>201902052139116_24.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902072253334_25.resx">
+      <DependentUpon>201902072253334_25.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

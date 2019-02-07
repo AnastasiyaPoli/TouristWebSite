@@ -19,8 +19,21 @@
                     <i class="fas fa-images fa-lg" style="float:right; margin-right: 5px"></i>
                 </a>
             }
+            @if (Model.Favourites.Find(x => x.TourId == item.Id) == null)
+            {
+                <a href="@Url.Action("Favourite", "Tours", new {itemId = item.Id})">
+                    <i class="far fa-heart fa-lg" style="float:right; margin-right: 5px"></i>
+                </a>
+            }
+            else
+            {
+                <a href="@Url.Action("RemoveFavourite", "Tours", new {itemId = Model.Favourites.Find(x => x.TourId == item.Id).Id})">
+                    <i class="fas fa-heart fa-lg" style="float:right; margin-right: 5px"></i>
+                </a>
+            }
+           
         </div>
-        <br/>
+        <br />
         <div class="flex-container">
             <div>
                 <h3><a href="@Url.Action("Details", "Tours", new {itemId = item.Id})"><strong>@item.Name (@item.Place)</strong></a></h3>

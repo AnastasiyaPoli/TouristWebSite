@@ -42,6 +42,11 @@ namespace TouristWebSite.Models
         public string Text { get; set; }
     }
 
+    public class FavouritesViewModel
+    {
+        public List<Favourite> Favourites { get; set; }
+    }
+
     public class ManageLoginsViewModel
     {
         public IList<UserLoginInfo> CurrentLogins { get; set; }

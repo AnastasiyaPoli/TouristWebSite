@@ -161,6 +161,18 @@ namespace TouristWebSite.Controllers
             return View();
         }
 
+        public ActionResult FavouriteTours(string message = "")
+        {
+            ViewBag.StatusMessage = message;
+
+            FavouritesViewModel model = new FavouritesViewModel()
+            {
+                Favourites = FavouritesDBHelper.GetForUser(User.Identity.GetUserId())
+            };
+
+            return View(model);
+        }
+
         [HttpGet]
         public ActionResult Questions()
         {
