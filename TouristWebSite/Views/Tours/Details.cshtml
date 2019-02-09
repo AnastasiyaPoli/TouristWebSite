@@ -70,7 +70,7 @@
     <div class="jumbotron transparent transp-container">
         @if (User.IsInRole("Admin"))
             {
-                <a href="@Url.Action("DeleteComment", "Tours", new {itemId = item.Id, tourId = Model.ChosenTour.Id})">
+                <a href="@Url.Action("DeleteComment", "Tours", new {itemId = item.Id, tourId = Model.ChosenTour.Id})" title="Видалити">
                     <i class="fas fa-times fa-lg" style="float:right;"></i>
                 </a>
             }

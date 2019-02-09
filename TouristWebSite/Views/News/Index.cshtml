@@ -8,10 +8,10 @@
     <div class="jumbotron transparent transp-container">
         @if (User.IsInRole("Admin"))
         {
-            <a href="@Url.Action("DeleteNew", "News", new {itemId = item.Id})">
+            <a href="@Url.Action("DeleteNew", "News", new {itemId = item.Id})" title="Видалити">
                 <i class="fas fa-times fa-lg" style="float:right;"></i>
             </a>
-            <a href="@Url.Action("EditNew", "News", new {itemId = item.Id})">
+            <a href="@Url.Action("EditNew", "News", new {itemId = item.Id})" title="Редагувати">
                 <i class="fas fa-edit fa-lg" style="float:right; margin-right: 5px"></i>
             </a>
         }
@@ -37,7 +37,7 @@
     <div class="jumbotron transparent transp-container">
         @if (User.IsInRole("Admin"))
         {
-            <a href="@Url.Action("EditDiscount", "News", new {itemId = item.Id})">
+            <a href="@Url.Action("EditDiscount", "News", new {itemId = item.Id})" title="Редагувати">
                 <i class="fas fa-edit fa-lg" style="float:right;"></i>
             </a>
         }

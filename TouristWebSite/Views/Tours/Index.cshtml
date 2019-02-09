@@ -9,25 +9,25 @@
         <div>
             @if (User.IsInRole("Admin"))
             {
-                <a href="@Url.Action("Delete", "Tours", new {itemId = item.Id})">
+                <a href="@Url.Action("Delete", "Tours", new {itemId = item.Id})" title="Видалити">
                     <i class="fas fa-times fa-lg" style="float:right;"></i>
                 </a>
-                <a href="@Url.Action("Update", "Tours", new {itemId = item.Id})">
+                <a href="@Url.Action("Update", "Tours", new {itemId = item.Id})" title="Редагувати">
                     <i class="fas fa-edit fa-lg" style="float:right; margin-right: 5px"></i>
                 </a>
-                <a href="@Url.Action("Photos", "Tours", new {itemId = item.Id})">
+                <a href="@Url.Action("Photos", "Tours", new {itemId = item.Id})" title="Редагувати фотографії">
                     <i class="fas fa-images fa-lg" style="float:right; margin-right: 5px"></i>
                 </a>
             }
             @if (Model.Favourites.Find(x => x.TourId == item.Id) == null)
             {
-                <a href="@Url.Action("Favourite", "Tours", new {itemId = item.Id})">
+                <a href="@Url.Action("Favourite", "Tours", new {itemId = item.Id})" title="Додати у список улюблених">
                     <i class="far fa-heart fa-lg" style="float:right; margin-right: 5px"></i>
                 </a>
             }
             else
             {
-                <a href="@Url.Action("RemoveFavourite", "Tours", new {itemId = Model.Favourites.Find(x => x.TourId == item.Id).Id})">
+                <a href="@Url.Action("RemoveFavourite", "Tours", new {itemId = Model.Favourites.Find(x => x.TourId == item.Id).Id})" title="Прибрати зі списку улюблених">
                     <i class="fas fa-heart fa-lg" style="float:right; margin-right: 5px"></i>
                 </a>
             }
