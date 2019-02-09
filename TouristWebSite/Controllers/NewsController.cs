@@ -10,7 +10,7 @@ namespace TouristWebSite.Controllers
     public class NewsController : Controller
     {
         [AllowAnonymous]
-        public ActionResult Index(string message = "")
+        public ActionResult Index(string message = "", string message1 = "")
         {
             var model = new ActiveNewsViewModel()
             {
@@ -19,6 +19,7 @@ namespace TouristWebSite.Controllers
             };
 
             ViewBag.StatusMessage = message;
+            ViewBag.StatusMessage1 = message1;
 
             return View(model);
         }
@@ -29,7 +30,7 @@ namespace TouristWebSite.Controllers
             try
             {
                 NewsDBHelper.Deactivate(itemId);
-                return RedirectToRoute(new { controller = "News", action = "Index", message = "Зміни було успішно внесено." });
+                return RedirectToRoute(new { controller = "News", action = "Index", message = "Новину було успішно видалено." });
             }
             catch (Exception e)
             {
@@ -76,7 +77,7 @@ namespace TouristWebSite.Controllers
                     }
                 }
 
-                return RedirectToRoute(new { controller = "News", action = "Index" });
+                return RedirectToRoute(new { controller = "News", action = "Index", message = "Новину було успішно додано." });
             }
             catch (Exception e)
             {
@@ -171,7 +172,7 @@ namespace TouristWebSite.Controllers
                     }
                 }
 
-                return RedirectToRoute(new { controller = "News", action = "Index" });
+                return RedirectToRoute(new { controller = "News", action = "Index", message1 = "Акцію було успішно додано." });
             }
             catch (Exception e)
             {
@@ -221,7 +222,7 @@ namespace TouristWebSite.Controllers
                 }
 
                 DiscountsDBHelper.Edit(model);
-                return RedirectToRoute(new { controller = "News", action = "Index", message = "Зміни було успішно внесено." });
+                return RedirectToRoute(new { controller = "News", action = "Index", message1 = "Зміни було успішно внесено." });
             }
             catch (Exception e)
             {

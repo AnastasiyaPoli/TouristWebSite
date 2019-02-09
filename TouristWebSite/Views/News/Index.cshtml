@@ -2,6 +2,7 @@
 
 <h2>Найсвіжіші новини</h2>
 <p class="text-success">@ViewBag.StatusMessage</p>
+<h4>Переглядайте наші новини.</h4>
 
 @foreach (var item in Model.ActiveNews)
 {
@@ -31,6 +32,8 @@
 }
 
 <h2>Наші акції</h2>
+<p class="text-success">@ViewBag.StatusMessage1</p>
+<h4>Переглядайте наші акції.</h4>
 
 @foreach (var item in Model.ActiveDiscounts)
 {

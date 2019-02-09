@@ -1,7 +1,7 @@
 ﻿@using TouristWebSite.Models
 @model UserInfoViewModel
 
-<h2>Загальна інформація</h2>
+<h2>Загальна інформація.</h2>
 @using (Html.BeginForm("UserInfo", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()

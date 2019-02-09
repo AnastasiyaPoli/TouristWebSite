@@ -1,5 +1,8 @@
 ﻿@model TouristWebSite.Models.QuestionsViewModel
 <h2>Запитання користувачів сайту</h2>
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+
 <h4>Переглядайте запитання користувачів та відповідайте на них.</h4>
 <hr />
 
@@ -17,7 +20,7 @@
         <h4><strong>Тема: </strong>@item.Theme</h4>
         <h4><strong>Запитання: </strong>@item.Text</h4>
         <h4><strong>Відповідь: </strong>@item.Answer</h4>
-        
+
         <a class="btn btn-default no-underline" href="/Manage/Answer?questionId=@item.Id"><span> <i class="fas fa-check"></i> Відповісти на запитання </span></a>
     </div>
 }

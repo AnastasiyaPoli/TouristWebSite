@@ -174,7 +174,7 @@ namespace TouristWebSite.Controllers
         }
 
         [HttpGet]
-        public ActionResult Questions()
+        public ActionResult Questions(string message = "")
         {
             try
             {
@@ -182,6 +182,8 @@ namespace TouristWebSite.Controllers
                 {
                     Questions = QuestionsDBHelper.GetForUser(User.Identity.GetUserId())
                 };
+
+                ViewBag.StatusMessage = message;
 
                 return View(model);
             }
@@ -193,7 +195,7 @@ namespace TouristWebSite.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpGet]
-        public ActionResult AllQuestions()
+        public ActionResult AllQuestions(string message = "")
         {
             try
             {
@@ -201,6 +203,8 @@ namespace TouristWebSite.Controllers
                 {
                     Questions = QuestionsDBHelper.GetAll()
                 };
+
+                ViewBag.StatusMessage = message;
 
                 return View(model);
             }
@@ -216,7 +220,7 @@ namespace TouristWebSite.Controllers
             try
             {
                 QuestionsDBHelper.Add(model.Text, model.Theme, User.Identity.GetUserId());
-                return RedirectToRoute(new { controller = "Manage", action = "Questions" });
+                return RedirectToRoute(new { controller = "Manage", action = "Questions", message = "Запитання адміністратору було успішно додано." });
             }
             catch (Exception ex)
             {
@@ -307,7 +311,7 @@ namespace TouristWebSite.Controllers
             {
                 QuestionsDBHelper.Answer(Question.Text, Question.QuestionId);
                 EmailSenderHelper.SendEmail(UsersDBHelper.GetById(Question.UserId).Email, "Відповідь на запитання", "На Ваше запитання на сайті туристичної фірми \"Формула відпочинку \" надано відповідь. Ви можете переглянути її в особистому кабінеті.");
-                return RedirectToRoute(new { controller = "Manage", action = "AllQuestions" });
+                return RedirectToRoute(new { controller = "Manage", action = "AllQuestions", message = "Відповідь на запитання було успішно надано." });
             }
             catch (Exception ex)
             {

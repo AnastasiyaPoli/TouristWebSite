@@ -1,5 +1,9 @@
 ﻿@model TouristWebSite.Models.ChosenTourViewModel
+
 <h2>@Model.ChosenTour.Name (@Model.ChosenTour.Place)</h2>
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+
 <h4><strong>Дати: </strong> @Model.ChosenTour.DateStart.ToShortDateString() - @Model.ChosenTour.DateEnd.ToShortDateString()</h4>
 <h4><strong>Ціна: </strong> @Model.ChosenTour.Price грн.</h4>
 <h4>@Model.ChosenTour.Description</h4>
@@ -69,11 +73,11 @@
 {
     <div class="jumbotron transparent transp-container">
         @if (User.IsInRole("Admin"))
-            {
-                <a href="@Url.Action("DeleteComment", "Tours", new {itemId = item.Id, tourId = Model.ChosenTour.Id})" title="Видалити">
-                    <i class="fas fa-times fa-lg" style="float:right;"></i>
-                </a>
-            }
+        {
+            <a href="@Url.Action("DeleteComment", "Tours", new {itemId = item.Id, tourId = Model.ChosenTour.Id})" title="Видалити">
+                <i class="fas fa-times fa-lg" style="float:right;"></i>
+            </a>
+        }
 
         @if ((item.User.Name != null && item.User.Name != string.Empty) || (item.User.Surname != null && item.User.Surname != string.Empty))
         {
@@ -83,7 +87,7 @@
         {
             <h3>Анонім</h3>
         }
-        
+
         <h4><strong>Оцінка: </strong> @item.Mark</h4>
         <h4>@item.Text</h4>
 
