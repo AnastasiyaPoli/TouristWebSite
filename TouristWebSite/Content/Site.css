@@ -142,3 +142,15 @@ h, h1, h2, h3, h4, h5, h6, p, label {
 .form-control {
     min-width: 50% !important;
 }
+
+@media (min-width: 768px) {
+    .dl-horizontal dt {
+        width: 200px;
+        margin-right: 5px;
+    }
+}
+
+rect {
+    fill: #2C4A55 !important;
+    fill-opacity: 0.5;
+}

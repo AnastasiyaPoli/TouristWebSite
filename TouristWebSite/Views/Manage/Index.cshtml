@@ -36,12 +36,11 @@
                 @Html.ActionLink("Підписатись на оновлення", "Subscription", "Manage")
             }
         </dd>
-        
+
         <dt>Список улюблених турів:</dt>
         <dd>
             @Html.ActionLink("Переглянути та редагувати", "FavouriteTours")
         </dd>
-
 
         <dt>Статистика:</dt>
         <dd>
@@ -58,7 +57,7 @@
     
     @if (User.IsInRole("Admin"))
     {
-        <h4>Управляйте користувачами</h4>
+        <h4>Управляйте користувачами.</h4>
 
         <dl class="dl-horizontal">
             <dt>Список користувачів:</dt>

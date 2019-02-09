@@ -315,6 +315,7 @@
     <Content Include="Views\Manage\AllQuestions.cshtml" />
     <Content Include="Views\Manage\Answer.cshtml" />
     <Content Include="Views\Manage\FavouriteTours.cshtml" />
+    <Content Include="Views\Manage\BookedTours.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

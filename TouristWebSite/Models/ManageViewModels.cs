@@ -47,6 +47,18 @@ namespace TouristWebSite.Models
         public List<Favourite> Favourites { get; set; }
     }
 
+    public class StatisticsViewModel
+    {
+        public int ToursCount { get; set; }
+        public int QuestionsCount { get; set; }
+        public Dictionary<string, int> Data { get; set; }
+    }
+
+    public class BookedToursViewModel
+    {
+        public List<BookedTour> BookedTours { get; set; }
+    }
+
     public class ManageLoginsViewModel
     {
         public IList<UserLoginInfo> CurrentLogins { get; set; }

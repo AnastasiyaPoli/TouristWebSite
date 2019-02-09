@@ -1,4 +1,6 @@
 ﻿using DAL.Models;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using TouristWebSite.Models;
 
@@ -31,6 +33,14 @@ namespace DAL.DBHelpers
             using (context = new ApplicationDbContext())
             {
                 return (context.BookedTours.FirstOrDefault(x => x.ApplicationUserId == userId && x.TourId == tourId) != null);
+            }
+        }
+
+        public static List<BookedTour> GetBookedToursForUser(string userId)
+        {
+            using (context = new ApplicationDbContext())
+            {
+                return context.BookedTours.Where(x => x.ApplicationUserId == userId).Include(x => x.Tour).ToList();
             }
         }
     }

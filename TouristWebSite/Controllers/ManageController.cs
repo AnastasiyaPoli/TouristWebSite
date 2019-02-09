@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -158,7 +159,111 @@ namespace TouristWebSite.Controllers
 
         public ActionResult Statistics()
         {
-            return View();
+            Dictionary<string, int> Data = new Dictionary<string, int>();
+
+            int all = BookedToursDBHelper.GetBookedToursForUser(User.Identity.GetUserId()).Count();
+            var grouped = BookedToursDBHelper.GetBookedToursForUser(User.Identity.GetUserId()).OrderBy(x => x.Tour.DateStart).GroupBy(ms => string.Format("{0}-{1}", ms.Tour.DateStart.Month, ms.Tour.DateStart.Year));
+
+            foreach (var group in grouped)
+            {
+                var temp = group.Key;
+
+                switch (temp.Substring(0, 2))
+                {
+                    case "1-":
+                        {
+                            temp = string.Concat("Січень ", temp.Substring(2, (temp.Length - 2)));
+                        }
+                        break;
+
+                    case "2-":
+                        {
+                            temp = string.Concat("Лютий ", temp.Substring(2, (temp.Length - 2)));
+                        }
+                        break;
+
+                    case "3-":
+                        {
+                            temp = string.Concat("Березень ", temp.Substring(2, (temp.Length - 2)));
+                        }
+                        break;
+
+                    case "4-":
+                        {
+                            temp = string.Concat("Квітень ", temp.Substring(2, (temp.Length - 2)));
+                        }
+                        break;
+
+                    case "5-":
+                        {
+                            temp = string.Concat("Травень ", temp.Substring(2, (temp.Length - 2)));
+                        }
+                        break;
+
+                    case "6-":
+                        {
+                            temp = string.Concat("Червень ", temp.Substring(2, (temp.Length - 2)));
+                        }
+                        break;
+
+                    case "7-":
+                        {
+                            temp = string.Concat("Липень ", temp.Substring(2, (temp.Length - 2)));
+                        }
+                        break;
+
+                    case "8-":
+                        {
+                            temp = string.Concat("Серпень ", temp.Substring(2, (temp.Length - 2)));
+                        }
+                        break;
+
+                    case "9-":
+                        {
+                            temp = string.Concat("Вересень ", temp.Substring(2, (temp.Length - 2)));
+                        }
+                        break;
+
+                    case "10":
+                        {
+                            temp = string.Concat("Жовтень ", temp.Substring(3, (temp.Length - 3)));
+                        }
+                        break;
+
+                    case "11":
+                        {
+                            temp = string.Concat("Листопад ", temp.Substring(3, (temp.Length - 3)));
+                        }
+                        break;
+
+                    case "12":
+                        {
+                            temp = string.Concat("Грудень ", temp.Substring(3, (temp.Length - 3)));
+                        }
+                        break;
+                }
+
+                Data[temp] = group.Count();
+            };
+
+            StatisticsViewModel model = new StatisticsViewModel()
+            {
+                ToursCount = BookedToursDBHelper.GetBookedToursForUser(User.Identity.GetUserId()).Count(),
+                QuestionsCount = QuestionsDBHelper.GetForUser(User.Identity.GetUserId()).Count(),
+                Data = Data
+            };
+
+            return View(model);
+        }
+
+        public ActionResult BookedTours()
+        {
+            BookedToursViewModel model = new BookedToursViewModel()
+            {
+                BookedTours = BookedToursDBHelper.GetBookedToursForUser(User.Identity.GetUserId())
+            };
+
+            return View(model);
         }
 
         public ActionResult FavouriteTours(string message = "")
