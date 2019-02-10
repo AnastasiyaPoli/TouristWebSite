@@ -23,5 +23,11 @@ namespace DAL
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Favourite> Favourites { get; set; }
+
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<City> Cities { get; set; }
+        public DbSet<Transport> Transports { get; set; }
+        public DbSet<LeavePoint> LeavePoints { get; set; }
+        public DbSet<Route> Routes { get; set; }
     }
 }

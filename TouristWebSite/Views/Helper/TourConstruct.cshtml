@@ -1,0 +1,149 @@
+﻿@using TouristWebSite.Models
+@model CountriesViewModel
+
+<h2>Конструктор турів.</h2>
+@Html.AntiForgeryToken()
+<h4>Сконструюйте тур для себе.</h4>
+<hr />
+
+@using (Html.BeginForm("TourConstruct", "Helper", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Country, new { @class = "col-md-2 control-label" })
+        <div class="col-md-9">
+            @Html.DropDownListFor(model => model.Country, new SelectList(
+                Model.Countries.Select(x => new { Value = x.Id, Text = x.Name }),
+                "Value",
+                "Text"
+                ),
+                new { @class = "form-control", @Id = "countryList" })
+            @Html.ValidationMessageFor(m => m.Country, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.City, new { @class = "col-md-2 control-label" })
+        <div class="col-md-9">
+            @Html.DropDownListFor(model => model.City, Enumerable.Empty<SelectListItem>(), new { @class = "form-control", @Id = "cityList" })
+            @Html.ValidationMessageFor(m => m.City, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Transport, new { @class = "col-md-2 control-label" })
+        <div class="col-md-9">
+            @Html.DropDownListFor(model => model.Transport, new SelectList(
+                Model.Transports.Select(x => new { Value = x.Id, Text = x.Name }),
+                "Value",
+                "Text"
+                ),
+                new { @class = "form-control", @Id = "transportList" })
+            @Html.ValidationMessageFor(m => m.Transport, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.LeavePoint, new { @class = "col-md-2 control-label" })
+        <div class="col-md-9">
+            @Html.DropDownListFor(model => model.LeavePoint, Enumerable.Empty<SelectListItem>(), new { @class = "form-control", @Id = "pointsList" })
+            @Html.ValidationMessageFor(m => m.LeavePoint, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Route, new { @class = "col-md-2 control-label" })
+        <div class="col-md-9">
+            @Html.DropDownListFor(model => model.Route, Enumerable.Empty<SelectListItem>(), new { @class = "form-control", @Id = "routesList" })
+            @Html.ValidationMessageFor(m => m.Route, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-9">
+            <button type="submit" class="btn btn-success"> <i class="fas fa-check"></i> Сконструювати </button>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        var url = '@Url.Action("GetCities", "Helper")';
+        var urlpoints = '@Url.Action("GetLeavePoints", "Helper")';
+        var urlroutes = '@Url.Action("GetRoutes", "Helper")';
+
+        var cities = $('#cityList');
+        var points = $('#pointsList');
+        var routes = $('#routesList');
+
+       async function fetchCities(id) {
+                await $.getJSON(url, { id: id }, function(response) {
+                cities.empty();
+
+                $.each(response, function(index, item) {
+                    cities.append($('<option value="'+ item.Id +'">' + item.Name + '</option>'));
+                });
+            });
+        }
+
+        async function fetchPoints(cityId, transportId) {
+                await $.getJSON(urlpoints, { cityId: cityId, transportId: transportId }, function (response) {
+                points.empty();
+
+                $.each(response, function (index, item) {
+                    points.append($('<option value="' + item.Id + '">' + item.Name + '</option>'));
+                });
+            });
+        }
+
+        async function fetchRoutes(leavePointId) {
+                await $.getJSON(urlroutes, { leavePointId: leavePointId}, function (response) {
+                routes.empty();
+
+                $.each(response, function (index, item) {
+                    routes.append($('<option value="' + item.Id + '">' + item.Name + '</option>'));
+                });
+            });
+        }
+
+        $(document).ready(function() {
+            $("#countryList").change(async function () {
+                var id = $(this).val();
+                await fetchCities(id);
+                var idcity = $("#cityList").val();
+                var idtransport = $("#transportList").val();
+                await fetchPoints(idcity, idtransport);
+                var idPoint = $("#pointsList").val();
+                await fetchRoutes(idPoint);
+            });
+
+            $("#cityList").change(async function () {
+                var id = $(this).val();
+                var idtransport = $("#transportList").val();
+                await fetchPoints(id, idtransport);
+                var idPoint = $("#pointsList").val();
+                await fetchRoutes(idPoint);
+            });
+
+            $("#transportList").change(async function () {
+                var id = $(this).val();
+                var idcity = $("#cityList").val();
+                await fetchPoints(idcity, id);
+                var idPoint = $("#pointsList").val();
+                await fetchRoutes(idPoint);
+            });
+
+            $("#pointsList").change(async function () {
+                var id = $(this).val();
+                await fetchRoutes(id);
+            });
+
+            fetchCities(1);
+            fetchPoints(1, 1);
+            fetchRoutes(1);
+        });
+    </script>
+}

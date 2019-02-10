@@ -42,7 +42,7 @@ namespace TouristWebSite.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToRoute(new { controller = "Helper", action = "Index" });
+                return RedirectToRoute(new {controller = "Helper", action = "Index"});
             }
         }
 
@@ -57,12 +57,69 @@ namespace TouristWebSite.Controllers
                 }
 
                 UsersDBHelper.UpdateUserAdditional(model);
-                return RedirectToAction("Index", new { Message = "Зміни було успішно внесено." });
+                return RedirectToAction("Index", new {Message = "Зміни було успішно внесено."});
             }
             catch (Exception e)
             {
-                return RedirectToRoute(new { controller = "Helper", action = "Index" });
+                return RedirectToRoute(new {controller = "Helper", action = "Index"});
             }
+        }
+
+        [HttpGet]
+        public ActionResult TourConstruct()
+        {
+            try
+            {
+                CountriesViewModel model = new CountriesViewModel()
+                {
+                    Countries = CountriesDBHelper.GetCountries(),
+                    Transports = TransportsDBHelper.GetTransports()
+                };
+
+                return View(model);
+            }
+            catch (Exception e)
+            {
+                return RedirectToRoute(new {controller = "Helper", action = "Index"});
+            }
+        }
+
+        [HttpPost]
+        public ActionResult TourConstruct(CountriesViewModel model)
+        {
+            try
+            { 
+                return View(model);
+            }
+            catch (Exception e)
+            {
+                return RedirectToRoute(new {controller = "Helper", action = "Index"});
+            }
+        }
+
+        [HttpGet]
+        public JsonResult GetCities(long id)
+        {
+            return Json(CitiesDBHelper.GetCitiesForCountry(id), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult GetLeavePoints(long cityId, long transportId)
+        {
+            return Json(LeavePointDBHelper.GetLeavePointsByCityAndTransport(cityId, transportId), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult GetRoutes(long leavePointId)
+        {
+            var temp = RoutesDBHelper.GetRoutesForLeavePoint(leavePointId);
+
+            foreach (var item in temp)
+            {
+                item.Name = $"{item.Name} ({item.Start.ToShortDateString()}, {item.Start.ToShortTimeString()} - {item.End.ToShortDateString()}, {item.End.ToShortTimeString()})";
+            }
+
+            return Json(temp, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -1,4 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using DAL.Models;
 
 namespace TouristWebSite.Models
 {
@@ -38,5 +41,31 @@ namespace TouristWebSite.Models
 
         [Display(Name = "Коментарі: ")]
         public string OtherInfo { get; set; }
+    }
+
+    public class CountriesViewModel
+    {
+        public IEnumerable<Country> Countries { get; set; }
+        public IEnumerable<Transport> Transports { get; set; }
+
+        [Display(Name = "Країна відправлення: ")]
+        [Required(ErrorMessage = "Необхідно заповнити поле \"Країна відправлення\".")]
+        public long Country { get; set; }
+
+        [Display(Name = "Місто відправлення: ")]
+        [Required(ErrorMessage = "Необхідно заповнити поле \"Місто відправлення\".")]
+        public long City { get; set; }
+
+        [Display(Name = "Тип транспорту: ")]
+        [Required(ErrorMessage = "Необхідно заповнити поле \"Тип транспорту\".")]
+        public long Transport { get; set; }
+
+        [Display(Name = "Точка відправлення: ")]
+        [Required(ErrorMessage = "Необхідно заповнити поле \"Точка відправлення\".")]
+        public long LeavePoint { get; set; }
+
+        [Display(Name = "Маршрут: ")]
+        [Required(ErrorMessage = "Необхідно заповнити поле \"Маршрут\".")]
+        public long Route { get; set; }
     }
 }

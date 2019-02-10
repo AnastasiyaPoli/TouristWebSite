@@ -159,7 +159,24 @@
     <Compile Include="Migrations\201902072253334_25.Designer.cs">
       <DependentUpon>201902072253334_25.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902101101442_26.cs" />
+    <Compile Include="Migrations\201902101101442_26.Designer.cs">
+      <DependentUpon>201902101101442_26.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902101445228_27.cs" />
+    <Compile Include="Migrations\201902101445228_27.Designer.cs">
+      <DependentUpon>201902101445228_27.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902101446137_28.cs" />
+    <Compile Include="Migrations\201902101446137_28.Designer.cs">
+      <DependentUpon>201902101446137_28.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Route.cs" />
+    <Compile Include="Models\LeavePoint.cs" />
+    <Compile Include="Models\City.cs" />
+    <Compile Include="Models\Transport.cs" />
+    <Compile Include="Models\Country.cs" />
     <Compile Include="Models\Favourite.cs" />
     <Compile Include="Models\Question.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -252,6 +269,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902072253334_25.resx">
       <DependentUpon>201902072253334_25.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902101101442_26.resx">
+      <DependentUpon>201902101101442_26.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902101445228_27.resx">
+      <DependentUpon>201902101445228_27.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902101446137_28.resx">
+      <DependentUpon>201902101446137_28.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
