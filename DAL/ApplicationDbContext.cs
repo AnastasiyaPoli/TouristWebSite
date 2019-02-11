@@ -28,6 +28,7 @@ namespace DAL
         public DbSet<City> Cities { get; set; }
         public DbSet<Transport> Transports { get; set; }
         public DbSet<LeavePoint> LeavePoints { get; set; }
+        public DbSet<DestinationPoint> DestinationPoints { get; set; }
         public DbSet<Route> Routes { get; set; }
     }
 }
