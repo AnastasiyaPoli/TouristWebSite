@@ -1,5 +1,5 @@
 ﻿@using TouristWebSite.Models
-@model CountriesViewModel
+@model ConstructViewModel
 
 <h2>Конструктор турів.</h2>
 @Html.AntiForgeryToken()
@@ -85,13 +85,25 @@
         </div>
     </div>
 
-    @*<div class="form-group">
+    <hr />
+    <h4>Маршрут подорожі:</h4>
+
+    <div class="form-group">
             @Html.LabelFor(m => m.Route, new { @class = "col-md-2 control-label" })
             <div class="col-md-9">
                 @Html.DropDownListFor(model => model.Route, Enumerable.Empty<SelectListItem>(), new { @class = "form-control", @Id = "routesList" })
                 @Html.ValidationMessageFor(m => m.Route, "", new { @class = "text-danger" })
             </div>
-        </div>*@
+        </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Class, new { @class = "col-md-2 control-label" })
+        <div class="col-md-9">
+            @Html.DropDownListFor(model => model.Class, new SelectList(new string[] { "Бізнес", "Економ" }), new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Class, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-9">
@@ -162,15 +174,15 @@
             });
         }
 
-        //async function fetchRoutes(leavePointId) {
-        //        await $.getJSON(urlroutes, { leavePointId: leavePointId}, function (response) {
-        //        routes.empty();
+        async function fetchRoutes(leavePointId, destinationPointId) {
+            await $.getJSON(urlroutes, { leavePointId: leavePointId, destinationPointId: destinationPointId}, function (response) {
+                routes.empty();
 
-        //        $.each(response, function (index, item) {
-        //            routes.append($('<option value="' + item.Id + '">' + item.Name + '</option>'));
-        //        });
-        //    });
-        //}
+                $.each(response, function (index, item) {
+                    routes.append($('<option value="' + item.Id + '">' + item.Name + '</option>'));
+                });
+            });
+        }
 
         $(document).ready(function() {
             $("#countryList").change(async function () {
@@ -180,7 +192,8 @@
                 var idtransport = $("#transportList").val();
                 await fetchPoints(idcity, idtransport);
                 var idPoint = $("#pointsList").val();
-                //await fetchRoutes(idPoint);
+                var idDestinationPoint = $("#destinationPointsList").val();
+                await fetchRoutes(idPoint, idDestinationPoint);
             });
 
             $("#cityList").change(async function () {
@@ -188,7 +201,8 @@
                 var idtransport = $("#transportList").val();
                 await fetchPoints(id, idtransport);
                 var idPoint = $("#pointsList").val();
-                //await fetchRoutes(idPoint);
+                var idDestinationPoint = $("#destinationPointsList").val();
+                await fetchRoutes(idPoint, idDestinationPoint);
             });
 
             $("#transportList").change(async function () {
@@ -198,7 +212,8 @@
                 var idcitydest = $("#destinationCityList").val();
                 await fetchDestinationPoints(idcitydest, id);
                 var idPoint = $("#pointsList").val();
-                //await fetchRoutes(idPoint);
+                var idDestinationPoint = $("#destinationPointsList").val();
+                await fetchRoutes(idPoint, idDestinationPoint);
             });
 
             $("#destinationCountryList").change(async function () {
@@ -207,24 +222,37 @@
                 var idcity = $("#destinationCityList").val();
                 var idtransport = $("#transportList").val();
                 await fetchDestinationPoints(idcity, idtransport);
+                var idPoint = $("#pointsList").val();
+                var idDestinationPoint = $("#destinationPointsList").val();
+                await fetchRoutes(idPoint, idDestinationPoint);
             });
 
             $("#destinationCityList").change(async function () {
                 var id = $(this).val();
                 var idtransport = $("#transportList").val();
                 await fetchDestinationPoints(id, idtransport);
+                var idPoint = $("#pointsList").val();
+                var idDestinationPoint = $("#destinationPointsList").val();
+                await fetchRoutes(idPoint, idDestinationPoint);
             });
 
-            //$("#pointsList").change(async function () {
-            //    var id = $(this).val();
-            //    await fetchRoutes(id);
-            //});
+            $("#pointsList").change(async function () {
+                var id = $(this).val();
+                var idDestinationPoint = $("#destinationPointsList").val();
+                await fetchRoutes(id, idDestinationPoint);
+            });
+
+            $("#destinationPointsList").change(async function () {
+                var id = $(this).val();
+                var idPoint = $("#pointsList").val();
+                await fetchRoutes(idPoint, id);
+            });
 
             fetchCities(1);
             fetchPoints(1, 1);
             fetchDestinationCities(1);
             fetchDestinationPoints(1, 1);
-            //fetchRoutes(1);
+            fetchRoutes(1, 1);
         });
     </script>
 }

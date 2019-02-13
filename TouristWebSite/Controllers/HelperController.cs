@@ -70,7 +70,7 @@ namespace TouristWebSite.Controllers
         {
             try
             {
-                CountriesViewModel model = new CountriesViewModel()
+                ConstructViewModel model = new ConstructViewModel()
                 {
                     Countries = CountriesDBHelper.GetCountries(),
                     Transports = TransportsDBHelper.GetTransports(),
@@ -86,7 +86,7 @@ namespace TouristWebSite.Controllers
         }
 
         [HttpPost]
-        public ActionResult TourConstruct(CountriesViewModel model)
+        public ActionResult TourConstruct(ConstructViewModel model)
         {
             try
             { 
@@ -123,9 +123,9 @@ namespace TouristWebSite.Controllers
         }
 
         [HttpGet]
-        public JsonResult GetRoutes(long leavePointId)
+        public JsonResult GetRoutes(long leavePointId, long destinationPointId)
         {
-            var temp = RoutesDBHelper.GetRoutesForLeavePoint(leavePointId);
+            var temp = RoutesDBHelper.GetRoutesForLeavePoint(leavePointId, destinationPointId);
 
             foreach (var item in temp)
             {

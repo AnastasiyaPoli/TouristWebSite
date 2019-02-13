@@ -43,7 +43,7 @@ namespace TouristWebSite.Models
         public string OtherInfo { get; set; }
     }
 
-    public class CountriesViewModel
+    public class ConstructViewModel
     {
         public IEnumerable<Country> Countries { get; set; }
         public IEnumerable<Transport> Transports { get; set; }
@@ -81,5 +81,9 @@ namespace TouristWebSite.Models
         [Display(Name = "Маршрут: ")]
         [Required(ErrorMessage = "Необхідно заповнити поле \"Маршрут\".")]
         public long Route { get; set; }
+
+        [Display(Name = "Клас: ")]
+        [Required(ErrorMessage = "Необхідно заповнити поле \"Клас\".")]
+        public string Class { get; set; }
     }
 }

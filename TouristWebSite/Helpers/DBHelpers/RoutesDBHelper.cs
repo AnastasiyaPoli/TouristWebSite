@@ -9,11 +9,11 @@ namespace DAL.DBHelpers
     {
         private static ApplicationDbContext context;
 
-        public static List<Route> GetRoutesForLeavePoint(long leavePoint)
+        public static List<Route> GetRoutesForLeavePoint(long leavePoint, long destinationPoint)
         {
             using (context = new ApplicationDbContext())
             {
-                return context.Routes.Where(x => x.LeavePointId == leavePoint && x.Start > DateTime.Now).ToList();
+                return context.Routes.Where(x => x.LeavePointId == leavePoint && x.DestinationPointId == destinationPoint && x.Start > DateTime.Now).ToList();
             }
         }
     }
