@@ -207,6 +207,9 @@
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Helpers\DBHelpers\DestinationCitiesDBHelper.cs" />
+    <Compile Include="Helpers\DBHelpers\DestinationCountriesDBHelper.cs" />
+    <Compile Include="Helpers\DBHelpers\DestinationPointsDBHelper.cs" />
     <Compile Include="Helpers\DBHelpers\RoutesDBHelper.cs" />
     <Compile Include="Helpers\DBHelpers\LeavePointsDBHelper.cs" />
     <Compile Include="Helpers\DBHelpers\TransportsDBHelper.cs" />

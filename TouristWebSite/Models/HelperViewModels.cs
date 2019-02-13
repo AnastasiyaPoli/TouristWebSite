@@ -64,6 +64,20 @@ namespace TouristWebSite.Models
         [Required(ErrorMessage = "Необхідно заповнити поле \"Точка відправлення\".")]
         public long LeavePoint { get; set; }
 
+        public IEnumerable<DestinationCountry> DestinationCountries { get; set; }
+
+        [Display(Name = "Країна призначення: ")]
+        [Required(ErrorMessage = "Необхідно заповнити поле \"Країна призначення\".")]
+        public long DestinationCountry { get; set; }
+
+        [Display(Name = "Місто призначення: ")]
+        [Required(ErrorMessage = "Необхідно заповнити поле \"Місто призначення\".")]
+        public long DestinationCity { get; set; }
+
+        [Display(Name = "Точка призначення: ")]
+        [Required(ErrorMessage = "Необхідно заповнити поле \"Точка призначення\".")]
+        public long DestinationPoint { get; set; }
+
         [Display(Name = "Маршрут: ")]
         [Required(ErrorMessage = "Необхідно заповнити поле \"Маршрут\".")]
         public long Route { get; set; }

@@ -53,17 +53,45 @@
         </div>
     </div>
 
-    @*<div class="form-group">
-        @Html.LabelFor(m => m.Route, new { @class = "col-md-2 control-label" })
-        <div class="col-md-9">
-            @Html.DropDownListFor(model => model.Route, Enumerable.Empty<SelectListItem>(), new { @class = "form-control", @Id = "routesList" })
-            @Html.ValidationMessageFor(m => m.Route, "", new { @class = "text-danger" })
-        </div>
-    </div>*@
-
     <hr />
     <h4>Пункт призначення:</h4>
 
+    <div class="form-group">
+        @Html.LabelFor(m => m.DestinationCountry, new { @class = "col-md-2 control-label" })
+        <div class="col-md-9">
+            @Html.DropDownListFor(model => model.DestinationCountry, new SelectList(
+                Model.DestinationCountries.Select(x => new { Value = x.Id, Text = x.Name }),
+                "Value",
+                "Text"
+                ),
+                new { @class = "form-control", @Id = "destinationCountryList" })
+            @Html.ValidationMessageFor(m => m.DestinationCountry, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.DestinationCity, new { @class = "col-md-2 control-label" })
+        <div class="col-md-9">
+            @Html.DropDownListFor(model => model.DestinationCity, Enumerable.Empty<SelectListItem>(), new { @class = "form-control", @Id = "destinationCityList" })
+            @Html.ValidationMessageFor(m => m.DestinationCity, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.DestinationPoint, new { @class = "col-md-2 control-label" })
+        <div class="col-md-9">
+            @Html.DropDownListFor(model => model.DestinationPoint, Enumerable.Empty<SelectListItem>(), new { @class = "form-control", @Id = "destinationPointsList" })
+            @Html.ValidationMessageFor(m => m.DestinationPoint, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @*<div class="form-group">
+            @Html.LabelFor(m => m.Route, new { @class = "col-md-2 control-label" })
+            <div class="col-md-9">
+                @Html.DropDownListFor(model => model.Route, Enumerable.Empty<SelectListItem>(), new { @class = "form-control", @Id = "routesList" })
+                @Html.ValidationMessageFor(m => m.Route, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-9">
@@ -78,16 +106,20 @@
     @Scripts.Render("~/bundles/jqueryval")
 
     <script>
-        var url = '@Url.Action("GetCities", "Helper")';
+        var urlcities = '@Url.Action("GetCities", "Helper")';
         var urlpoints = '@Url.Action("GetLeavePoints", "Helper")';
+        var urldestinationcities = '@Url.Action("GetDestinationCities", "Helper")';
+        var urldestinationpoints = '@Url.Action("GetDestinationPoints", "Helper")';
         var urlroutes = '@Url.Action("GetRoutes", "Helper")';
 
         var cities = $('#cityList');
         var points = $('#pointsList');
+        var destinationcities = $('#destinationCityList');
+        var destinationpoints = $('#destinationPointsList');
         var routes = $('#routesList');
 
        async function fetchCities(id) {
-                await $.getJSON(url, { id: id }, function(response) {
+           await $.getJSON(urlcities, { id: id }, function(response) {
                 cities.empty();
 
                 $.each(response, function(index, item) {
@@ -104,6 +136,28 @@
 
                 $.each(response, function (index, item) {
                     points.append($('<option value="' + item.Id + '">' + item.Name + '</option>'));
+                });
+            });
+        }
+
+        async function fetchDestinationCities(id) {
+            await $.getJSON(urldestinationcities, { id: id }, function(response) {
+                destinationcities.empty();
+
+                $.each(response, function(index, item) {
+                    destinationcities.append($('<option value="'+ item.Id +'">' + item.Name + '</option>'));
+                });
+            });
+        }
+
+        async function fetchDestinationPoints(cityId, transportId) {
+            await $.getJSON(urldestinationpoints, { cityId: cityId, transportId: transportId }, function (response) {
+                destinationpoints.empty();
+
+                console.log(response);
+
+                $.each(response, function (index, item) {
+                    destinationpoints.append($('<option value="' + item.Id + '">' + item.Name + '</option>'));
                 });
             });
         }
@@ -145,6 +199,20 @@
                 //await fetchRoutes(idPoint);
             });
 
+            $("#destinationCountryList").change(async function () {
+                var id = $(this).val();
+                await fetchDestinationCities(id);
+                var idcity = $("#destinationCityList").val();
+                var idtransport = $("#transportList").val();
+                await fetchDestinationPoints(idcity, idtransport);
+            });
+
+            $("#destinationCityList").change(async function () {
+                var id = $(this).val();
+                var idtransport = $("#transportList").val();
+                await fetchDestinationPoints(id, idtransport);
+            });
+
             //$("#pointsList").change(async function () {
             //    var id = $(this).val();
             //    await fetchRoutes(id);
@@ -152,6 +220,8 @@
 
             fetchCities(1);
             fetchPoints(1, 1);
+            fetchDestinationCities(1);
+            fetchDestinationPoints(1, 1);
             //fetchRoutes(1);
         });
     </script>

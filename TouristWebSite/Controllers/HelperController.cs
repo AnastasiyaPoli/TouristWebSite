@@ -73,7 +73,8 @@ namespace TouristWebSite.Controllers
                 CountriesViewModel model = new CountriesViewModel()
                 {
                     Countries = CountriesDBHelper.GetCountries(),
-                    Transports = TransportsDBHelper.GetTransports()
+                    Transports = TransportsDBHelper.GetTransports(),
+                    DestinationCountries = DestinationCountriesDBHelper.GetCountries(),
                 };
 
                 return View(model);
@@ -107,6 +108,18 @@ namespace TouristWebSite.Controllers
         public JsonResult GetLeavePoints(long cityId, long transportId)
         {
             return Json(LeavePointDBHelper.GetLeavePointsByCityAndTransport(cityId, transportId), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult GetDestinationCities(long id)
+        {
+            return Json(DestinationCitiesDBHelper.GetCitiesForCountry(id), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult GetDestinationPoints(long cityId, long transportId)
+        {
+            return Json(DestinationPointDBHelper.GetDestinationPointsByCityAndTransport(cityId, transportId), JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]

@@ -199,7 +199,21 @@
     <Compile Include="Migrations\201902112247339_35.Designer.cs">
       <DependentUpon>201902112247339_35.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902132045349_36.cs" />
+    <Compile Include="Migrations\201902132045349_36.Designer.cs">
+      <DependentUpon>201902132045349_36.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902132053128_37.cs" />
+    <Compile Include="Migrations\201902132053128_37.Designer.cs">
+      <DependentUpon>201902132053128_37.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902132136423_38.cs" />
+    <Compile Include="Migrations\201902132136423_38.Designer.cs">
+      <DependentUpon>201902132136423_38.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\DestinationCity.cs" />
+    <Compile Include="Models\DestinationCountry.cs" />
     <Compile Include="Models\DestinationPoint.cs" />
     <Compile Include="Models\Route.cs" />
     <Compile Include="Models\LeavePoint.cs" />
@@ -328,6 +342,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902112247339_35.resx">
       <DependentUpon>201902112247339_35.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902132045349_36.resx">
+      <DependentUpon>201902132045349_36.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902132053128_37.resx">
+      <DependentUpon>201902132053128_37.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902132136423_38.resx">
+      <DependentUpon>201902132136423_38.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
