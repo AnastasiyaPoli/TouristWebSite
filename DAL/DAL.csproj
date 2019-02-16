@@ -211,10 +211,50 @@
     <Compile Include="Migrations\201902132136423_38.Designer.cs">
       <DependentUpon>201902132136423_38.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902152135571_39.cs" />
+    <Compile Include="Migrations\201902152135571_39.Designer.cs">
+      <DependentUpon>201902152135571_39.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902152137329_40.cs" />
+    <Compile Include="Migrations\201902152137329_40.Designer.cs">
+      <DependentUpon>201902152137329_40.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902152139344_41.cs" />
+    <Compile Include="Migrations\201902152139344_41.Designer.cs">
+      <DependentUpon>201902152139344_41.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902152318018_42.cs" />
+    <Compile Include="Migrations\201902152318018_42.Designer.cs">
+      <DependentUpon>201902152318018_42.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902160010589_43.cs" />
+    <Compile Include="Migrations\201902160010589_43.Designer.cs">
+      <DependentUpon>201902160010589_43.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902161035577_44.cs" />
+    <Compile Include="Migrations\201902161035577_44.Designer.cs">
+      <DependentUpon>201902161035577_44.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902161045515_45.cs" />
+    <Compile Include="Migrations\201902161045515_45.Designer.cs">
+      <DependentUpon>201902161045515_45.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902161046410_46.cs" />
+    <Compile Include="Migrations\201902161046410_46.Designer.cs">
+      <DependentUpon>201902161046410_46.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902161100038_47.cs" />
+    <Compile Include="Migrations\201902161100038_47.Designer.cs">
+      <DependentUpon>201902161100038_47.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Excursion.cs" />
+    <Compile Include="Models\ConstructedTour.cs" />
+    <Compile Include="Models\Hotel.cs" />
     <Compile Include="Models\DestinationCity.cs" />
     <Compile Include="Models\DestinationCountry.cs" />
     <Compile Include="Models\DestinationPoint.cs" />
+    <Compile Include="Models\BackRoute.cs" />
     <Compile Include="Models\Route.cs" />
     <Compile Include="Models\LeavePoint.cs" />
     <Compile Include="Models\City.cs" />
@@ -351,6 +391,33 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902132136423_38.resx">
       <DependentUpon>201902132136423_38.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902152135571_39.resx">
+      <DependentUpon>201902152135571_39.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902152137329_40.resx">
+      <DependentUpon>201902152137329_40.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902152139344_41.resx">
+      <DependentUpon>201902152139344_41.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902152318018_42.resx">
+      <DependentUpon>201902152318018_42.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902160010589_43.resx">
+      <DependentUpon>201902160010589_43.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902161035577_44.resx">
+      <DependentUpon>201902161035577_44.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902161045515_45.resx">
+      <DependentUpon>201902161045515_45.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902161046410_46.resx">
+      <DependentUpon>201902161046410_46.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902161100038_47.resx">
+      <DependentUpon>201902161100038_47.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

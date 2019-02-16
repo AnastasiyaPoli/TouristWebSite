@@ -15,5 +15,13 @@ namespace DAL.DBHelpers
                 return context.DestinationCities.Where(x => x.DestinationCountryId == countryId).ToList();
             }
         }
+
+        public static DestinationCity GetCityById(long id)
+        {
+            using (context = new ApplicationDbContext())
+            {
+                return context.DestinationCities.FirstOrDefault(x => x.Id == id);
+            }
+        }
     }
 }

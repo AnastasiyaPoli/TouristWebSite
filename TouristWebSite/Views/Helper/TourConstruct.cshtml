@@ -89,21 +89,114 @@
     <h4>Маршрут подорожі:</h4>
 
     <div class="form-group">
-            @Html.LabelFor(m => m.Route, new { @class = "col-md-2 control-label" })
-            <div class="col-md-9">
-                @Html.DropDownListFor(model => model.Route, Enumerable.Empty<SelectListItem>(), new { @class = "form-control", @Id = "routesList" })
-                @Html.ValidationMessageFor(m => m.Route, "", new { @class = "text-danger" })
-            </div>
+        @Html.LabelFor(m => m.Route, new { @class = "col-md-2 control-label" })
+        <div class="col-md-9">
+            @Html.DropDownListFor(model => model.Route, Enumerable.Empty<SelectListItem>(), new { @class = "form-control", @Id = "routesList" })
+            @Html.ValidationMessageFor(m => m.Route, "", new { @class = "text-danger" })
         </div>
+    </div>
 
     <div class="form-group">
         @Html.LabelFor(m => m.Class, new { @class = "col-md-2 control-label" })
         <div class="col-md-9">
-            @Html.DropDownListFor(model => model.Class, new SelectList(new string[] { "Бізнес", "Економ" }), new { @class = "form-control" })
+            @Html.DropDownListFor(model => model.Class, new SelectList(new string[] { "Економ", "Бізнес" }), new { @class = "form-control" })
             @Html.ValidationMessageFor(m => m.Class, "", new { @class = "text-danger" })
         </div>
     </div>
 
+    <hr />
+    <h4>Готель:</h4>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Hotel, new { @class = "col-md-2 control-label" })
+        <div class="col-md-9">
+            @Html.DropDownListFor(model => model.Hotel, Enumerable.Empty<SelectListItem>(), new { @class = "form-control", @Id = "hotelsList" })
+            @Html.ValidationMessageFor(m => m.Hotel, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.PeopleCount, new { @class = "col-md-2 control-label" })
+        <div class="col-md-9">
+            @Html.TextBoxFor(m => m.PeopleCount, new { @class = "form-control", @type = "number", @id = "PeopleCount" })
+            @Html.ValidationMessageFor(m => m.PeopleCount, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.HotelClass, new { @class = "col-md-2 control-label" })
+        <div class="col-md-9">
+            @Html.DropDownListFor(model => model.HotelClass, new SelectList(new string[] { "Стандарт", "Люкс" }), new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.HotelClass, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.ExcursionsCount, new { @class = "col-md-2 control-label" })
+        <div class="col-md-9">
+            @Html.TextBoxFor(m => m.ExcursionsCount, new { @class = "form-control", @type = "number", @oninput = "onchangeevent();", @id = "ExcursionsCount" })
+            @Html.ValidationMessageFor(m => m.ExcursionsCount, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group" id="excurs1" style="display: none">
+        @Html.LabelFor(m => m.Excursion1, new { @class = "col-md-2 control-label" })
+        <div class="col-md-9">
+            @Html.DropDownListFor(model => model.Excursion1, Enumerable.Empty<SelectListItem>(), new { @class = "form-control", @Id = "excursionsList1" })
+            @Html.ValidationMessageFor(m => m.Excursion1, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group" id="excurs2" style="display: none">
+        @Html.LabelFor(m => m.Excursion2, new { @class = "col-md-2 control-label" })
+        <div class="col-md-9">
+            @Html.DropDownListFor(model => model.Excursion2, Enumerable.Empty<SelectListItem>(), new { @class = "form-control", @Id = "excursionsList2" })
+            @Html.ValidationMessageFor(m => m.Excursion2, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group" id="excurs3" style="display: none">
+        @Html.LabelFor(m => m.Excursion3, new { @class = "col-md-2 control-label" })
+        <div class="col-md-9">
+            @Html.DropDownListFor(model => model.Excursion3, Enumerable.Empty<SelectListItem>(), new { @class = "form-control", @Id = "excursionsList3" })
+            @Html.ValidationMessageFor(m => m.Excursion3, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group" id="excurs4" style="display: none">
+        @Html.LabelFor(m => m.Excursion4, new { @class = "col-md-2 control-label" })
+        <div class="col-md-9">
+            @Html.DropDownListFor(model => model.Excursion4, Enumerable.Empty<SelectListItem>(), new { @class = "form-control", @Id = "excursionsList4" })
+            @Html.ValidationMessageFor(m => m.Excursion4, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group" id="excurs5" style="display: none">
+        @Html.LabelFor(m => m.Excursion5, new { @class = "col-md-2 control-label" })
+        <div class="col-md-9">
+            @Html.DropDownListFor(model => model.Excursion5, Enumerable.Empty<SelectListItem>(), new { @class = "form-control", @Id = "excursionsList5" })
+            @Html.ValidationMessageFor(m => m.Excursion5, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <hr />
+    <h4>Маршрут зворотньої подорожі:</h4>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.BackRoute, new { @class = "col-md-2 control-label" })
+        <div class="col-md-9">
+            @Html.DropDownListFor(model => model.BackRoute, Enumerable.Empty<SelectListItem>(), new { @class = "form-control", @Id = "backRoutesList" })
+            @Html.ValidationMessageFor(m => m.BackRoute, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.BackClass, new { @class = "col-md-2 control-label" })
+        <div class="col-md-9">
+            @Html.DropDownListFor(model => model.BackClass, new SelectList(new string[] { "Економ", "Бізнес" }), new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.BackClass, "", new { @class = "text-danger" })
+        </div>
+    </div>
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-9">
@@ -123,12 +216,22 @@
         var urldestinationcities = '@Url.Action("GetDestinationCities", "Helper")';
         var urldestinationpoints = '@Url.Action("GetDestinationPoints", "Helper")';
         var urlroutes = '@Url.Action("GetRoutes", "Helper")';
+        var urlhotels = '@Url.Action("GetHotels", "Helper")';
+        var urlexcursions = '@Url.Action("GetExcursions", "Helper")';
+        var urlbackroutes = '@Url.Action("GetBackRoutes", "Helper")';
 
         var cities = $('#cityList');
         var points = $('#pointsList');
         var destinationcities = $('#destinationCityList');
         var destinationpoints = $('#destinationPointsList');
         var routes = $('#routesList');
+        var hotels = $('#hotelsList');
+        var excursions1 = $('#excursionsList1');
+        var excursions2 = $('#excursionsList2');
+        var excursions3 = $('#excursionsList3');
+        var excursions4 = $('#excursionsList4');
+        var excursions5 = $('#excursionsList5');
+        var backroutes = $('#backRoutesList');
 
        async function fetchCities(id) {
            await $.getJSON(urlcities, { id: id }, function(response) {
@@ -143,8 +246,6 @@
         async function fetchPoints(cityId, transportId) {
                 await $.getJSON(urlpoints, { cityId: cityId, transportId: transportId }, function (response) {
                 points.empty();
-
-                    console.log(response);
 
                 $.each(response, function (index, item) {
                     points.append($('<option value="' + item.Id + '">' + item.Name + '</option>'));
@@ -166,8 +267,6 @@
             await $.getJSON(urldestinationpoints, { cityId: cityId, transportId: transportId }, function (response) {
                 destinationpoints.empty();
 
-                console.log(response);
-
                 $.each(response, function (index, item) {
                     destinationpoints.append($('<option value="' + item.Id + '">' + item.Name + '</option>'));
                 });
@@ -184,6 +283,106 @@
             });
         }
 
+        async function fetchHotels(destinationPointId) {
+            await $.getJSON(urlhotels, { destinationPointId: destinationPointId }, function(response) {
+                hotels.empty();
+
+                $.each(response, function(index, item) {
+                    hotels.append($('<option value="'+ item.Id +'">' + item.Name + '</option>'));
+                });
+            });
+        }
+
+        async function fetchExcursions(hotelId) {
+            await $.getJSON(urlexcursions, { hotelId: hotelId }, function (response) {
+                excursions1.empty();
+                excursions2.empty();
+                excursions3.empty();
+                excursions4.empty();
+                excursions5.empty();
+
+                $.each(response, function (index, item) {
+                    excursions1.append($('<option value="' + item.Id + '">' + item.Name + '</option>'));
+                });
+
+                $.each(response, function (index, item) {
+                    excursions2.append($('<option value="' + item.Id + '">' + item.Name + '</option>'));
+                });
+
+                $.each(response, function (index, item) {
+                    excursions3.append($('<option value="' + item.Id + '">' + item.Name + '</option>'));
+                });
+
+                $.each(response, function (index, item) {
+                    excursions4.append($('<option value="' + item.Id + '">' + item.Name + '</option>'));
+                });
+
+                $.each(response, function (index, item) {
+                    excursions5.append($('<option value="' + item.Id + '">' + item.Name + '</option>'));
+                });
+            });
+        }
+
+        async function fetchBackRoutes(leavePointId, destinationPointId) {
+            await $.getJSON(urlbackroutes, { leavePointId: leavePointId, destinationPointId: destinationPointId}, function (response) {
+                backroutes.empty();
+
+                $.each(response, function (index, item) {
+                    backroutes.append($('<option value="' + item.Id + '">' + item.Name + '</option>'));
+                });
+            });
+        }
+
+        function onchangeevent() {
+            var count = document.getElementById("ExcursionsCount").value;
+            console.log(count);
+            switch (Number(count)) {
+            case 0:
+                    document.getElementById("excurs1").style.display = "none";
+                    document.getElementById("excurs2").style.display = "none";
+                    document.getElementById("excurs3").style.display = "none";
+                    document.getElementById("excurs4").style.display = "none";
+                    document.getElementById("excurs5").style.display = "none";
+                break;
+            case 1:
+                    document.getElementById("excurs1").style.display = "block";
+                    document.getElementById("excurs2").style.display = "none";
+                    document.getElementById("excurs3").style.display = "none";
+                    document.getElementById("excurs4").style.display = "none";
+                    document.getElementById("excurs5").style.display = "none";
+                break;
+            case 2:
+                    document.getElementById("excurs1").style.display = "block";
+                    document.getElementById("excurs2").style.display = "block";
+                    document.getElementById("excurs3").style.display = "none";
+                    document.getElementById("excurs4").style.display = "none";
+                    document.getElementById("excurs5").style.display = "none";
+                break;
+            case 3:
+                    document.getElementById("excurs1").style.display = "block";
+                    document.getElementById("excurs2").style.display = "block";
+                    document.getElementById("excurs3").style.display = "block";
+                    document.getElementById("excurs4").style.display = "none";
+                    document.getElementById("excurs5").style.display = "none";
+                break;
+            case 4:
+                    document.getElementById("excurs1").style.display = "block";
+                    document.getElementById("excurs2").style.display = "block";
+                    document.getElementById("excurs3").style.display = "block";
+                    document.getElementById("excurs4").style.display = "block";
+                    document.getElementById("excurs5").style.display = "none";
+                break;
+            case 5:
+                    document.getElementById("excurs1").style.display = "block";
+                    document.getElementById("excurs2").style.display = "block";
+                    document.getElementById("excurs3").style.display = "block";
+                    document.getElementById("excurs4").style.display = "block";
+                    document.getElementById("excurs5").style.display = "block";
+                break;
+            default:
+            }
+        }
+
         $(document).ready(function() {
             $("#countryList").change(async function () {
                 var id = $(this).val();
@@ -194,6 +393,10 @@
                 var idPoint = $("#pointsList").val();
                 var idDestinationPoint = $("#destinationPointsList").val();
                 await fetchRoutes(idPoint, idDestinationPoint);
+                await fetchBackRoutes(idPoint, idDestinationPoint);
+                await fetchHotels(idDestinationPoint);
+                var idHotel = $("#hotelsList").val();
+                await fetchExcursions(idHotel);   
             });
 
             $("#cityList").change(async function () {
@@ -203,6 +406,10 @@
                 var idPoint = $("#pointsList").val();
                 var idDestinationPoint = $("#destinationPointsList").val();
                 await fetchRoutes(idPoint, idDestinationPoint);
+                await fetchBackRoutes(idPoint, idDestinationPoint);
+                await fetchHotels(idDestinationPoint);
+                var idHotel = $("#hotelsList").val();
+                await fetchExcursions(idHotel);            
             });
 
             $("#transportList").change(async function () {
@@ -214,6 +421,10 @@
                 var idPoint = $("#pointsList").val();
                 var idDestinationPoint = $("#destinationPointsList").val();
                 await fetchRoutes(idPoint, idDestinationPoint);
+                await fetchBackRoutes(idPoint, idDestinationPoint);
+                await fetchHotels(idDestinationPoint);
+                var idHotel = $("#hotelsList").val();
+                await fetchExcursions(idHotel);
             });
 
             $("#destinationCountryList").change(async function () {
@@ -225,6 +436,10 @@
                 var idPoint = $("#pointsList").val();
                 var idDestinationPoint = $("#destinationPointsList").val();
                 await fetchRoutes(idPoint, idDestinationPoint);
+                await fetchBackRoutes(idPoint, idDestinationPoint);
+                await fetchHotels(idDestinationPoint);
+                var idHotel = $("#hotelsList").val();
+                await fetchExcursions(idHotel);
             });
 
             $("#destinationCityList").change(async function () {
@@ -234,18 +449,35 @@
                 var idPoint = $("#pointsList").val();
                 var idDestinationPoint = $("#destinationPointsList").val();
                 await fetchRoutes(idPoint, idDestinationPoint);
+                await fetchBackRoutes(idPoint, idDestinationPoint);
+                await fetchHotels(idDestinationPoint);
+                var idHotel = $("#hotelsList").val();
+                await fetchExcursions(idHotel);
             });
 
             $("#pointsList").change(async function () {
                 var id = $(this).val();
                 var idDestinationPoint = $("#destinationPointsList").val();
                 await fetchRoutes(id, idDestinationPoint);
+                await fetchBackRoutes(id, idDestinationPoint);
+                await fetchHotels(idDestinationPoint);
+                var idHotel = $("#hotelsList").val();
+                await fetchExcursions(idHotel);
             });
 
             $("#destinationPointsList").change(async function () {
                 var id = $(this).val();
                 var idPoint = $("#pointsList").val();
                 await fetchRoutes(idPoint, id);
+                await fetchBackRoutes(idPoint, id);
+                await fetchHotels(id);
+                var idHotel = $("#hotelsList").val();
+                await fetchExcursions(idHotel);
+            });
+
+            $("#hotelsList").change(async function() {
+                var id = $(this).val();
+                await fetchExcursions(id);
             });
 
             fetchCities(1);
@@ -253,6 +485,9 @@
             fetchDestinationCities(1);
             fetchDestinationPoints(1, 1);
             fetchRoutes(1, 1);
+            fetchHotels(1);
+            fetchExcursions(1);
+            fetchBackRoutes(1, 1);
         });
     </script>
 }

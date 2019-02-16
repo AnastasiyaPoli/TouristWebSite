@@ -15,5 +15,13 @@ namespace DAL.DBHelpers
                 return context.Transports.ToList();
             }
         }
+
+        public static Transport GetTransportById(long id)
+        {
+            using (context = new ApplicationDbContext())
+            {
+                return context.Transports.FirstOrDefault(x => x.Id == id);
+            }
+        }
     }
 }

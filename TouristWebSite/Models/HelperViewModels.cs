@@ -85,5 +85,46 @@ namespace TouristWebSite.Models
         [Display(Name = "Клас: ")]
         [Required(ErrorMessage = "Необхідно заповнити поле \"Клас\".")]
         public string Class { get; set; }
+
+        [Display(Name = "Готель: ")]
+        [Required(ErrorMessage = "Необхідно заповнити поле \"Готель\".")]
+        public long Hotel { get; set; }
+
+        [Display(Name = "Кількість людей: ")]
+        [Required(ErrorMessage = "Необхідно заповнити поле \"Кількість людей\".")]
+        [Range(1, 20, ErrorMessage = "Кількість людей повинна бути числом від 1 до 20.")]
+        public long PeopleCount { get; set; }
+
+        [Display(Name = "Клас номеру: ")]
+        [Required(ErrorMessage = "Необхідно заповнити поле \"Клас номеру\".")]
+        public string HotelClass { get; set; }
+
+        [Display(Name = "Кількість екскурсій: ")]
+        [Required(ErrorMessage = "Необхідно заповнити поле \"Кількість екскурсій\".")]
+        [Range(0, 5, ErrorMessage = "Кількість екскурсій повинна бути числом від 0 до 5.")]
+        public long ExcursionsCount { get; set; }
+
+        [Display(Name = "Екскурсія №1: ")]
+        public long? Excursion1 { get; set; }
+
+        [Display(Name = "Екскурсія №2: ")]
+        public long? Excursion2 { get; set; }
+
+        [Display(Name = "Екскурсія №3: ")]
+        public long? Excursion3 { get; set; }
+
+        [Display(Name = "Екскурсія №4: ")]
+        public long? Excursion4 { get; set; }
+
+        [Display(Name = "Екскурсія №5: ")]
+        public long? Excursion5 { get; set; }
+
+        [Display(Name = "Зворотний маршрут: ")]
+        [Required(ErrorMessage = "Необхідно заповнити поле \"Зворотний маршрут\".")]
+        public long BackRoute { get; set; }
+
+        [Display(Name = "Клас: ")]
+        [Required(ErrorMessage = "Необхідно заповнити поле \"Клас\".")]
+        public string BackClass { get; set; }
     }
 }

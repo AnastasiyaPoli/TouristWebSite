@@ -15,5 +15,13 @@ namespace DAL.DBHelpers
                 return context.DestinationPoints.Where(x => x.DestinationCityId == cityId && x.TransportId == transportId).ToList();
             }
         }
+
+        public static DestinationPoint GetDestinationPointById(long id)
+        {
+            using (context = new ApplicationDbContext())
+            {
+                return context.DestinationPoints.FirstOrDefault(x => x.Id == id);
+            }
+        }
     }
 }

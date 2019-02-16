@@ -15,5 +15,13 @@ namespace DAL.DBHelpers
                 return context.DestinationCountries.ToList();
             }
         }
+
+        public static DestinationCountry GetCountryById(long id)
+        {
+            using (context = new ApplicationDbContext())
+            {
+                return context.DestinationCountries.FirstOrDefault(x => x.Id == id);
+            }
+        }
     }
 }

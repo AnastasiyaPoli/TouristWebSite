@@ -1,7 +1,9 @@
 ﻿using DAL.DBHelpers;
 using System;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using TouristWebSite.Models;
+using TouristWebSite.Helpers;
 
 namespace TouristWebSite.Controllers
 {
@@ -75,6 +77,7 @@ namespace TouristWebSite.Controllers
                     Countries = CountriesDBHelper.GetCountries(),
                     Transports = TransportsDBHelper.GetTransports(),
                     DestinationCountries = DestinationCountriesDBHelper.GetCountries(),
+                    PeopleCount = 1
                 };
 
                 return View(model);
@@ -89,8 +92,11 @@ namespace TouristWebSite.Controllers
         public ActionResult TourConstruct(ConstructViewModel model)
         {
             try
-            { 
-                return View(model);
+            {
+                long newId = ConstructedToursDBHelper.Add(model, User.Identity.GetUserId());
+                string filename = PDFGeneratorHelper.GenerateConstructPDF(model, newId);
+                EmailSenderHelper.SendEmail(UsersDBHelper.GetById(User.Identity.GetUserId()).Email, "Підтвердження бронювання туру.", "Тур було успішно заброньовано, деталі можна переглянути у прикріпленому документі.", filename);
+                return RedirectToAction("Index", new { Message = "Тур було успішно сконструйовано. Документ про бронювання відправлено на електронну пошту." });
             }
             catch (Exception e)
             {
@@ -124,8 +130,40 @@ namespace TouristWebSite.Controllers
 
         [HttpGet]
         public JsonResult GetRoutes(long leavePointId, long destinationPointId)
+         {
+            var temp = RoutesDBHelper.GetRoutes(leavePointId, destinationPointId);
+
+            foreach (var item in temp)
+            {
+                item.Name = $"{item.Name} ({item.Start.ToShortDateString()}, {item.Start.ToShortTimeString()} - {item.End.ToShortDateString()}, {item.End.ToShortTimeString()})";
+            }
+
+            return Json(temp, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult GetHotels(long destinationPointId)
         {
-            var temp = RoutesDBHelper.GetRoutesForLeavePoint(leavePointId, destinationPointId);
+            var temp = HotelsDBHelper.GetHotels(destinationPointId);
+
+            foreach (var item in temp)
+            {
+                item.Name = $"{item.Name} ({item.Price}$)";
+            }
+
+            return Json(temp, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult GetExcursions(long hotelId)
+        {
+            return Json(ExcursionsDBHelper.GetExcursions(hotelId), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult GetBackRoutes(long leavePointId, long destinationPointId)
+        {
+            var temp = BackRoutesDBHelper.GetBackRoutes(leavePointId, destinationPointId);
 
             foreach (var item in temp)
             {

@@ -210,6 +210,10 @@
     <Compile Include="Helpers\DBHelpers\DestinationCitiesDBHelper.cs" />
     <Compile Include="Helpers\DBHelpers\DestinationCountriesDBHelper.cs" />
     <Compile Include="Helpers\DBHelpers\DestinationPointsDBHelper.cs" />
+    <Compile Include="Helpers\DBHelpers\ExcursionsDBHelper.cs" />
+    <Compile Include="Helpers\DBHelpers\HotelsDBHelper.cs" />
+    <Compile Include="Helpers\DBHelpers\ConstructedToursDBHelper.cs" />
+    <Compile Include="Helpers\DBHelpers\BackRoutesDBHelper.cs" />
     <Compile Include="Helpers\DBHelpers\RoutesDBHelper.cs" />
     <Compile Include="Helpers\DBHelpers\LeavePointsDBHelper.cs" />
     <Compile Include="Helpers\DBHelpers\TransportsDBHelper.cs" />
@@ -239,6 +243,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Documents\Constructed\TemplateConstructed.html" />
     <Content Include="Content\Img\Mountains.png" />
     <Content Include="Content\Documents\Template.html" />
     <Content Include="favicon.ico" />

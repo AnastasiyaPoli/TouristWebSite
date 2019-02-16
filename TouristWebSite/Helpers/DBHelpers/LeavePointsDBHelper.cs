@@ -15,5 +15,13 @@ namespace DAL.DBHelpers
                 return context.LeavePoints.Where(x => x.CityId == cityId && x.TransportId == transportId).ToList();
             }
         }
+
+        public static LeavePoint GetLeavePointById(long id)
+        {
+            using (context = new ApplicationDbContext())
+            {
+                return context.LeavePoints.FirstOrDefault(x => x.Id == id);
+            }
+        }
     }
 }

@@ -140,7 +140,7 @@ h, h1, h2, h3, h4, h5, h6, p, label {
 }
 
 .form-control {
-    min-width: 50% !important;
+    min-width: 60% !important;
 }
 
 @media (min-width: 768px) {

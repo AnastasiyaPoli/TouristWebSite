@@ -4,23 +4,23 @@ using System.Linq;
 
 namespace DAL.DBHelpers
 {
-    public static class CitiesDBHelper
+    public static class ExcursionsDBHelper
     {
         private static ApplicationDbContext context;
 
-        public static List<City> GetCitiesForCountry(long countryId)
+        public static List<Excursion> GetExcursions(long hotelId)
         {
             using (context = new ApplicationDbContext())
             {
-                return context.Cities.Where(x => x.CountryId == countryId).ToList();
+                return context.Excursions.Where(x => x.HotelId == hotelId).ToList();
             }
         }
 
-        public static City GetCityById(long id)
+        public static Excursion GetExcursionById(long? id)
         {
             using (context = new ApplicationDbContext())
             {
-                return context.Cities.FirstOrDefault(x => x.Id == id);
+                return context.Excursions.FirstOrDefault(x => x.Id == id);
             }
         }
     }
