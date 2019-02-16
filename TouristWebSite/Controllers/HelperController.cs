@@ -148,7 +148,7 @@ namespace TouristWebSite.Controllers
 
             foreach (var item in temp)
             {
-                item.Name = $"{item.Name} ({item.Price}$)";
+                item.Name = $"{item.Name} ({item.PriceStandart}грн./{item.PriceLux}грн.)";
             }
 
             return Json(temp, JsonRequestBehavior.AllowGet);
@@ -171,6 +171,12 @@ namespace TouristWebSite.Controllers
             }
 
             return Json(temp, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public long GetPrice(long routeId, bool isBusiness, long backRouteId, bool isBackBusiness, long hotelId, bool isLux, long ex1, long ex2, long ex3, long ex4, long ex5, long peopleCount)
+        {
+            return PriceCounterHelper.CountPrice(routeId, isBusiness, backRouteId, isBackBusiness, hotelId, isLux, ex1, ex2, ex3, ex4, ex5, peopleCount);
         }
     }
 }

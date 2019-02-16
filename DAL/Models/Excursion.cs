@@ -14,5 +14,7 @@ namespace DAL.Models
         [ForeignKey("Hotel")]
         public long HotelId { get; set; }
         public Hotel Hotel { get; set; }
+
+        public long Price { get; set; }
     }
 }

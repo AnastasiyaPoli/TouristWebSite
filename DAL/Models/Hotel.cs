@@ -15,6 +15,7 @@ namespace DAL.Models
         public long DestinationPointId { get; set; }
         public DestinationPoint DestinationPoint { get; set; }
 
-        public int Price { get; set; }
+        public long PriceStandart { get; set; }
+        public long PriceLux { get; set; }
     }
 }

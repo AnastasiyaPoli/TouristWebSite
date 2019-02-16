@@ -99,7 +99,7 @@
     <div class="form-group">
         @Html.LabelFor(m => m.Class, new { @class = "col-md-2 control-label" })
         <div class="col-md-9">
-            @Html.DropDownListFor(model => model.Class, new SelectList(new string[] { "Економ", "Бізнес" }), new { @class = "form-control" })
+            @Html.DropDownListFor(model => model.Class, new SelectList(new string[] { "Економ", "Бізнес" }), new { @class = "form-control", @id="routeClass" })
             @Html.ValidationMessageFor(m => m.Class, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -126,7 +126,7 @@
     <div class="form-group">
         @Html.LabelFor(m => m.HotelClass, new { @class = "col-md-2 control-label" })
         <div class="col-md-9">
-            @Html.DropDownListFor(model => model.HotelClass, new SelectList(new string[] { "Стандарт", "Люкс" }), new { @class = "form-control" })
+            @Html.DropDownListFor(model => model.HotelClass, new SelectList(new string[] { "Стандарт", "Люкс" }), new { @class = "form-control", @id = "hotelClass" })
             @Html.ValidationMessageFor(m => m.HotelClass, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -193,9 +193,12 @@
     <div class="form-group">
         @Html.LabelFor(m => m.BackClass, new { @class = "col-md-2 control-label" })
         <div class="col-md-9">
-            @Html.DropDownListFor(model => model.BackClass, new SelectList(new string[] { "Економ", "Бізнес" }), new { @class = "form-control" })
+            @Html.DropDownListFor(model => model.BackClass, new SelectList(new string[] { "Економ", "Бізнес" }), new { @class = "form-control", @id = "backRouteClass" })
             @Html.ValidationMessageFor(m => m.BackClass, "", new { @class = "text-danger" })
         </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-offset-2 col-md-9" id="PriceCount">Вартість туру на обрану кількість людей:  грн.</label>
     </div>
 
     <div class="form-group">
@@ -204,7 +207,6 @@
         </div>
     </div>
 }
-
 
 
 @section Scripts {
@@ -219,6 +221,7 @@
         var urlhotels = '@Url.Action("GetHotels", "Helper")';
         var urlexcursions = '@Url.Action("GetExcursions", "Helper")';
         var urlbackroutes = '@Url.Action("GetBackRoutes", "Helper")';
+        var urlprice = '@Url.Action("GetPrice", "Helper")';
 
         var cities = $('#cityList');
         var points = $('#pointsList');
@@ -333,9 +336,14 @@
             });
         }
 
-        function onchangeevent() {
+        async function fetchPrice(routeId, isBusiness, backRouteId, isBackBusiness, hotelId, isLux, ex1, ex2, ex3, ex4, ex5, peopleCount) {
+            await $.getJSON(urlprice, { routeId: routeId, isBusiness: isBusiness, backRouteId: backRouteId, isBackBusiness: isBackBusiness, hotelId: hotelId, isLux: isLux, ex1: ex1, ex2: ex2, ex3: ex3, ex4: ex4, ex5: ex5, peopleCount: peopleCount }, function (response) {
+                document.getElementById("PriceCount").innerHTML = "Вартість індивідуального туру на обрану кількість людей: " + response + " грн.";
+            });
+        }
+
+        async function onchangeevent() {
             var count = document.getElementById("ExcursionsCount").value;
-            console.log(count);
             switch (Number(count)) {
             case 0:
                     document.getElementById("excurs1").style.display = "none";
@@ -381,9 +389,67 @@
                 break;
             default:
             }
+            await countPrice();
         }
 
-        $(document).ready(function() {
+        async function countPrice() {
+            var idRouteClass = $("#routeClass").prop('selectedIndex');
+            var isBusiness = false;
+            if (idRouteClass == 1) {
+                isBusiness = true;
+            }
+            var idBackRouteClass = $("#backRouteClass").prop('selectedIndex');
+            var isBackBusiness = false;
+            if (idBackRouteClass == 1) {
+                isBackBusiness = true;
+            }
+            var idHotelClass = $("#hotelClass").prop('selectedIndex');
+            var isLux = false;
+            if (idHotelClass == 1) {
+                isLux = true;
+            }
+            var ex1 = 0;
+            var ex2 = 0;
+            var ex3 = 0;
+            var ex4 = 0;
+            var ex5 = 0;
+            var count = document.getElementById("ExcursionsCount").value;
+            switch (Number(count)) {
+                case 0:
+
+                    break;
+                case 1:
+                    ex1 = $("#excursionsList1").val();
+                    break;
+                case 2:
+                    ex1 = $("#excursionsList1").val();
+                    ex2 = $("#excursionsList2").val();
+                    break;
+                case 3:
+                    ex1 = $("#excursionsList1").val();
+                    ex2 = $("#excursionsList2").val();
+                    ex3 = $("#excursionsList3").val();
+                    break;
+                case 4:
+                    ex1 = $("#excursionsList1").val();
+                    ex2 = $("#excursionsList2").val();
+                    ex3 = $("#excursionsList3").val();
+                    ex4 = $("#excursionsList4").val();
+                    break;
+                case 5:
+                    ex1 = $("#excursionsList1").val();
+                    ex2 = $("#excursionsList2").val();
+                    ex3 = $("#excursionsList3").val();
+                    ex4 = $("#excursionsList4").val();
+                    ex5 = $("#excursionsList5").val();
+                    break;
+                default:
+            }
+
+            await fetchPrice($("#routesList").val(), isBusiness, $("#backRoutesList").val(), isBackBusiness, $("#hotelsList").val(), isLux, ex1, ex2, ex3, ex4, ex5, $("#PeopleCount").val());
+        }
+
+        $(document).ready(async function() {
             $("#countryList").change(async function () {
                 var id = $(this).val();
                 await fetchCities(id);
@@ -396,7 +462,8 @@
                 await fetchBackRoutes(idPoint, idDestinationPoint);
                 await fetchHotels(idDestinationPoint);
                 var idHotel = $("#hotelsList").val();
-                await fetchExcursions(idHotel);   
+                await fetchExcursions(idHotel);
+                await countPrice();
             });
 
             $("#cityList").change(async function () {
@@ -409,7 +476,8 @@
                 await fetchBackRoutes(idPoint, idDestinationPoint);
                 await fetchHotels(idDestinationPoint);
                 var idHotel = $("#hotelsList").val();
-                await fetchExcursions(idHotel);            
+                await fetchExcursions(idHotel);
+                await countPrice();
             });
 
             $("#transportList").change(async function () {
@@ -425,6 +493,7 @@
                 await fetchHotels(idDestinationPoint);
                 var idHotel = $("#hotelsList").val();
                 await fetchExcursions(idHotel);
+                await countPrice();
             });
 
             $("#destinationCountryList").change(async function () {
@@ -440,6 +509,7 @@
                 await fetchHotels(idDestinationPoint);
                 var idHotel = $("#hotelsList").val();
                 await fetchExcursions(idHotel);
+                await countPrice();
             });
 
             $("#destinationCityList").change(async function () {
@@ -453,6 +523,7 @@
                 await fetchHotels(idDestinationPoint);
                 var idHotel = $("#hotelsList").val();
                 await fetchExcursions(idHotel);
+                await countPrice();
             });
 
             $("#pointsList").change(async function () {
@@ -463,6 +534,7 @@
                 await fetchHotels(idDestinationPoint);
                 var idHotel = $("#hotelsList").val();
                 await fetchExcursions(idHotel);
+                await countPrice();
             });
 
             $("#destinationPointsList").change(async function () {
@@ -473,21 +545,68 @@
                 await fetchHotels(id);
                 var idHotel = $("#hotelsList").val();
                 await fetchExcursions(idHotel);
+                await countPrice();
             });
 
             $("#hotelsList").change(async function() {
                 var id = $(this).val();
                 await fetchExcursions(id);
+                await countPrice();
             });
 
-            fetchCities(1);
-            fetchPoints(1, 1);
-            fetchDestinationCities(1);
-            fetchDestinationPoints(1, 1);
-            fetchRoutes(1, 1);
-            fetchHotels(1);
-            fetchExcursions(1);
-            fetchBackRoutes(1, 1);
+            $("#routesList").change(async function () {
+                await countPrice();
+            });
+
+            $("#backRoutesList").change(async function () {
+                await countPrice();
+            });
+
+            $("#routeClass").change(async function () {
+                await countPrice();
+            });
+
+            $("#backRouteClass").change(async function () {
+                await countPrice();
+            });
+
+            $("#hotelClass").change(async function () {
+                await countPrice();
+            });
+
+            $("#excursionsList1").change(async function () {
+                await countPrice();
+            });
+
+            $("#excursionsList2").change(async function () {
+                await countPrice();
+            });
+
+            $("#excursionsList3").change(async function () {
+                await countPrice();
+            });
+
+            $("#excursionsList4").change(async function () {
+                await countPrice();
+            });
+
+            $("#excursionsList5").change(async function () {
+                await countPrice();
+            });
+
+            $("#PeopleCount").change(async function () {
+                await countPrice();
+            });
+
+            await fetchCities($("#countryList").val());
+            await fetchPoints($("#cityList").val(), $("#transportList").val());
+            await fetchDestinationCities($("#destinationCountryList").val());
+            await fetchDestinationPoints($("#destinationCityList").val(), $("#transportList").val());
+            await fetchRoutes($("#pointsList").val(), $("#destinationPointsList").val());
+            await fetchHotels($("#destinationPointsList").val());
+            await fetchExcursions($("#hotelsList").val());
+            await fetchBackRoutes($("#pointsList").val(), $("#destinationPointsList").val());
+            await fetchPrice($("#routesList").val(), false, $("#backRoutesList").val(), false, $("#hotelsList").val(), false, 0, 0, 0, 0, 0, $("#PeopleCount").val());
         });
     </script>
 }

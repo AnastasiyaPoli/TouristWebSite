@@ -247,6 +247,30 @@
     <Compile Include="Migrations\201902161100038_47.Designer.cs">
       <DependentUpon>201902161100038_47.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902161736329_48.cs" />
+    <Compile Include="Migrations\201902161736329_48.Designer.cs">
+      <DependentUpon>201902161736329_48.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902161737447_49.cs" />
+    <Compile Include="Migrations\201902161737447_49.Designer.cs">
+      <DependentUpon>201902161737447_49.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902161739017_50.cs" />
+    <Compile Include="Migrations\201902161739017_50.Designer.cs">
+      <DependentUpon>201902161739017_50.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902161740117_51.cs" />
+    <Compile Include="Migrations\201902161740117_51.Designer.cs">
+      <DependentUpon>201902161740117_51.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902161741455_52.cs" />
+    <Compile Include="Migrations\201902161741455_52.Designer.cs">
+      <DependentUpon>201902161741455_52.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902161743054_53.cs" />
+    <Compile Include="Migrations\201902161743054_53.Designer.cs">
+      <DependentUpon>201902161743054_53.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Excursion.cs" />
     <Compile Include="Models\ConstructedTour.cs" />
@@ -418,6 +442,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902161100038_47.resx">
       <DependentUpon>201902161100038_47.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902161736329_48.resx">
+      <DependentUpon>201902161736329_48.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902161737447_49.resx">
+      <DependentUpon>201902161737447_49.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902161739017_50.resx">
+      <DependentUpon>201902161739017_50.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902161740117_51.resx">
+      <DependentUpon>201902161740117_51.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902161741455_52.resx">
+      <DependentUpon>201902161741455_52.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902161743054_53.resx">
+      <DependentUpon>201902161743054_53.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

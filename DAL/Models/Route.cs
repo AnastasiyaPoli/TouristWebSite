@@ -22,5 +22,8 @@ namespace DAL.Models
 
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
+
+        public long PriceEconom { get; set; }
+        public long PriceBusiness { get; set; }
     }
 }

@@ -87,7 +87,38 @@ namespace TouristWebSite.Helpers
 
                     case "price":
                         {
-                            node.InnerHtml += "PRIIIIIIIIIIIIIIIIIIICE";
+                            long? ex1 = 0;
+                            long? ex2 = 0;
+                            long? ex3 = 0;
+                            long? ex4 = 0;
+                            long? ex5 = 0;
+
+                            if (model.ExcursionsCount > 0)
+                            {
+                                ex1 = model.Excursion1;
+                            }
+
+                            if (model.ExcursionsCount > 1)
+                            {
+                                ex2 = model.Excursion2;
+                            }
+
+                            if (model.ExcursionsCount > 2)
+                            {
+                                ex3 = model.Excursion3;
+                            }
+
+                            if (model.ExcursionsCount > 3)
+                            {
+                                ex4 = model.Excursion4;
+                            }
+
+                            if (model.ExcursionsCount > 4)
+                            {
+                                ex5 = model.Excursion5;
+                            }
+
+                            node.InnerHtml += PriceCounterHelper.CountPrice(model.Route, model.Class == "Бізнес", model.BackRoute, model.BackClass == "Бізнес", model.Hotel, model.HotelClass == "Люкс", (long)ex1, (long)ex2, (long)ex3, (long)ex4, (long)ex5, model.PeopleCount) + "грн.";
                         }
                         break;
 
@@ -135,7 +166,8 @@ namespace TouristWebSite.Helpers
 
                     case "route":
                         {
-                            node.InnerHtml += RoutesDBHelper.GetRouteById(model.Route).Name;
+                            var route = RoutesDBHelper.GetRouteById(model.Route);
+                            node.InnerHtml += route.Name + "(" + route.Start.ToShortDateString() + ", " + route.Start.ToShortTimeString() + " - " + route.End.ToShortDateString() + ", " + route.End.ToShortTimeString() + ")";
                         }
                         break;
 
@@ -161,27 +193,27 @@ namespace TouristWebSite.Helpers
                         {
                             string content = string.Empty;
 
-                            if (model.Excursion1 != null)
+                            if (model.ExcursionsCount > 0)
                             {
                                 content += ExcursionsDBHelper.GetExcursionById(model.Excursion1).Name + ", ";
                             }
 
-                            if (model.Excursion2 != null)
+                            if (model.ExcursionsCount > 1)
                             {
                                 content += ExcursionsDBHelper.GetExcursionById(model.Excursion2).Name + ", ";
                             }
 
-                            if (model.Excursion3 != null)
+                            if (model.ExcursionsCount > 2)
                             {
                                 content += ExcursionsDBHelper.GetExcursionById(model.Excursion3).Name + ", ";
                             }
 
-                            if (model.Excursion4 != null)
+                            if (model.ExcursionsCount > 3)
                             {
                                 content += ExcursionsDBHelper.GetExcursionById(model.Excursion4).Name + ", ";
                             }
 
-                            if (model.Excursion5 != null)
+                            if (model.ExcursionsCount > 4)
                             {
                                 content += ExcursionsDBHelper.GetExcursionById(model.Excursion5).Name + ", ";
                             }
@@ -197,7 +229,8 @@ namespace TouristWebSite.Helpers
 
                     case "backroute":
                         {
-                            node.InnerHtml += BackRoutesDBHelper.GetBackRouteById(model.BackRoute).Name;
+                            var route = BackRoutesDBHelper.GetBackRouteById(model.BackRoute);
+                            node.InnerHtml += route.Name + "(" + route.Start.ToShortDateString() + ", " + route.Start.ToShortTimeString() + " - " + route.End.ToShortDateString() + ", " + route.End.ToShortTimeString() + ")";
                         }
                         break;
 
