@@ -1,7 +1,9 @@
 ﻿using DAL.DBHelpers;
+using DAL.Models;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
@@ -14,17 +16,120 @@ namespace TouristWebSite.Controllers
     public class ToursController : Controller
     {
         [AllowAnonymous]
-        public ActionResult Index(string message = "")
+        [HttpGet]
+        public ActionResult Index(string message = "", string search = "")
         {
             ViewBag.StatusMessage = message;
+            search = search.ToLower();
+
+            var tours = ToursDBHelper.GetActive();
+            List<TourPlace> tourPlaces = new List<TourPlace>();
+
+            DateTime max = DateTime.Now;
+            long maxPrice = 0;
+
+            if (tours.Count > 0)
+            {
+                max = tours[0].DateEnd;
+            }
+
+            foreach (var tour in tours)
+            {
+                if (tour.DateEnd > max)
+                {
+                    max = tour.DateEnd;
+                }
+
+                if (tour.Price > maxPrice)
+                {
+                    maxPrice = tour.Price;
+                }
+
+                var onePlace = tour.Place.Split(',').ToList();
+                foreach (var place in onePlace)
+                {
+                    if (tourPlaces.FirstOrDefault(x => x.Place == place) == null)
+                    {
+                        tourPlaces.Add(new TourPlace()
+                        {
+                            Place = place,
+                            IsChosen = false
+                        });
+                    }
+                }
+            }
 
             var model = new ActiveToursViewModel()
             {
-                ActiveTours = ToursDBHelper.GetActive(),
-                Favourites = FavouritesDBHelper.GetForUser(User.Identity.GetUserId())
+                ActiveTours = tours
+                    .Where(x =>
+                         x.Name.ToLower().Contains(search) ||
+                         x.Description.ToLower().Contains(search) ||
+                         x.Place.ToLower().Contains(search))
+                    .ToList(),
+                Favourites = FavouritesDBHelper.GetForUser(User.Identity.GetUserId()),
+                Search = string.Empty,
+                TourPlaces = tourPlaces,
+                DateFrom = DateTime.Now,
+                DateTo = max,
+                PriceTo = maxPrice
             };
 
             return View(model);
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult Index(ActiveToursViewModel model)
+        {
+            var tours = ToursDBHelper.GetActive();
+            List<Tour> rezultTours = new List<Tour>();
+
+            foreach (var tour in tours)
+            {
+                if (!(tour.DateStart >= model.DateFrom && tour.DateEnd <= model.DateTo && tour.Price <= model.PriceTo))
+                {
+                    continue;
+                }
+
+                foreach (var place in model.TourPlaces)
+                {
+                    var lowerPlace = place.Place.ToLower();
+                    if (place.IsChosen && tour.Place.ToLower().Contains(lowerPlace))
+                    {
+                        rezultTours.Add(tour);
+                        break;
+                    }
+                }
+            }
+
+            var newModel = new ActiveToursViewModel()
+            {
+                ActiveTours = rezultTours,
+                Favourites = FavouritesDBHelper.GetForUser(User.Identity.GetUserId()),
+                Search = string.Empty,
+                TourPlaces = model.TourPlaces,
+                DateTo = model.DateTo,
+                DateFrom = model.DateFrom,
+                PriceTo = model.PriceTo
+            };
+
+            ViewBag.StatusMessage = "Фільтр було успішно застосовано.";
+            return View(newModel);
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult Search(ActiveToursViewModel model)
+        {
+            return RedirectToRoute(new { controller = "Tours", action = "Index", message = "Пошук було успішно виконано.", search = model.Search });
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult Test(ActiveToursViewModel model)
+        {
+            return RedirectToRoute(new { controller = "Tours", action = "Index", search = model.Search });
         }
 
         [AllowAnonymous]
@@ -310,7 +415,7 @@ namespace TouristWebSite.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToRoute(new { controller = "Tours", action = "Details", itemId = model.ChosenTourId});
+                return RedirectToRoute(new { controller = "Tours", action = "Details", itemId = model.ChosenTourId });
             }
         }
 

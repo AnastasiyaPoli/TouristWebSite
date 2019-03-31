@@ -9,6 +9,21 @@ namespace TouristWebSite.Models
     {
         public List<Tour> ActiveTours { get; set; }
         public List<Favourite> Favourites { get; set; }
+        public List<TourPlace> TourPlaces { get; set; }
+        public long PriceTo { get; set; }
+
+        [Display(Name = "Від: ")]
+        public DateTime DateFrom { get; set; }
+
+        [Display(Name = "До: ")]
+        public DateTime DateTo { get; set; }
+        public string Search { get; set; }
+    }
+
+    public class TourPlace
+    {
+        public string Place { get; set; }
+        public bool IsChosen { get; set; }
     }
 
     public class ChosenTourViewModel

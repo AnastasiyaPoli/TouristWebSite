@@ -4,6 +4,54 @@
 <p class="text-success">@ViewBag.StatusMessage</p>
 <h4>Переглядайте та бронюйте наші пакетні тури.</h4>
 
+@using (Html.BeginForm("Search", "Tours", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <div class="flexhorizontal" style="margin-bottom: 10px">
+        @Html.TextBoxFor(m => m.Search, new { @id = "searchBox", @class = "form-control search-text-box" })
+        <button type="submit" class="btn btn-default no-underline"> <span> <i class="fas fa-search"></i> </span> </button>
+        <a class="btn btn-default no-underline" href="@Url.Action("Index", "Tours")"> <span> <i class="fas fa-times"></i> </span> </a>
+    </div>
+}
+
+@using (Html.BeginForm("Index", "Tours", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <div class="flexchangeable">
+        <div>
+            <h4>Оберіть країни:</h4>
+            @for (var i = 0; i < Model.TourPlaces.Count(); i++)
+            {
+                <div class="flexhorizontalstart">
+                    @Html.HiddenFor(m => m.TourPlaces[i].Place)
+                    @Html.CheckBoxFor(m => m.TourPlaces[i].IsChosen)
+                    <h4 style="margin-top: 0px; margin-left: 5px">
+                        @Model.TourPlaces[i].Place
+                    </h4>
+                </div>
+            }
+        </div>
+        <div>
+            <h4>Оберіть діапазон дат:</h4>
+            <div class="flexhorizontal">
+                @Html.LabelFor(m => m.DateFrom, new { @style = "margin-right:5px; margin-top: 6px" })
+                @Html.TextBoxFor(m => m.DateFrom, new { @class = "form-control", @type = "date", @Value = Model.DateFrom.ToString("yyyy-MM-dd"), @style = "margin-bottom: 10px" })
+            </div>
+            <div class="flexhorizontal">
+                @Html.LabelFor(m => m.DateTo, new { @style = "margin-right:5px; margin-top: 6px" })
+                @Html.TextBoxFor(m => m.DateTo, new { @class = "form-control", @type = "date", @Value = Model.DateTo.ToString("yyyy-MM-dd") })
+            </div>
+        </div>
+        <div>
+            <h4>Оберіть максимальну ціну:</h4>
+            @Html.TextBoxFor(m => m.PriceTo, new { @class = "form-control", @type = "number" })
+        </div>
+    </div>
+
+    <div class="flexhorizontalstart" style="margin-top: 10px; margin-bottom: 10px">
+        <button type="submit" class="btn btn-default no-underline" style="margin-right: 5px;"> <span> <i class="fas fa-filter"></i> Застосувати фільтр</span> </button>
+        <a class="btn btn-default no-underline" href="@Url.Action("Index", "Tours")"> <span> <i class="fas fa-times"></i> Прибрати фільтр</span> </a>
+    </div>
+}
+
 @foreach (var item in Model.ActiveTours)
 {
     <div class="jumbotron transparent transp-container">

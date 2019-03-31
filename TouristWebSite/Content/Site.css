@@ -154,3 +154,29 @@ rect {
     fill: #2C4A55 !important;
     fill-opacity: 0.5;
 }
+
+.flexhorizontal {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.flexhorizontalstart {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.flexchangeable{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+@media (max-width: 768px) {
+    .flexchangeable{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+}

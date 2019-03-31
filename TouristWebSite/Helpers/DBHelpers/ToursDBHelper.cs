@@ -1,4 +1,5 @@
-﻿using DAL.Models;
+﻿using System;
+using DAL.Models;
 using System.Collections.Generic;
 using System.Linq;
 using TouristWebSite.Models;
@@ -13,7 +14,7 @@ namespace DAL.DBHelpers
         {
             using (context = new ApplicationDbContext())
             {
-                return context.Tours.Where(x => x.IsActive).ToList();
+                return context.Tours.Where(x => x.IsActive && x.DateStart > DateTime.Now).ToList();
             }
         }
 

@@ -21,3 +21,13 @@
 .carousel-inner{
     max-height: 600px;
 }
+
+.search-text-box {
+    min-width: 93% !important;
+}
+
+@media(max-width: 700px) {
+    .search-text-box {
+        min-width: 70% !important;
+    }
+}
