@@ -22,6 +22,8 @@ namespace DAL.Models
 
         public string Mark { get; set; }
 
+        public int NumberMark { get; set; }
+
         public bool IsActive { get; set; }
     }
 }

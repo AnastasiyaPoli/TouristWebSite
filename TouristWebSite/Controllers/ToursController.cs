@@ -45,8 +45,8 @@ namespace TouristWebSite.Controllers
                     maxPrice = tour.Price;
                 }
 
-                var onePlace = tour.Place.Split(',').ToList();
-                foreach (var place in onePlace)
+                var places = tour.Place.Split(',').ToList();
+                foreach (var place in places)
                 {
                     if (tourPlaces.FirstOrDefault(x => x.Place == place) == null)
                     {
@@ -123,13 +123,6 @@ namespace TouristWebSite.Controllers
         public ActionResult Search(ActiveToursViewModel model)
         {
             return RedirectToRoute(new { controller = "Tours", action = "Index", message = "Пошук було успішно виконано.", search = model.Search });
-        }
-
-        [AllowAnonymous]
-        [HttpPost]
-        public ActionResult Test(ActiveToursViewModel model)
-        {
-            return RedirectToRoute(new { controller = "Tours", action = "Index", search = model.Search });
         }
 
         [AllowAnonymous]
@@ -303,6 +296,47 @@ namespace TouristWebSite.Controllers
                 var newId = BookedToursDBHelper.BookTour(model, User.Identity.GetUserId());
                 string filename = PDFGeneratorHelper.GeneratePDF(ToursDBHelper.GetById(model.TourId), model.PeopleCount, model.Comment, newId);
                 EmailSenderHelper.SendEmail(UsersDBHelper.GetById(User.Identity.GetUserId()).Email, "Підтвердження бронювання туру.", "Тур було успішно заброньовано, деталі можна переглянути у прикріпленому документі.", filename);
+
+                //recommendations
+                var bookedTour = ToursDBHelper.GetById(model.TourId);
+                var places = bookedTour.Place.Split(',').ToList();
+                var tours = ToursDBHelper.GetActive().Where(x =>
+                    (x.Id != model.TourId) &&
+                    (places.Any(s => x.Place.Contains(s))) &&
+                    (Math.Abs(x.Price - bookedTour.Price) <= 10000) &&
+                    (Math.Abs(((bookedTour.DateStart.Year - x.DateStart.Year) * 12) + bookedTour.DateStart.Month - x.DateStart.Month) <= 2)
+                    ).ToList();
+
+                if (tours.Count > 3)
+                {
+                    var listOfToursWithMarks = tours.Select(k =>
+                        {
+                            var commentsWithMarks = CommentsDBHelper.GetActiveForTour(k.Id)
+                                .Where(b => b.NumberMark != 0);
+
+                            return new
+                            {
+                                Tour = k,
+                                Mark = (double) commentsWithMarks.Count() != 0
+                                    ? (double) commentsWithMarks.Sum(y => y.NumberMark) /
+                                      ((double) commentsWithMarks.Count())
+                                    : 0
+                            };
+                        })
+                        .OrderByDescending(m => m.Mark)
+                        .Take(3)
+                        .ToList();
+
+                    tours = new List<Tour>()
+                    {
+                        listOfToursWithMarks[0].Tour,
+                        listOfToursWithMarks[1].Tour,
+                        listOfToursWithMarks[2].Tour
+                    };
+                }
+
+                //tours = result
+
                 return RedirectToAction("Index", new { Message = "Тур було успішно заброньовано. Документ про бронювання відправлено на електронну пошту." });
             }
             catch (Exception e)

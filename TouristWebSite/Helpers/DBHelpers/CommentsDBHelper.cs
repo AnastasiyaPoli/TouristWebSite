@@ -28,6 +28,47 @@ namespace DAL.DBHelpers
 
         public static void Add(string text, string userId, long tourId, string mark)
         {
+            int numberMark = 0;
+
+            switch (mark)
+            {
+                case "Ідеально":
+                    {
+                        numberMark = 5;
+                    }
+                    break;
+
+                case "Добре":
+                    {
+                        numberMark = 4;
+                    }
+                    break;
+
+                case "Задовільно":
+                    {
+                        numberMark = 3;
+                    }
+                    break;
+
+                case "Погано":
+                    {
+                        numberMark = 2;
+                    }
+                    break;
+
+                case "Жахливо":
+                    {
+                        numberMark = 1;
+                    }
+                    break;
+
+                default:
+                    {
+                        numberMark = 0;
+                    }
+                    break;
+            }
+
             using (context = new ApplicationDbContext())
             {
                 var newComment = new Comment()
@@ -36,6 +77,7 @@ namespace DAL.DBHelpers
                     TourId = tourId,
                     Text = text,
                     Mark = mark,
+                    NumberMark = numberMark,
                     IsActive = true
                 };
 

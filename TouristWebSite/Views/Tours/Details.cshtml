@@ -117,7 +117,7 @@
         <div class="form-group">
             @Html.LabelFor(m => m.Mark, new { @class = "col-md-2 control-label" })
             <div class="col-md-9">
-                @Html.DropDownListFor(model => model.Mark, new SelectList(new string[] { "Не обрана", "Ідеально", "Добре", "Задовільно", "Погано" }), new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.Mark, new SelectList(new string[] { "Не обрана", "Ідеально", "Добре", "Задовільно", "Погано", "Жахливо" }), new { @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.Mark, "", new { @class = "text-danger" })
             </div>
         </div>
