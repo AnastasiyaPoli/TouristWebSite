@@ -298,46 +298,15 @@ namespace TouristWebSite.Controllers
                 EmailSenderHelper.SendEmail(UsersDBHelper.GetById(User.Identity.GetUserId()).Email, "Підтвердження бронювання туру.", "Тур було успішно заброньовано, деталі можна переглянути у прикріпленому документі.", filename);
 
                 //recommendations
-                var userId = User.Identity.GetUserId();
                 var bookedTour = ToursDBHelper.GetById(model.TourId);
-                var places = bookedTour.Place.Split(',').ToList();
-                var tours = ToursDBHelper.GetActive().Where(x =>
-                    (x.Id != model.TourId) &&
-                    (CommentsDBHelper.GetActiveForTour(x.Id).FirstOrDefault(n => n.ApplicationUserId == userId && (n.NumberMark != 0 && n.NumberMark < 4)) == null) &&
-                    (places.Any(s => x.Place.Contains(s))) &&
-                    (Math.Abs(x.Price - bookedTour.Price) <= 10000) &&
-                    (Math.Abs(((bookedTour.DateStart.Year - x.DateStart.Year) * 12) + bookedTour.DateStart.Month - x.DateStart.Month) <= 2)
-                    ).ToList();
+                var userId = User.Identity.GetUserId();
+                var tours = SimilarToursHelper.FindSimilarTours(bookedTour, userId);
 
-                if (tours.Count > 3)
+                if (tours.Count > 0)
                 {
-                    var listOfToursWithMarks = tours.Select(k =>
-                        {
-                            var commentsWithMarks = CommentsDBHelper.GetActiveForTour(k.Id)
-                                .Where(b => b.NumberMark != 0);
-
-                            return new
-                            {
-                                Tour = k,
-                                Mark = (double)commentsWithMarks.Count() != 0
-                                    ? (double)commentsWithMarks.Sum(y => y.NumberMark) /
-                                      ((double)commentsWithMarks.Count())
-                                    : 0
-                            };
-                        })
-                        .OrderByDescending(m => m.Mark)
-                        .Take(3)
-                        .ToList();
-
-                    tours = new List<Tour>()
-                    {
-                        listOfToursWithMarks[0].Tour,
-                        listOfToursWithMarks[1].Tour,
-                        listOfToursWithMarks[2].Tour
-                    };
+                    string filenameRecommend = PDFGeneratorHelper.GeneratePDFRecommend(tours, userId);
+                    EmailSenderHelper.SendEmail(UsersDBHelper.GetById(User.Identity.GetUserId()).Email, "Рекомендації до туру.", "У цьому документі Ви знайдете рекомендації турів, приємного перегляду!", filenameRecommend);
                 }
-
-                //tours = result
 
                 return RedirectToAction("Index", new { Message = "Тур було успішно заброньовано. Документ про бронювання відправлено на електронну пошту." });
             }
@@ -447,6 +416,23 @@ namespace TouristWebSite.Controllers
             try
             {
                 CommentsDBHelper.Add(model.Text, User.Identity.GetUserId(), model.ChosenTourId, model.Mark);
+
+                // if current user has already booked this tour and ratet it highly
+                if ((model.Mark == "Ідеально" || model.Mark == "Добре")
+                    && BookedToursDBHelper.GetBookedToursForUser(User.Identity.GetUserId())
+                        .FirstOrDefault(x => x.TourId == model.ChosenTourId) != null)
+                {
+                    var bookedTour = ToursDBHelper.GetById(model.ChosenTourId);
+                    var userId = User.Identity.GetUserId();
+                    var tours = SimilarToursHelper.FindSimilarTours(bookedTour, userId);
+
+                    if (tours.Count > 0)
+                    {
+                        string filenameRecommend = PDFGeneratorHelper.GeneratePDFRecommend(tours, userId);
+                        EmailSenderHelper.SendEmail(UsersDBHelper.GetById(User.Identity.GetUserId()).Email, "Рекомендації до туру.", "У цьому документі Ви знайдете рекомендації турів, приємного перегляду!", filenameRecommend);
+                    }
+                }
+
                 return RedirectToRoute(new { controller = "Tours", action = "Details", itemId = model.ChosenTourId, message = "Коментар було успішно додано." });
             }
             catch (Exception e)

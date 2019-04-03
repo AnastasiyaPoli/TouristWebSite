@@ -230,6 +230,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\SimilarToursHelper.cs" />
     <Compile Include="Helpers\PriceCounterHelper.cs" />
     <Compile Include="Helpers\EmailSenderHelper.cs" />
     <Compile Include="Helpers\PDFGeneratorHelper.cs" />
@@ -245,6 +246,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Documents\Constructed\TemplateConstructed.html" />
+    <Content Include="Content\Documents\Recommendations\TemplateRecommendations.html" />
     <Content Include="Content\Img\Mountains.png" />
     <Content Include="Content\Documents\Template.html" />
     <Content Include="favicon.ico" />

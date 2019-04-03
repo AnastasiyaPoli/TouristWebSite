@@ -1,8 +1,10 @@
-﻿using DAL.Models;
+﻿using DAL.DBHelpers;
+using DAL.Models;
 using HtmlAgilityPack;
 using SelectPdf;
+using System;
+using System.Collections.Generic;
 using System.Web.Hosting;
-using DAL.DBHelpers;
 using TouristWebSite.Models;
 
 namespace TouristWebSite.Helpers
@@ -245,6 +247,166 @@ namespace TouristWebSite.Helpers
             HtmlToPdf converter = new HtmlToPdf();
             PdfDocument doc = converter.ConvertHtmlString(HTMLdoc.DocumentNode.OuterHtml);
             var pathSave = HostingEnvironment.ApplicationPhysicalPath + "\\Content\\Documents\\Constructed\\" + addId + ".pdf";
+            doc.Save(pathSave);
+
+            return pathSave;
+        }
+
+        public static string GeneratePDFRecommend(List<Tour> tours, string userId)
+        {
+            var pathTemplate = HostingEnvironment.ApplicationPhysicalPath + "\\Content\\Documents\\Recommendations\\TemplateRecommendations.html";
+            HtmlDocument HTMLdoc = new HtmlDocument();
+            HTMLdoc.Load(pathTemplate);
+
+            var myNodes = HTMLdoc.DocumentNode.SelectNodes("//div");
+
+            bool end = false;
+            foreach (HtmlNode node in myNodes)
+            {
+                if (end) break;
+                switch (node.Id)
+                {
+                    case "0":
+                        {
+                            if (tours.Count < 1)
+                            {
+                                node.SetAttributeValue("style", "border: 1px solid black; border-radius: 10px; padding: 10px; display: none");
+                                end = true;
+                            }
+                        }
+                        break;
+
+                    case "name0":
+                        {
+                            node.InnerHtml = tours[0].Name;
+                        }
+                        break;
+
+                    case "place0":
+                        {
+                            node.InnerHtml = "<strong> Місце: </strong>" + tours[0].Place;
+                        }
+                        break;
+
+                    case "description0":
+                        {
+                            node.InnerHtml = "<strong> Опис: </strong>" + tours[0].Description;
+                        }
+                        break;
+
+                    case "dates0":
+                        {
+                            node.InnerHtml = "<strong> Дати: </strong>" + tours[0].DateStart.ToShortDateString() + "-" + tours[0].DateEnd.ToShortDateString();
+                        }
+                        break;
+
+                    case "price0":
+                        {
+                            node.InnerHtml = "<strong> Ціна: </strong>" + tours[0].Price;
+                        }
+                        break;
+                }
+            }
+
+            end = false;
+            foreach (HtmlNode node in myNodes)
+            {
+                if (end) break;
+                switch (node.Id)
+                {
+                    case "1":
+                        {
+                            if (tours.Count < 2)
+                            {
+                                node.SetAttributeValue("style", "border: 1px solid black; border-radius: 10px; padding: 10px; display: none");
+                                end = true;
+                            }
+                        }
+                        break;
+
+                    case "name1":
+                        {
+                            node.InnerHtml = tours[1].Name;
+                        }
+                        break;
+
+                    case "place1":
+                        {
+                            node.InnerHtml = "<strong> Місце: </strong>" + tours[1].Place;
+                        }
+                        break;
+
+                    case "description1":
+                        {
+                            node.InnerHtml = "<strong> Опис: </strong>" + tours[1].Description;
+                        }
+                        break;
+
+                    case "dates1":
+                        {
+                            node.InnerHtml = "<strong> Дати: </strong>" + tours[1].DateStart.ToShortDateString() + "-" + tours[1].DateEnd.ToShortDateString();
+                        }
+                        break;
+
+                    case "price1":
+                        {
+                            node.InnerHtml = "<strong> Ціна: </strong>" + tours[1].Price;
+                        }
+                        break;
+                }
+            }
+
+            end = false;
+            foreach (HtmlNode node in myNodes)
+            {
+                if (end) break;
+                switch (node.Id)
+                {
+                    case "2":
+                        {
+                            if (tours.Count < 3)
+                            {
+                                node.SetAttributeValue("style", "border: 1px solid black; border-radius: 10px; padding: 10px; display: none");
+                                end = true;
+                            }
+                        }
+                        break;
+
+                    case "name2":
+                        {
+                            node.InnerHtml = tours[2].Name;
+                        }
+                        break;
+
+                    case "place2":
+                        {
+                            node.InnerHtml = "<strong> Місце: </strong>" + tours[2].Place;
+                        }
+                        break;
+
+                    case "description2":
+                        {
+                            node.InnerHtml = "<strong> Опис: </strong>" + tours[2].Description;
+                        }
+                        break;
+
+                    case "dates2":
+                        {
+                            node.InnerHtml = "<strong> Дати: </strong>" + tours[2].DateStart.ToShortDateString() + "-" + tours[2].DateEnd.ToShortDateString();
+                        }
+                        break;
+
+                    case "price2":
+                        {
+                            node.InnerHtml = "<strong> Ціна: </strong>" + tours[2].Price;
+                        }
+                        break;
+                }
+            }
+
+            HtmlToPdf converter = new HtmlToPdf();
+            PdfDocument doc = converter.ConvertHtmlString(HTMLdoc.DocumentNode.OuterHtml);
+            var pathSave = HostingEnvironment.ApplicationPhysicalPath + "\\Content\\Documents\\Recommendations\\" + userId + "-" + DateTime.Now.Millisecond + ".pdf";
             doc.Save(pathSave);
 
             return pathSave;
