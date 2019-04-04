@@ -87,9 +87,28 @@
             </div>
         </div>
         <div class="form-group">
+            <div>
+                <div class="checkbox rememberme">
+                    <input type="checkbox" id="confirm" onchange="confirming()" />
+                    <label>Даю згоду на обробку персональних даних</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-9">
-                <button type="submit" class="btn btn-success"> <i class="fas fa-check"></i> Зберегти </button>
+                <button type="submit" class="btn btn-success" disabled="true" id="confirmbutton"> <i class="fas fa-check"></i> Зберегти </button>
             </div>
         </div>
     </div>
 }
+
+<script>
+    function confirming() {
+        if (document.getElementById("confirm").checked == true) {
+            document.getElementById("confirmbutton").disabled = false;
+        }
+        else {
+            document.getElementById("confirmbutton").disabled = true;
+        }
+    }
+</script>
