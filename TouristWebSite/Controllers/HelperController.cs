@@ -1,9 +1,11 @@
 ﻿using DAL.DBHelpers;
 using System;
+using System.Linq;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using TouristWebSite.Models;
 using TouristWebSite.Helpers;
+using System.Collections.Generic;
 
 namespace TouristWebSite.Controllers
 {
@@ -178,5 +180,133 @@ namespace TouristWebSite.Controllers
         {
             return PriceCounterHelper.CountPrice(routeId, isBusiness, backRouteId, isBackBusiness, hotelId, isLux, ex1, ex2, ex3, ex4, ex5, peopleCount);
         }
+
+        [HttpGet]
+        public ActionResult HelpConstruct()
+        {
+            try
+            {
+                var currentUser = UsersDBHelper.GetById(User.Identity.GetUserId());
+                var usersFromSamePlace = UsersDBHelper.GetAllActive()
+                    .Where(x => x.Id != currentUser.Id &&
+                                x.Country == currentUser.Country &&
+                                x.City == currentUser.City).ToList();
+
+                List<ApplicationUser> sameUsers = new List<ApplicationUser>();
+
+                foreach (var user in usersFromSamePlace)
+                {
+                    var counter = 0;
+
+                    if (user.DateOfBirth != null && currentUser.DateOfBirth != null)
+                    {
+                        if (Math.Abs((user.DateOfBirth - currentUser.DateOfBirth).Value.TotalDays / 365) <= 5)
+                        {
+                            counter++;
+                        }
+                    }
+
+                    if (user.MaritalStatus != null && currentUser.MaritalStatus != null &&
+                        user.MaritalStatus == currentUser.MaritalStatus)
+                    {
+                        counter++;
+                    }
+
+                    if (user.Profession != null && currentUser.Profession != null &&
+                        user.Profession == currentUser.Profession)
+                    {
+                        counter++;
+                    }
+
+                    if (user.TypeOfStudies != null && currentUser.TypeOfStudies != null &&
+                        user.TypeOfStudies == currentUser.TypeOfStudies)
+                    {
+                        counter++;
+                    }
+
+                    if (user.TypeOfWork != null && currentUser.TypeOfWork != null &&
+                        user.TypeOfWork == currentUser.TypeOfWork)
+                    {
+                        counter++;
+                    }
+
+                    if (user.StudiesDescription != null && currentUser.StudiesDescription != null &&
+                        CountMatches(user.StudiesDescription, currentUser.StudiesDescription) >= 5)
+                    {
+                        counter++;
+                    }
+
+                    if (user.WorkDescription != null && currentUser.WorkDescription != null &&
+                        CountMatches(user.WorkDescription, currentUser.WorkDescription) >= 5)
+                    {
+                        counter++;
+                    }
+
+                    if (user.SportsDescription != null && currentUser.SportsDescription != null &&
+                        CountMatches(user.SportsDescription, currentUser.SportsDescription) >= 5)
+                    {
+                        counter++;
+                    }
+
+                    if (user.MusicDescription != null && currentUser.MusicDescription != null &&
+                        CountMatches(user.MusicDescription, currentUser.MusicDescription) >= 5)
+                    {
+                        counter++;
+                    }
+
+                    if (user.FilmsDescription != null && currentUser.FilmsDescription != null &&
+                        CountMatches(user.FilmsDescription, currentUser.FilmsDescription) >= 5)
+                    {
+                        counter++;
+                    }
+
+                    if (user.BooksDescription != null && currentUser.BooksDescription != null &&
+                        CountMatches(user.BooksDescription, currentUser.BooksDescription) >= 5)
+                    {
+                        counter++;
+                    }
+
+                    if (user.HobbiesDescription != null && currentUser.HobbiesDescription != null &&
+                        CountMatches(user.HobbiesDescription, currentUser.HobbiesDescription) >= 5)
+                    {
+                        counter++;
+                    }
+
+                    if (user.PetsDescription != null && currentUser.PetsDescription != null &&
+                        CountMatches(user.PetsDescription, currentUser.PetsDescription) >= 5)
+                    {
+                        counter++;
+                    }
+
+                    if (counter >= 5)
+                    {
+                        sameUsers.Add(user);
+                    }
+                }
+
+                // TODO CHANGE
+                return RedirectToRoute(new { controller = "Helper", action = "Index" });
+            }
+            catch (Exception e)
+            {
+                return RedirectToRoute(new { controller = "Helper", action = "Index" });
+            }
+        }
+
+        private int CountMatches(string string1, string string2)
+        {
+            string1 = string1.ToLower();
+            string2 = string2.ToLower();
+
+            List<string> notMatches = new List<string>()
+                {"та", "і", "також", "тільки", "люблю", "не", "отож", "саме", "навіть", "дуже", "у", "на", "в", "під", "", " ", "з", "із"};
+
+            List<string> stringList1 = string1.Split(',', ' ', '.').ToList();
+            List<string> stringList2 = string2.Split(',', ' ', '.').ToList();
+
+            List<string> result = stringList1.Intersect(stringList2).Except(notMatches).ToList();
+            return result.Count;
+        }
+
     }
 }

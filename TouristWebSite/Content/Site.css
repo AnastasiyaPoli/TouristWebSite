@@ -4,7 +4,7 @@ body {
     padding-bottom: 20px;
     font-family: "Comic Sans MS", cursive, sans-serif;
     background-size: cover;
-    background-repeat: repeat;
+    background-repeat: revert;
 }
 
 @media(max-width: 1100px) {

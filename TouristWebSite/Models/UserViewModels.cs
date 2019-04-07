@@ -18,7 +18,7 @@ namespace TouristWebSite.Models
         public string Gender { get; set; }
 
         [Display(Name = "Дата народження: ")]
-        public DateTime DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; }
 
         [Display(Name = "Сімейний стан: ")]
         public string MaritalStatus { get; set; }

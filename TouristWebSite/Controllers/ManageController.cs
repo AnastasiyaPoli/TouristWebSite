@@ -353,6 +353,11 @@ namespace TouristWebSite.Controllers
                     Biography = userForEdit.Biography
                 };
 
+                if (model.DateOfBirth == null)
+                {
+                    model.DateOfBirth = DateTime.Now;
+                }
+
                 return View(model);
             }
             catch (Exception e)

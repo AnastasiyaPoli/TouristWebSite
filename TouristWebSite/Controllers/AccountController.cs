@@ -78,7 +78,8 @@ namespace TouristWebSite.Controllers
             }
 
             // User blocked
-            if (!this.UserManager.FindByEmailAsync(model.Email).Result.IsActive)
+            var user = await this.UserManager.FindByEmailAsync(model.Email);
+            if (user != null && !user.IsActive)
             {
                 string[] Errors = new string[1];
                 Errors[0] = "Ваш акаунт заблоковано. Зверніться до адміністрації сайту.";
@@ -169,7 +170,7 @@ namespace TouristWebSite.Controllers
 
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, IsActive = true };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
