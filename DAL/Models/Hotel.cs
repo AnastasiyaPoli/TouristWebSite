@@ -11,9 +11,9 @@ namespace DAL.Models
 
         public string Name { get; set; }
 
-        [ForeignKey("DestinationPoint")]
-        public long DestinationPointId { get; set; }
-        public DestinationPoint DestinationPoint { get; set; }
+        [ForeignKey("DestinationCity")]
+        public long DestinationCityId { get; set; }
+        public DestinationCity DestinationCity { get; set; }
 
         public long PriceStandart { get; set; }
         public long PriceLux { get; set; }

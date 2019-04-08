@@ -8,11 +8,11 @@ namespace DAL.DBHelpers
     {
         private static ApplicationDbContext context;
 
-        public static List<Hotel> GetHotels(long destinationPointId)
+        public static List<Hotel> GetHotels(long destinationCityId)
         {
             using (context = new ApplicationDbContext())
             {
-                return context.Hotels.Where(x => x.DestinationPointId == destinationPointId).ToList();
+                return context.Hotels.Where(x => x.DestinationCityId == destinationCityId).ToList();
             }
         }
 

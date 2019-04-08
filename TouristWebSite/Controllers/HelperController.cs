@@ -144,9 +144,9 @@ namespace TouristWebSite.Controllers
         }
 
         [HttpGet]
-        public JsonResult GetHotels(long destinationPointId)
+        public JsonResult GetHotels(long destinationCityId)
         {
-            var temp = HotelsDBHelper.GetHotels(destinationPointId);
+            var temp = HotelsDBHelper.GetHotels(destinationCityId);
 
             foreach (var item in temp)
             {
