@@ -46,7 +46,7 @@ namespace TouristWebSite.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToRoute(new {controller = "Helper", action = "Index"});
+                return RedirectToRoute(new { controller = "Helper", action = "Index" });
             }
         }
 
@@ -61,11 +61,11 @@ namespace TouristWebSite.Controllers
                 }
 
                 UsersDBHelper.UpdateUserAdditional(model);
-                return RedirectToAction("Index", new {Message = "Зміни було успішно внесено."});
+                return RedirectToAction("Index", new { Message = "Зміни було успішно внесено." });
             }
             catch (Exception e)
             {
-                return RedirectToRoute(new {controller = "Helper", action = "Index"});
+                return RedirectToRoute(new { controller = "Helper", action = "Index" });
             }
         }
 
@@ -86,7 +86,7 @@ namespace TouristWebSite.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToRoute(new {controller = "Helper", action = "Index"});
+                return RedirectToRoute(new { controller = "Helper", action = "Index" });
             }
         }
 
@@ -102,7 +102,7 @@ namespace TouristWebSite.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToRoute(new {controller = "Helper", action = "Index"});
+                return RedirectToRoute(new { controller = "Helper", action = "Index" });
             }
         }
 
@@ -132,7 +132,7 @@ namespace TouristWebSite.Controllers
 
         [HttpGet]
         public JsonResult GetRoutes(long leavePointId, long destinationPointId)
-         {
+        {
             var temp = RoutesDBHelper.GetRoutes(leavePointId, destinationPointId);
 
             foreach (var item in temp)
