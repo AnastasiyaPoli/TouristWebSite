@@ -5,12 +5,16 @@
 <hr />
 
 <dl class="dl-horizontal">
-    <dt>Кількість замовлених турів:</dt>
-    <dd>@Model.ToursCount</dd>
-    <dt>Кількість заданих питань:</dt>
+    <dt class="aligner-300">Кількість заданих питань:</dt>
     <dd>@Model.QuestionsCount</dd>
-    <dt>Заброньовані раніше тури:</dt>
+    <dt class="aligner-300">Кількість заброньованих пакетних турів:</dt>
+    <dd>@Model.ToursCount</dd>
+    <dt class="aligner-300">Заброньовані раніше тури:</dt>
     <dd>@Html.ActionLink("Переглянути список", "BookedTours")</dd>
+    <dt class="aligner-300">Кількість сконструйованих індивідуальних турів:</dt>
+    <dd>@Model.IndividualToursCount</dd>
+    <dt class="aligner-300">Сконструйовані раніше тури:</dt>
+    <dd>@Html.ActionLink("Переглянути список", "RateConstruct", "Helper")</dd>
 </dl>
 
 <div id="piechart" style="width: 100%; height: 350px;"></div>

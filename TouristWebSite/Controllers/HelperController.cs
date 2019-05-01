@@ -6,6 +6,7 @@ using Microsoft.AspNet.Identity;
 using TouristWebSite.Models;
 using TouristWebSite.Helpers;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 
 namespace TouristWebSite.Controllers
 {
@@ -95,6 +96,38 @@ namespace TouristWebSite.Controllers
         {
             try
             {
+                long? ex1 = 0;
+                long? ex2 = 0;
+                long? ex3 = 0;
+                long? ex4 = 0;
+                long? ex5 = 0;
+
+                if (model.ExcursionsCount > 0)
+                {
+                    ex1 = model.Excursion1;
+                }
+
+                if (model.ExcursionsCount > 1)
+                {
+                    ex2 = model.Excursion2;
+                }
+
+                if (model.ExcursionsCount > 2)
+                {
+                    ex3 = model.Excursion3;
+                }
+
+                if (model.ExcursionsCount > 3)
+                {
+                    ex4 = model.Excursion4;
+                }
+
+                if (model.ExcursionsCount > 4)
+                {
+                    ex5 = model.Excursion5;
+                }
+
+                model.Price = PriceCounterHelper.CountPrice(model.Route, model.Class == "Бізнес", model.BackRoute, model.BackClass == "Бізнес", model.Hotel, model.HotelClass == "Люкс", (long)ex1, (long)ex2, (long)ex3, (long)ex4, (long)ex5, model.PeopleCount);
                 long newId = ConstructedToursDBHelper.Add(model, User.Identity.GetUserId());
                 string filename = PDFGeneratorHelper.GenerateConstructPDF(model, newId);
                 EmailSenderHelper.SendEmail(UsersDBHelper.GetById(User.Identity.GetUserId()).Email, "Підтвердження бронювання туру.", "Тур було успішно заброньовано, деталі можна переглянути у прикріпленому документі.", filename);
@@ -286,6 +319,88 @@ namespace TouristWebSite.Controllers
 
                 // TODO CHANGE
                 return RedirectToRoute(new { controller = "Helper", action = "Index" });
+            }
+            catch (Exception e)
+            {
+                return RedirectToRoute(new { controller = "Helper", action = "Index" });
+            }
+        }
+
+        [HttpGet]
+        public ActionResult RateConstruct()
+        {
+            try
+            {
+                var constructedTours = ConstructedToursDBHelper.GetByUserId(User.Identity.GetUserId());
+                ListConstructRateViewModels list = new ListConstructRateViewModels()
+                {
+                    ConstructRateViewModels = new List<ConstructRateViewModel>()
+                };
+
+                foreach (var tour in constructedTours)
+                {
+                    var route = RoutesDBHelper.GetRouteById(tour.RouteId);
+                    var backRoute = BackRoutesDBHelper.GetBackRouteById(tour.BackRouteId);
+
+                    string content = string.Empty;
+
+                    if (tour.ExcursionsCount > 0)
+                    {
+                        content += ExcursionsDBHelper.GetExcursionById(tour.Excursion1Id).Name + ", ";
+                    }
+
+                    if (tour.ExcursionsCount > 1)
+                    {
+                        content += ExcursionsDBHelper.GetExcursionById(tour.Excursion2Id).Name + ", ";
+                    }
+
+                    if (tour.ExcursionsCount > 2)
+                    {
+                        content += ExcursionsDBHelper.GetExcursionById(tour.Excursion3Id).Name + ", ";
+                    }
+
+                    if (tour.ExcursionsCount > 3)
+                    {
+                        content += ExcursionsDBHelper.GetExcursionById(tour.Excursion4Id).Name + ", ";
+                    }
+
+                    if (tour.ExcursionsCount > 4)
+                    {
+                        content += ExcursionsDBHelper.GetExcursionById(tour.Excursion5Id).Name + ", ";
+                    }
+
+                    if (content != string.Empty)
+                    {
+                        content = content.Substring(0, content.Length - 2);
+                    }
+
+                    list.ConstructRateViewModels.Add(new ConstructRateViewModel()
+                    {
+                        Id = tour.Id,
+                        DateStart = route.Start,
+                        DateEnd = route.End,
+                        PeopleCount = tour.PeopleCount,
+                        Price = tour.Price,
+                        Country = CountriesDBHelper.GetCountryById(tour.CountryId).Name,
+                        City = CitiesDBHelper.GetCityById(tour.CityId).Name,
+                        Transport = TransportsDBHelper.GetTransportById(tour.TransportId).Name,
+                        LeavePoint = LeavePointDBHelper.GetLeavePointById(tour.LeavePointId).Name,
+                        DestinationCountry = DestinationCountriesDBHelper.GetCountryById(tour.DestinationCountryId).Name,
+                        DestinationCity = DestinationCitiesDBHelper.GetCityById(tour.DestinationCityId).Name,
+                        DestinationPoint = DestinationPointDBHelper.GetDestinationPointById(tour.DestinationPointId).Name,
+                        Route = route.Name + "(" + route.Start.ToShortDateString() + ", " + route.Start.ToShortTimeString() + " - " + route.End.ToShortDateString() + ", " + route.End.ToShortTimeString() + ")",
+                        Class = tour.Class,
+                        Hotel = HotelsDBHelper.GetHotelById(tour.HotelId).Name,
+                        HotelClass = tour.HotelClass,
+                        Excursions = content,
+                        BackRoute = backRoute.Name + "(" + backRoute.Start.ToShortDateString() + ", " + backRoute.Start.ToShortTimeString() + " - " + backRoute.End.ToShortDateString() + ", " + backRoute.End.ToShortTimeString() + ")",
+                        BackClass = tour.BackClass,
+                        Comment = tour.Comment,
+                        Mark = tour.Mark
+                    });
+                }
+
+                return View(list);
             }
             catch (Exception e)
             {

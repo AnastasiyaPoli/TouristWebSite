@@ -83,5 +83,13 @@ namespace DAL.Models
         [ForeignKey("User")]
         public string ApplicationUserId { get; set; }
         public ApplicationUser User { get; set; }
+
+        public long Price { get; set; }
+
+        public string Comment { get; set; }
+
+        public string Mark { get; set; }
+
+        public int NumberMark { get; set; }
     }
 }

@@ -89,38 +89,7 @@ namespace TouristWebSite.Helpers
 
                     case "price":
                         {
-                            long? ex1 = 0;
-                            long? ex2 = 0;
-                            long? ex3 = 0;
-                            long? ex4 = 0;
-                            long? ex5 = 0;
-
-                            if (model.ExcursionsCount > 0)
-                            {
-                                ex1 = model.Excursion1;
-                            }
-
-                            if (model.ExcursionsCount > 1)
-                            {
-                                ex2 = model.Excursion2;
-                            }
-
-                            if (model.ExcursionsCount > 2)
-                            {
-                                ex3 = model.Excursion3;
-                            }
-
-                            if (model.ExcursionsCount > 3)
-                            {
-                                ex4 = model.Excursion4;
-                            }
-
-                            if (model.ExcursionsCount > 4)
-                            {
-                                ex5 = model.Excursion5;
-                            }
-
-                            node.InnerHtml += PriceCounterHelper.CountPrice(model.Route, model.Class == "Бізнес", model.BackRoute, model.BackClass == "Бізнес", model.Hotel, model.HotelClass == "Люкс", (long)ex1, (long)ex2, (long)ex3, (long)ex4, (long)ex5, model.PeopleCount) + "грн.";
+                            node.InnerHtml += model.Price + "грн.";
                         }
                         break;
 

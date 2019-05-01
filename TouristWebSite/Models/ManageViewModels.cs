@@ -50,6 +50,7 @@ namespace TouristWebSite.Models
     public class StatisticsViewModel
     {
         public int ToursCount { get; set; }
+        public int IndividualToursCount { get; set; }
         public int QuestionsCount { get; set; }
         public Dictionary<string, int> Data { get; set; }
     }

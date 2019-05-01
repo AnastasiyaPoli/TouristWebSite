@@ -245,6 +245,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Custom\Statistics.css" />
     <Content Include="Content\Documents\Constructed\TemplateConstructed.html" />
     <Content Include="Content\Documents\Recommendations\TemplateRecommendations.html" />
     <Content Include="Content\Img\Mountains.png" />
@@ -333,6 +334,7 @@
     <Content Include="Views\Manage\FavouriteTours.cshtml" />
     <Content Include="Views\Manage\BookedTours.cshtml" />
     <Content Include="Views\Helper\TourConstruct.cshtml" />
+    <Content Include="Views\Helper\RateConstruct.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

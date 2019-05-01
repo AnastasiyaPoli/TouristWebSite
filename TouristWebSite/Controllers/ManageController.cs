@@ -246,10 +246,13 @@ namespace TouristWebSite.Controllers
                 Data[temp] = group.Count();
             };
 
+            var userId = User.Identity.GetUserId();
+
             StatisticsViewModel model = new StatisticsViewModel()
             {
-                ToursCount = BookedToursDBHelper.GetBookedToursForUser(User.Identity.GetUserId()).Count(),
-                QuestionsCount = QuestionsDBHelper.GetForUser(User.Identity.GetUserId()).Count(),
+                ToursCount = BookedToursDBHelper.GetBookedToursForUser(userId).Count(),
+                IndividualToursCount = ConstructedToursDBHelper.GetByUserId(userId).Count(),
+                QuestionsCount = QuestionsDBHelper.GetForUser(userId).Count(),
                 Data = Data
             };
 

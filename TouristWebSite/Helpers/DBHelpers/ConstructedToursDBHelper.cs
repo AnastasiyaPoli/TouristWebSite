@@ -9,7 +9,15 @@ namespace DAL.DBHelpers
     public static class ConstructedToursDBHelper
     {
         private static ApplicationDbContext context;
-        
+
+        public static List<ConstructedTour> GetByUserId(string id)
+        {
+            using (context = new ApplicationDbContext())
+            {
+                return context.ConstructedTours.Where(x => x.ApplicationUserId == id).ToList();
+            }
+        }
+
         public static long Add(ConstructViewModel model, string userId)
         {
             long? e1 = null;
@@ -67,7 +75,8 @@ namespace DAL.DBHelpers
                     HotelClass = model.HotelClass,
                     BackRouteId = model.BackRoute,
                     BackClass = model.BackClass,
-                    ApplicationUserId = userId
+                    ApplicationUserId = userId,
+                    Price = model.Price 
                 };
 
                 context.ConstructedTours.Add(newTour);

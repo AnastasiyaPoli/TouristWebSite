@@ -1,7 +1,7 @@
 ﻿using System;
+using DAL.Models;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using DAL.Models;
 
 namespace TouristWebSite.Models
 {
@@ -126,5 +126,37 @@ namespace TouristWebSite.Models
         [Display(Name = "Клас: ")]
         [Required(ErrorMessage = "Необхідно заповнити поле \"Клас\".")]
         public string BackClass { get; set; }
+
+        public long Price { get; set; }
+    }
+
+    public class ConstructRateViewModel
+    {
+        public long Id { get; set; }
+        public DateTime DateStart { get; set; }
+        public DateTime DateEnd { get; set; }
+        public long PeopleCount { get; set; }
+        public long Price { get; set; }
+        public string Country { get; set; }
+        public string City { get; set; }
+        public string Transport { get; set; }
+        public string LeavePoint { get; set; }
+        public string DestinationCountry { get; set; }
+        public string DestinationCity { get; set; }
+        public string DestinationPoint { get; set; }
+        public string Route { get; set; }
+        public string Class { get; set; }
+        public string Hotel { get; set; }
+        public string HotelClass { get; set; }
+        public string Excursions { get; set; }
+        public string BackRoute { get; set; }
+        public string BackClass { get; set; }
+        public string Comment { get; set; }
+        public string Mark { get; set; }
+    }
+
+    public class ListConstructRateViewModels
+    {
+        public List<ConstructRateViewModel> ConstructRateViewModels { get; set; }
     }
 }
