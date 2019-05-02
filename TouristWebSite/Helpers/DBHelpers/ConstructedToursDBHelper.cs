@@ -85,5 +85,58 @@ namespace DAL.DBHelpers
                 return newTour.Id;
             }
         }
+
+        public static void AddComment(string comment, string mark, long id)
+        {
+            int numberMark = 0;
+
+            switch (mark)
+            {
+                case "Ідеально":
+                {
+                    numberMark = 5;
+                }
+                    break;
+
+                case "Добре":
+                {
+                    numberMark = 4;
+                }
+                    break;
+
+                case "Задовільно":
+                {
+                    numberMark = 3;
+                }
+                    break;
+
+                case "Погано":
+                {
+                    numberMark = 2;
+                }
+                    break;
+
+                case "Жахливо":
+                {
+                    numberMark = 1;
+                }
+                    break;
+
+                default:
+                {
+                    numberMark = 0;
+                }
+                    break;
+            }
+
+            using (context = new ApplicationDbContext())
+            {
+                var tour = context.ConstructedTours.FirstOrDefault(x => x.Id == id);
+                tour.Mark = mark;
+                tour.NumberMark = numberMark;
+                tour.Comment = comment;
+                context.SaveChanges();
+            }
+        }
     }
 }

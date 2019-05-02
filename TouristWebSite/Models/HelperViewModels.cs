@@ -151,7 +151,13 @@ namespace TouristWebSite.Models
         public string Excursions { get; set; }
         public string BackRoute { get; set; }
         public string BackClass { get; set; }
+
+        [Display(Name = "Додайте коментар: ")]
+        [Required(ErrorMessage = "Необхідно заповнити поле \"Коментар\".")]
         public string Comment { get; set; }
+
+        [Display(Name = "Оберіть оцінку: ")]
+        [Required(ErrorMessage = "Необхідно заповнити поле \"Оцінка\".")]
         public string Mark { get; set; }
     }
 

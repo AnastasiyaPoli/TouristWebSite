@@ -408,6 +408,21 @@ namespace TouristWebSite.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult AddComment(string comment, string mark, long id)
+        {
+            try
+            {
+                ConstructedToursDBHelper.AddComment(comment, mark, id);
+
+                return RedirectToRoute(new { controller = "Helper", action = "RateConstruct" });
+            }
+            catch (Exception e)
+            {
+                return RedirectToRoute(new { controller = "Helper", action = "RateConstruct" });
+            }
+        }
+
         private int CountMatches(string string1, string string2)
         {
             string1 = string1.ToLower();

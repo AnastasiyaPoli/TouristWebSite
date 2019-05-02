@@ -4,6 +4,9 @@
 <p class="text-success">@ViewBag.StatusMessage</p>
 <h4>Переглядайте тури, які були сконструйовані для Вас раніше.</h4>
 
+@{
+    int i = 0;
+}
 @foreach (var item in Model.ConstructRateViewModels)
 {
     <div class="jumbotron transparent transp-container">
@@ -13,22 +16,22 @@
                 <h4><strong>Дати: </strong> @item.DateStart.ToShortDateString() - @item.DateEnd.ToShortDateString()</h4>
                 <h4><strong>Кількість людей: </strong> @item.PeopleCount</h4>
                 <h4><strong>Ціна: </strong> @item.Price грн.</h4>
-                <br/>
+                <br />
                 <h4><strong>Інформація про точку відправлення</strong></h4>
                 <h4><strong>Країна: </strong> @item.Country</h4>
                 <h4><strong>Місто: </strong> @item.City</h4>
                 <h4><strong>Вид транспорту: </strong> @item.Transport</h4>
                 <h4><strong>Точка відправлення: </strong> @item.LeavePoint</h4>
-                <br/>
+                <br />
                 <h4><strong>Інформація про пункт призначення</strong></h4>
                 <h4><strong>Країна: </strong> @item.DestinationCountry</h4>
                 <h4><strong>Місто: </strong> @item.DestinationCity</h4>
                 <h4><strong>Пункт призначення: </strong> @item.DestinationPoint</h4>
-                <br/>
+                <br />
                 <h4><strong>Інформація про маршрут подорожі</strong></h4>
                 <h4><strong>Маршрут: </strong> @item.Route</h4>
                 <h4><strong>Клас: </strong> @item.Class</h4>
-                <br/>
+                <br />
                 <h4><strong>Інформація про готель</strong></h4>
                 <h4><strong>Готель: </strong> @item.Hotel</h4>
                 <h4><strong>Клас: </strong> @item.HotelClass</h4>
@@ -36,4 +39,52 @@
             </div>
         </div>
     </div>
+
+    @Html.HiddenFor(m => m.ConstructRateViewModels[i].Id, new { @id = "id" + i })
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            @Html.LabelFor(m => m.ConstructRateViewModels[i].Mark, new { @class = "col-md-2 control-label" })
+            <div class="col-md-9">
+                @Html.DropDownList("Marks", new SelectList(new string[] { "Не обрана", "Ідеально", "Добре", "Задовільно", "Погано", "Жахливо" }.Except(new string[] { @item.Mark })), @item.Mark, new { @class = "form-control", @id = "mark" + i })
+                @Html.ValidationMessageFor(m => m.ConstructRateViewModels[i].Mark, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.ConstructRateViewModels[i].Comment, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(m => m.ConstructRateViewModels[i].Comment, new { @class = "form-control", @style = "min-width: 100% !important", @id = "comment" + i })
+                <div class="text-danger" id="error_@i">
+                   
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-9">
+                <button class="btn btn-success" onclick="postMark(@i)"> <i class="fas fa-check"></i> Зберегти </button>
+            </div>
+        </div>
+    </div>
+
+    i++;
 }
+
+<script>
+    async function postMark(i) {
+        var id = $("#id" + i).val();
+        var e = document.getElementById("mark" + i);
+        var mark = e.options[e.selectedIndex].text;
+        var comment = $("#comment" + i).val();
+
+        if (comment == "" || comment == null) {
+            document.getElementById("error_" + i).innerHTML = " Необхідно заповнити поле \"Коментар\".";
+        }
+        else {
+            await $.post("/Helper/AddComment", { comment: comment, mark: mark, id: id }, function (response) {
+                location.reload();
+            });
+        };
+    }
+</script>
