@@ -207,6 +207,7 @@
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Helpers\DBHelpers\ResommendationsDBHelper.cs" />
     <Compile Include="Helpers\DBHelpers\DestinationCitiesDBHelper.cs" />
     <Compile Include="Helpers\DBHelpers\DestinationCountriesDBHelper.cs" />
     <Compile Include="Helpers\DBHelpers\DestinationPointsDBHelper.cs" />
@@ -216,6 +217,7 @@
     <Compile Include="Helpers\DBHelpers\BackRoutesDBHelper.cs" />
     <Compile Include="Helpers\DBHelpers\RoutesDBHelper.cs" />
     <Compile Include="Helpers\DBHelpers\LeavePointsDBHelper.cs" />
+    <Compile Include="Helpers\DBHelpers\TourExcursionsDBHelper.cs" />
     <Compile Include="Helpers\DBHelpers\TransportsDBHelper.cs" />
     <Compile Include="Helpers\DBHelpers\CitiesDBHelper.cs" />
     <Compile Include="Helpers\DBHelpers\CountriesDBHelper.cs" />
@@ -335,6 +337,7 @@
     <Content Include="Views\Manage\BookedTours.cshtml" />
     <Content Include="Views\Helper\TourConstruct.cshtml" />
     <Content Include="Views\Helper\RateConstruct.cshtml" />
+    <Content Include="Views\Helper\Recommendations.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

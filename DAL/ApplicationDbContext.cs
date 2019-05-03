@@ -23,7 +23,6 @@ namespace DAL
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Favourite> Favourites { get; set; }
-
         public DbSet<Country> Countries { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<Transport> Transports { get; set; }
@@ -36,5 +35,7 @@ namespace DAL
         public DbSet<Excursion> Excursions { get; set; }
         public DbSet<BackRoute> BackRoutes { get; set; }
         public DbSet<ConstructedTour> ConstructedTours { get; set; }
+        public DbSet<Recommendation> Recommendations { get; set; }
+        public DbSet<TourExcursion> TourExcursions { get; set; }
     }
 }

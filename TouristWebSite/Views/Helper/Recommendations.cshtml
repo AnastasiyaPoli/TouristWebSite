@@ -1,0 +1,47 @@
+﻿@model TouristWebSite.Models.ListConstructRateViewModels
+<h2>Рекомендовані раніше індивідуальні тури.</h2>
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+<h4>Переглядайте тури, які були рекомендовані Вам раніше.</h4>
+@{
+    int i = 1;
+}
+
+@foreach (var item in Model.ConstructRateViewModels)
+{
+    <div class="jumbotron transparent transp-container" style="margin-top: 15px">
+        <div class="flex-container">
+            <div>
+                <h3><strong>Рекомендація №@i</strong></h3>
+                <h4><strong>Загальна інформація</strong></h4>
+                <h4><strong>Дати: </strong> @item.DateStart.ToShortDateString() - @item.DateEnd.ToShortDateString()</h4>
+                <h4><strong>Кількість людей: </strong> @item.PeopleCount</h4>
+                <h4><strong>Ціна: </strong> @item.Price грн.</h4>
+                <br/>
+                <h4><strong>Інформація про точку відправлення</strong></h4>
+                <h4><strong>Країна: </strong> @item.Country</h4>
+                <h4><strong>Місто: </strong> @item.City</h4>
+                <h4><strong>Вид транспорту: </strong> @item.Transport</h4>
+                <h4><strong>Точка відправлення: </strong> @item.LeavePoint</h4>
+                <br/>
+                <h4><strong>Інформація про пункт призначення</strong></h4>
+                <h4><strong>Країна: </strong> @item.DestinationCountry</h4>
+                <h4><strong>Місто: </strong> @item.DestinationCity</h4>
+                <h4><strong>Пункт призначення: </strong> @item.DestinationPoint</h4>
+                <br/>
+                <h4><strong>Інформація про маршрут подорожі</strong></h4>
+                <h4><strong>Маршрут: </strong> @item.Route</h4>
+                <h4><strong>Клас: </strong> @item.Class</h4>
+                <br/>
+                <h4><strong>Інформація про готель</strong></h4>
+                <h4><strong>Готель: </strong> @item.Hotel</h4>
+                <h4><strong>Клас: </strong> @item.HotelClass</h4>
+                @if (item.Excursions != "")
+                {
+                    <h4><strong>Екскурсії: </strong> @item.Excursions</h4>
+                }
+            </div>
+        </div>
+    </div>
+    i++;
+}

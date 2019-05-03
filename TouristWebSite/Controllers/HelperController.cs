@@ -317,8 +317,97 @@ namespace TouristWebSite.Controllers
                     }
                 }
 
-                // TODO CHANGE
+                var tours = ConstructedToursDBHelper.GetAll()
+                    .Where(x => (sameUsers.FirstOrDefault(y => y.Id == x.ApplicationUserId)) != null)
+                    .ToList();
+
+                foreach (var tour in tours)
+                {
+                    if (tour.NumberMark == 0)
+                    {
+                        tour.NumberMark = 3;
+                    }
+
+                    if (tour.Comment == null)
+                    {
+                        tour.Comment = "";
+                    }
+                };
+
+                var bestTours = tours.OrderByDescending(x => x.NumberMark)
+                    .ThenByDescending(y => y.Comment.Length)
+                    .Take(3)
+                    .ToList();
+
+                RecommendationsDBHelper.SaveRecommendations(bestTours, User.Identity.GetUserId());
+
+                return RedirectToRoute(new { controller = "Helper", action = "Recommendations" });
+            }
+            catch (Exception e)
+            {
                 return RedirectToRoute(new { controller = "Helper", action = "Index" });
+            }          
+        }
+
+        [HttpGet]
+        public ActionResult Recommendations()
+        {
+            try
+            {
+                var recommendations = RecommendationsDBHelper.GetRecommendationsForUser(User.Identity.GetUserId());
+                ListConstructRateViewModels list = new ListConstructRateViewModels()
+                {
+                    ConstructRateViewModels = new List<ConstructRateViewModel>()
+                };
+
+                foreach (var recommendation in recommendations)
+                {
+                    string content = string.Empty;
+                    var excusions = TourExcusionsDBHelper.GetByTourId(recommendation.ConstructedTourId);
+
+                    foreach (var excursion in excusions)
+                    {
+                        var realExcursion = ExcursionsDBHelper.GetExcursionById(excursion.ExcursionId);
+                        content += realExcursion.Name + ", ";
+                    }
+
+                    if (content != string.Empty)
+                    {
+                        content = content.Substring(0, content.Length - 2);
+                    }
+
+                    var route = RoutesDBHelper.GetRouteById(recommendation.ConstructedTour.RouteId);
+                    var backRoute = BackRoutesDBHelper.GetBackRouteById(recommendation.ConstructedTour.BackRouteId);
+                    var city = CitiesDBHelper.GetCityById(route.LeavePoint.CityId);
+                    var destinationCity = DestinationCitiesDBHelper.GetCityById(route.DestinationPoint.DestinationCityId);
+
+                    list.ConstructRateViewModels.Add(new ConstructRateViewModel()
+                    {
+                        Id = recommendation.Id,
+                        DateStart = route.Start,
+                        DateEnd = route.End,
+                        PeopleCount = recommendation.ConstructedTour.PeopleCount,
+                        Price = recommendation.ConstructedTour.Price,
+                        Country = city.Country.Name,
+                        City = city.Name,
+                        Transport = TransportsDBHelper.GetTransportById(route.LeavePoint.TransportId).Name,
+                        LeavePoint = route.LeavePoint.Name,
+                        DestinationCountry = destinationCity.DestinationCountry.Name,
+                        DestinationCity = destinationCity.Name,
+                        DestinationPoint = route.DestinationPoint.Name,
+                        Route = route.Name + "(" + route.Start.ToShortDateString() + ", " + route.Start.ToShortTimeString() + " - " + route.End.ToShortDateString() + ", " + route.End.ToShortTimeString() + ")",
+                        Class = recommendation.ConstructedTour.Class,
+                        Hotel = HotelsDBHelper.GetHotelById(recommendation.ConstructedTour.HotelId).Name,
+                        HotelClass = recommendation.ConstructedTour.HotelClass,
+                        Excursions = content,
+                        BackRoute = backRoute.Name + "(" + backRoute.Start.ToShortDateString() + ", " + backRoute.Start.ToShortTimeString() + " - " + backRoute.End.ToShortDateString() + ", " + backRoute.End.ToShortTimeString() + ")",
+                        BackClass = recommendation.ConstructedTour.BackClass,
+                        Comment = recommendation.ConstructedTour.Comment,
+                        Mark = recommendation.ConstructedTour.Mark
+                    });
+                }
+
+                return View(list);
             }
             catch (Exception e)
             {
@@ -339,40 +428,24 @@ namespace TouristWebSite.Controllers
 
                 foreach (var tour in constructedTours)
                 {
-                    var route = RoutesDBHelper.GetRouteById(tour.RouteId);
-                    var backRoute = BackRoutesDBHelper.GetBackRouteById(tour.BackRouteId);
-
                     string content = string.Empty;
+                    var excusions = TourExcusionsDBHelper.GetByTourId(tour.Id);
 
-                    if (tour.ExcursionsCount > 0)
+                    foreach (var excursion in excusions)
                     {
-                        content += ExcursionsDBHelper.GetExcursionById(tour.Excursion1Id).Name + ", ";
-                    }
-
-                    if (tour.ExcursionsCount > 1)
-                    {
-                        content += ExcursionsDBHelper.GetExcursionById(tour.Excursion2Id).Name + ", ";
-                    }
-
-                    if (tour.ExcursionsCount > 2)
-                    {
-                        content += ExcursionsDBHelper.GetExcursionById(tour.Excursion3Id).Name + ", ";
-                    }
-
-                    if (tour.ExcursionsCount > 3)
-                    {
-                        content += ExcursionsDBHelper.GetExcursionById(tour.Excursion4Id).Name + ", ";
-                    }
-
-                    if (tour.ExcursionsCount > 4)
-                    {
-                        content += ExcursionsDBHelper.GetExcursionById(tour.Excursion5Id).Name + ", ";
+                        var realExcursion = ExcursionsDBHelper.GetExcursionById(excursion.ExcursionId);
+                        content += realExcursion.Name + ", ";
                     }
 
                     if (content != string.Empty)
                     {
                         content = content.Substring(0, content.Length - 2);
                     }
+
+                    var route = RoutesDBHelper.GetRouteById(tour.RouteId);
+                    var backRoute = BackRoutesDBHelper.GetBackRouteById(tour.BackRouteId);
+                    var city = CitiesDBHelper.GetCityById(route.LeavePoint.CityId);
+                    var destinationCity = DestinationCitiesDBHelper.GetCityById(route.DestinationPoint.DestinationCityId);
 
                     list.ConstructRateViewModels.Add(new ConstructRateViewModel()
                     {
@@ -381,16 +454,16 @@ namespace TouristWebSite.Controllers
                         DateEnd = route.End,
                         PeopleCount = tour.PeopleCount,
                         Price = tour.Price,
-                        Country = CountriesDBHelper.GetCountryById(tour.CountryId).Name,
-                        City = CitiesDBHelper.GetCityById(tour.CityId).Name,
-                        Transport = TransportsDBHelper.GetTransportById(tour.TransportId).Name,
-                        LeavePoint = LeavePointDBHelper.GetLeavePointById(tour.LeavePointId).Name,
-                        DestinationCountry = DestinationCountriesDBHelper.GetCountryById(tour.DestinationCountryId).Name,
-                        DestinationCity = DestinationCitiesDBHelper.GetCityById(tour.DestinationCityId).Name,
-                        DestinationPoint = DestinationPointDBHelper.GetDestinationPointById(tour.DestinationPointId).Name,
-                        Route = route.Name + "(" + route.Start.ToShortDateString() + ", " + route.Start.ToShortTimeString() + " - " + route.End.ToShortDateString() + ", " + route.End.ToShortTimeString() + ")",
+                        Country = city.Country.Name,
+                        City = city.Name,
+                        Transport = TransportsDBHelper.GetTransportById(route.LeavePoint.TransportId).Name,
+                        LeavePoint = route.LeavePoint.Name,
+                        DestinationCountry = destinationCity.DestinationCountry.Name,
+                        DestinationCity = destinationCity.Name,
+                        DestinationPoint = route.DestinationPoint.Name,
+                        Route = tour.Route.Name + "(" + route.Start.ToShortDateString() + ", " + route.Start.ToShortTimeString() + " - " + route.End.ToShortDateString() + ", " + route.End.ToShortTimeString() + ")",
                         Class = tour.Class,
-                        Hotel = HotelsDBHelper.GetHotelById(tour.HotelId).Name,
+                        Hotel = tour.Hotel.Name,
                         HotelClass = tour.HotelClass,
                         Excursions = content,
                         BackRoute = backRoute.Name + "(" + backRoute.Start.ToShortDateString() + ", " + backRoute.Start.ToShortTimeString() + " - " + backRoute.End.ToShortDateString() + ", " + backRoute.End.ToShortTimeString() + ")",

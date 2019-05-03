@@ -1,6 +1,7 @@
 ﻿using DAL.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 
 namespace DAL.DBHelpers
@@ -21,7 +22,7 @@ namespace DAL.DBHelpers
         {
             using (context = new ApplicationDbContext())
             {
-                return context.Routes.FirstOrDefault(x => x.Id == id);
+                return context.Routes.Include(x => x.LeavePoint).Include(x => x.DestinationPoint).FirstOrDefault(x => x.Id == id);
             }
         }
     }

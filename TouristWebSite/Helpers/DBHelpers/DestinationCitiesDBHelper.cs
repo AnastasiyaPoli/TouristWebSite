@@ -1,6 +1,7 @@
 ﻿using DAL.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity;
 
 namespace DAL.DBHelpers
 {
@@ -20,7 +21,7 @@ namespace DAL.DBHelpers
         {
             using (context = new ApplicationDbContext())
             {
-                return context.DestinationCities.FirstOrDefault(x => x.Id == id);
+                return context.DestinationCities.Include(x => x.DestinationCountry).FirstOrDefault(x => x.Id == id);
             }
         }
     }

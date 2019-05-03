@@ -76,7 +76,7 @@ namespace TouristWebSite.Helpers
                 {
                     case "dates":
                         {
-                            node.InnerHtml += RoutesDBHelper.GetRouteById(model.Route).Start.ToShortDateString() + " - " + RoutesDBHelper.GetRouteById(model.Route).End.ToShortDateString();
+                            node.InnerHtml += RoutesDBHelper.GetRouteById(model.Route).Start.ToShortDateString() + " - " + BackRoutesDBHelper.GetBackRouteById(model.BackRoute).End.ToShortDateString();
                         }
                         break;
 
