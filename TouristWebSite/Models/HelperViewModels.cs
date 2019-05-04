@@ -128,6 +128,8 @@ namespace TouristWebSite.Models
         public string BackClass { get; set; }
 
         public long Price { get; set; }
+
+        public string Type { get; set; }
     }
 
     public class ConstructRateViewModel

@@ -40,8 +40,13 @@
                 {
                     <h4><strong>Екскурсії: </strong> @item.Excursions</h4>
                 }
+                <br/>
+                <h4><strong>Інформація про маршрут зворотньої подорожі</strong></h4>
+                <h4><strong>Маршрут: </strong> @item.BackRoute</h4>
+                <h4><strong>Клас: </strong> @item.BackClass</h4>
             </div>
         </div>
+        <a style="margin-top: 5px" class="btn btn-default no-underline" href="@Url.Action("RecommendationsConstruct", "Helper", new {itemId = item.Id})"> <span> <i class="fas fa-check"></i> Продовжити конструювання </span> </a>
     </div>
     i++;
 }

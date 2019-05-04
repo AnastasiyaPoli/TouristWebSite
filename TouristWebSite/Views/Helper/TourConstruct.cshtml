@@ -6,6 +6,23 @@
 <h4>Сконструюйте тур для себе.</h4>
 <hr />
 
+@Html.HiddenFor(m => m.Type, new { @id = "Type" })
+@Html.HiddenFor(m => m.Country, new { @id = "CountryHint" })
+@Html.HiddenFor(m => m.City, new { @id = "CityHint" })
+@Html.HiddenFor(m => m.LeavePoint, new { @id = "LeavePointHint" })
+@Html.HiddenFor(m => m.DestinationCountry, new { @id = "DestinationCountryHint" })
+@Html.HiddenFor(m => m.DestinationCity, new { @id = "DestinationCityHint" })
+@Html.HiddenFor(m => m.DestinationPoint, new { @id = "DestinationPointHint" })
+@Html.HiddenFor(m => m.Route, new { @id = "RouteHint" })
+@Html.HiddenFor(m => m.Hotel, new { @id = "HotelHint" })
+@Html.HiddenFor(m => m.BackRoute, new { @id = "BackRouteHint" })
+@Html.HiddenFor(m => m.ExcursionsCount, new { @id = "ExcursionsCountHint" })
+@Html.HiddenFor(m => m.Excursion1, new { @id = "Excursion1Hint" })
+@Html.HiddenFor(m => m.Excursion2, new { @id = "Excursion2Hint" })
+@Html.HiddenFor(m => m.Excursion3, new { @id = "Excursion3Hint" })
+@Html.HiddenFor(m => m.Excursion4, new { @id = "Excursion4Hint" })
+@Html.HiddenFor(m => m.Excursion5, new { @id = "Excursion5Hint" })
+
 <h4>Точка відправлення:</h4>
 @using (Html.BeginForm("TourConstruct", "Helper", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
@@ -236,83 +253,100 @@
         var excursions5 = $('#excursionsList5');
         var backroutes = $('#backRoutesList');
 
-       async function fetchCities(id) {
-           cities.empty();
-           if (id == null) {
-               return;
-           }
+        async function fetchCities(CountryHint, CityHint) {
+            cities.empty();
+            if (CountryHint == null) {
+                return;
+            }
 
-           await $.getJSON(urlcities, { id: id }, function (response) {
-                $.each(response, function(index, item) {
-                    cities.append($('<option value="'+ item.Id +'">' + item.Name + '</option>'));
+            await $.getJSON(urlcities,
+                { CountryHint: CountryHint, CityHint: CityHint },
+                function(response) {
+                    $.each(response,
+                        function(index, item) {
+                            cities.append($('<option value="' + item.Id + '">' + item.Name + '</option>'));
+                        });
                 });
-            });
         }
 
-        async function fetchPoints(cityId, transportId) {
+        async function fetchPoints(cityId, transportId, LeavePointHint) {
             points.empty();
             if (cityId == null || transportId == null) {
                 return;
             }
 
-            await $.getJSON(urlpoints, { cityId: cityId, transportId: transportId }, function (response) {
-                $.each(response, function (index, item) {
-                    points.append($('<option value="' + item.Id + '">' + item.Name + '</option>'));
+            await $.getJSON(urlpoints,
+                { cityId: cityId, transportId: transportId, LeavePointHint: LeavePointHint },
+                function(response) {
+                    $.each(response,
+                        function(index, item) {
+                            points.append($('<option value="' + item.Id + '">' + item.Name + '</option>'));
+                        });
                 });
-            });
         }
 
-        async function fetchDestinationCities(id) {
+        async function fetchDestinationCities(id, DestinationCityHint) {
             destinationcities.empty();
             if (id == null) {
                 return;
             }
 
-            await $.getJSON(urldestinationcities, { id: id }, function (response) {
-                $.each(response, function(index, item) {
-                    destinationcities.append($('<option value="'+ item.Id +'">' + item.Name + '</option>'));
+            await $.getJSON(urldestinationcities,
+                { id: id, DestinationCityHint: DestinationCityHint },
+                function(response) {
+                    $.each(response,
+                        function(index, item) {
+                            destinationcities.append($('<option value="' + item.Id + '">' + item.Name + '</option>'));
+                        });
                 });
-            });
         }
 
-        async function fetchDestinationPoints(cityId, transportId) {
+        async function fetchDestinationPoints(cityId, transportId, DestinationPointHint) {
             destinationpoints.empty();
             if (cityId == null || transportId == null) {
                 return;
             }
 
-            await $.getJSON(urldestinationpoints, { cityId: cityId, transportId: transportId }, function (response) {
-                $.each(response, function (index, item) {
-                    destinationpoints.append($('<option value="' + item.Id + '">' + item.Name + '</option>'));
+            await $.getJSON(urldestinationpoints,
+                { cityId: cityId, transportId: transportId, DestinationPointHint: DestinationPointHint },
+                function(response) {
+                    $.each(response,
+                        function(index, item) {
+                            destinationpoints.append($('<option value="' + item.Id + '">' + item.Name + '</option>'));
+                        });
                 });
-            });
         };
 
-        async function fetchRoutes(leavePointId, destinationPointId) {
+        async function fetchRoutes(leavePointId, destinationPointId, RouteHint) {
             routes.empty();
             if (leavePointId == null || destinationPointId == null) {
                 return;
             }
 
-            await $.getJSON(urlroutes, { leavePointId: leavePointId, destinationPointId: destinationPointId },
-                    function(response) {
-                        $.each(response, function(index, item) {
-                                routes.append($('<option value="' + item.Id + '">' + item.Name + '</option>'));
-                            });
-                    });
+            await $.getJSON(urlroutes,
+                { leavePointId: leavePointId, destinationPointId: destinationPointId, RouteHint: RouteHint },
+                function(response) {
+                    $.each(response,
+                        function(index, item) {
+                            routes.append($('<option value="' + item.Id + '">' + item.Name + '</option>'));
+                        });
+                });
         };
 
-        async function fetchHotels(destinationCityId) {
+        async function fetchHotels(destinationCityId, HotelHint) {
             hotels.empty();
             if (destinationCityId == null) {
                 return;
             }
 
-            await $.getJSON(urlhotels, { destinationCityId: destinationCityId }, function (response) {
-                $.each(response, function(index, item) {
-                    hotels.append($('<option value="'+ item.Id +'">' + item.Name + '</option>'));
+            await $.getJSON(urlhotels,
+                { destinationCityId: destinationCityId, HotelHint: HotelHint },
+                function(response) {
+                    $.each(response,
+                        function(index, item) {
+                            hotels.append($('<option value="' + item.Id + '">' + item.Name + '</option>'));
+                        });
                 });
-            });
         }
 
         async function fetchExcursions(hotelId) {
@@ -325,43 +359,64 @@
                 return;
             }
 
-            await $.getJSON(urlexcursions, { hotelId: hotelId }, function (response) {
-                $.each(response, function (index, item) {
-                    excursions1.append($('<option value="' + item.Id + '">' + item.Name + '</option>'));
-                });
+            await $.getJSON(urlexcursions,
+                { hotelId: hotelId, ExcursionHint: 0 },
+                function(response) {
+                    $.each(response,
+                        function(index, item) {
+                            excursions1.append($('<option value="' + item.Id + '">' + item.Name + '</option>'));
+                        });
 
-                $.each(response, function (index, item) {
-                    excursions2.append($('<option value="' + item.Id + '">' + item.Name + '</option>'));
-                });
+                    $.each(response,
+                        function(index, item) {
+                            excursions2.append($('<option value="' + item.Id + '">' + item.Name + '</option>'));
+                        });
 
-                $.each(response, function (index, item) {
-                    excursions3.append($('<option value="' + item.Id + '">' + item.Name + '</option>'));
-                });
+                    $.each(response,
+                        function(index, item) {
+                            excursions3.append($('<option value="' + item.Id + '">' + item.Name + '</option>'));
+                        });
 
-                $.each(response, function (index, item) {
-                    excursions4.append($('<option value="' + item.Id + '">' + item.Name + '</option>'));
-                });
+                    $.each(response,
+                        function(index, item) {
+                            excursions4.append($('<option value="' + item.Id + '">' + item.Name + '</option>'));
+                        });
 
-                $.each(response, function (index, item) {
-                    excursions5.append($('<option value="' + item.Id + '">' + item.Name + '</option>'));
+                    $.each(response,
+                        function(index, item) {
+                            excursions5.append($('<option value="' + item.Id + '">' + item.Name + '</option>'));
+                        });
                 });
-            });
         }
 
-        async function fetchBackRoutes(leavePointId, destinationPointId) {
+        async function fetchBackRoutes(leavePointId, destinationPointId, BackRouteHint) {
             backroutes.empty();
             if (leavePointId == null || destinationPointId == null) {
                 return;
             }
 
-            await $.getJSON(urlbackroutes, { leavePointId: leavePointId, destinationPointId: destinationPointId }, function (response) {
-                $.each(response, function (index, item) {
-                    backroutes.append($('<option value="' + item.Id + '">' + item.Name + '</option>'));
+            await $.getJSON(urlbackroutes,
+                { leavePointId: leavePointId, destinationPointId: destinationPointId, BackRouteHint: BackRouteHint },
+                function(response) {
+                    $.each(response,
+                        function(index, item) {
+                            backroutes.append($('<option value="' + item.Id + '">' + item.Name + '</option>'));
+                        });
                 });
-            });
         }
 
-        async function fetchPrice(routeId, isBusiness, backRouteId, isBackBusiness, hotelId, isLux, ex1, ex2, ex3, ex4, ex5, peopleCount) {
+        async function fetchPrice(routeId,
+            isBusiness,
+            backRouteId,
+            isBackBusiness,
+            hotelId,
+            isLux,
+            ex1,
+            ex2,
+            ex3,
+            ex4,
+            ex5,
+            peopleCount) {
             if (routeId == null || backRouteId == null || hotelId == null) {
                 document.getElementById("PriceCount").innerHTML =
                     "Індивідуальний тур із заданими параметрами не може бути сконструйовано.";
@@ -370,71 +425,71 @@
             }
 
             await $.getJSON(urlprice,
-                    {
-                        routeId: routeId,
-                        isBusiness: isBusiness,
-                        backRouteId: backRouteId,
-                        isBackBusiness: isBackBusiness,
-                        hotelId: hotelId,
-                        isLux: isLux,
-                        ex1: ex1,
-                        ex2: ex2,
-                        ex3: ex3,
-                        ex4: ex4,
-                        ex5: ex5,
-                        peopleCount: peopleCount
-                    },
-                    function(response) {
-                        document.getElementById("PriceCount").innerHTML =
-                            "Вартість індивідуального туру на обрану кількість людей: " + response + " грн.";
-                        document.getElementById("constructButton").disabled = false;
-                    });
+                {
+                    routeId: routeId,
+                    isBusiness: isBusiness,
+                    backRouteId: backRouteId,
+                    isBackBusiness: isBackBusiness,
+                    hotelId: hotelId,
+                    isLux: isLux,
+                    ex1: ex1,
+                    ex2: ex2,
+                    ex3: ex3,
+                    ex4: ex4,
+                    ex5: ex5,
+                    peopleCount: peopleCount
+                },
+                function(response) {
+                    document.getElementById("PriceCount").innerHTML =
+                        "Вартість індивідуального туру на обрану кількість людей: " + response + " грн.";
+                    document.getElementById("constructButton").disabled = false;
+                });
         }
 
         async function onchangeevent() {
             var count = document.getElementById("ExcursionsCount").value;
             switch (Number(count)) {
             case 0:
-                    document.getElementById("excurs1").style.display = "none";
-                    document.getElementById("excurs2").style.display = "none";
-                    document.getElementById("excurs3").style.display = "none";
-                    document.getElementById("excurs4").style.display = "none";
-                    document.getElementById("excurs5").style.display = "none";
+                document.getElementById("excurs1").style.display = "none";
+                document.getElementById("excurs2").style.display = "none";
+                document.getElementById("excurs3").style.display = "none";
+                document.getElementById("excurs4").style.display = "none";
+                document.getElementById("excurs5").style.display = "none";
                 break;
             case 1:
-                    document.getElementById("excurs1").style.display = "block";
-                    document.getElementById("excurs2").style.display = "none";
-                    document.getElementById("excurs3").style.display = "none";
-                    document.getElementById("excurs4").style.display = "none";
-                    document.getElementById("excurs5").style.display = "none";
+                document.getElementById("excurs1").style.display = "block";
+                document.getElementById("excurs2").style.display = "none";
+                document.getElementById("excurs3").style.display = "none";
+                document.getElementById("excurs4").style.display = "none";
+                document.getElementById("excurs5").style.display = "none";
                 break;
             case 2:
-                    document.getElementById("excurs1").style.display = "block";
-                    document.getElementById("excurs2").style.display = "block";
-                    document.getElementById("excurs3").style.display = "none";
-                    document.getElementById("excurs4").style.display = "none";
-                    document.getElementById("excurs5").style.display = "none";
+                document.getElementById("excurs1").style.display = "block";
+                document.getElementById("excurs2").style.display = "block";
+                document.getElementById("excurs3").style.display = "none";
+                document.getElementById("excurs4").style.display = "none";
+                document.getElementById("excurs5").style.display = "none";
                 break;
             case 3:
-                    document.getElementById("excurs1").style.display = "block";
-                    document.getElementById("excurs2").style.display = "block";
-                    document.getElementById("excurs3").style.display = "block";
-                    document.getElementById("excurs4").style.display = "none";
-                    document.getElementById("excurs5").style.display = "none";
+                document.getElementById("excurs1").style.display = "block";
+                document.getElementById("excurs2").style.display = "block";
+                document.getElementById("excurs3").style.display = "block";
+                document.getElementById("excurs4").style.display = "none";
+                document.getElementById("excurs5").style.display = "none";
                 break;
             case 4:
-                    document.getElementById("excurs1").style.display = "block";
-                    document.getElementById("excurs2").style.display = "block";
-                    document.getElementById("excurs3").style.display = "block";
-                    document.getElementById("excurs4").style.display = "block";
-                    document.getElementById("excurs5").style.display = "none";
+                document.getElementById("excurs1").style.display = "block";
+                document.getElementById("excurs2").style.display = "block";
+                document.getElementById("excurs3").style.display = "block";
+                document.getElementById("excurs4").style.display = "block";
+                document.getElementById("excurs5").style.display = "none";
                 break;
             case 5:
-                    document.getElementById("excurs1").style.display = "block";
-                    document.getElementById("excurs2").style.display = "block";
-                    document.getElementById("excurs3").style.display = "block";
-                    document.getElementById("excurs4").style.display = "block";
-                    document.getElementById("excurs5").style.display = "block";
+                document.getElementById("excurs1").style.display = "block";
+                document.getElementById("excurs2").style.display = "block";
+                document.getElementById("excurs3").style.display = "block";
+                document.getElementById("excurs4").style.display = "block";
+                document.getElementById("excurs5").style.display = "block";
                 break;
             default:
             }
@@ -464,121 +519,133 @@
             var ex5 = 0;
             var count = document.getElementById("ExcursionsCount").value;
             switch (Number(count)) {
-                case 0:
+            case 0:
 
-                    break;
-                case 1:
-                    ex1 = $("#excursionsList1").val();
-                    break;
-                case 2:
-                    ex1 = $("#excursionsList1").val();
-                    ex2 = $("#excursionsList2").val();
-                    break;
-                case 3:
-                    ex1 = $("#excursionsList1").val();
-                    ex2 = $("#excursionsList2").val();
-                    ex3 = $("#excursionsList3").val();
-                    break;
-                case 4:
-                    ex1 = $("#excursionsList1").val();
-                    ex2 = $("#excursionsList2").val();
-                    ex3 = $("#excursionsList3").val();
-                    ex4 = $("#excursionsList4").val();
-                    break;
-                case 5:
-                    ex1 = $("#excursionsList1").val();
-                    ex2 = $("#excursionsList2").val();
-                    ex3 = $("#excursionsList3").val();
-                    ex4 = $("#excursionsList4").val();
-                    ex5 = $("#excursionsList5").val();
-                    break;
-                default:
+                break;
+            case 1:
+                ex1 = $("#excursionsList1").val();
+                break;
+            case 2:
+                ex1 = $("#excursionsList1").val();
+                ex2 = $("#excursionsList2").val();
+                break;
+            case 3:
+                ex1 = $("#excursionsList1").val();
+                ex2 = $("#excursionsList2").val();
+                ex3 = $("#excursionsList3").val();
+                break;
+            case 4:
+                ex1 = $("#excursionsList1").val();
+                ex2 = $("#excursionsList2").val();
+                ex3 = $("#excursionsList3").val();
+                ex4 = $("#excursionsList4").val();
+                break;
+            case 5:
+                ex1 = $("#excursionsList1").val();
+                ex2 = $("#excursionsList2").val();
+                ex3 = $("#excursionsList3").val();
+                ex4 = $("#excursionsList4").val();
+                ex5 = $("#excursionsList5").val();
+                break;
+            default:
             }
 
-            await fetchPrice($("#routesList").val(), isBusiness, $("#backRoutesList").val(), isBackBusiness, $("#hotelsList").val(), isLux, ex1, ex2, ex3, ex4, ex5, $("#PeopleCount").val());
+            await fetchPrice($("#routesList").val(),
+                isBusiness,
+                $("#backRoutesList").val(),
+                isBackBusiness,
+                $("#hotelsList").val(),
+                isLux,
+                ex1,
+                ex2,
+                ex3,
+                ex4,
+                ex5,
+                $("#PeopleCount").val());
         }
 
         $(document).ready(async function() {
-            $("#countryList").change(async function () {
+
+            $("#countryList").change(async function() {
                 var id = $(this).val();
-                await fetchCities(id);
+                await fetchCities(id, 0);
                 var idcity = $("#cityList").val();
                 var idtransport = $("#transportList").val();
-                await fetchPoints(idcity, idtransport);
+                await fetchPoints(idcity, idtransport, 0);
                 var idPoint = $("#pointsList").val();
                 var idDestinationPoint = $("#destinationPointsList").val();
-                await fetchRoutes(idPoint, idDestinationPoint);
-                await fetchBackRoutes(idPoint, idDestinationPoint);
+                await fetchRoutes(idPoint, idDestinationPoint, 0);
+                await fetchBackRoutes(idPoint, idDestinationPoint, 0);
                 await countPrice();
             });
 
-            $("#cityList").change(async function () {
+            $("#cityList").change(async function() {
                 var id = $(this).val();
                 var idtransport = $("#transportList").val();
-                await fetchPoints(id, idtransport);
+                await fetchPoints(id, idtransport, 0);
                 var idPoint = $("#pointsList").val();
                 var idDestinationPoint = $("#destinationPointsList").val();
-                await fetchRoutes(idPoint, idDestinationPoint);
-                await fetchBackRoutes(idPoint, idDestinationPoint);
+                await fetchRoutes(idPoint, idDestinationPoint, 0);
+                await fetchBackRoutes(idPoint, idDestinationPoint, 0);
                 await countPrice();
             });
 
-            $("#transportList").change(async function () {
+            $("#transportList").change(async function() {
                 var id = $(this).val();
                 var idcity = $("#cityList").val();
-                await fetchPoints(idcity, id);
+                await fetchPoints(idcity, id, 0);
                 var idcitydest = $("#destinationCityList").val();
-                await fetchDestinationPoints(idcitydest, id);
+                await fetchDestinationPoints(idcitydest, id, 0);
                 var idPoint = $("#pointsList").val();
                 var idDestinationPoint = $("#destinationPointsList").val();
-                await fetchRoutes(idPoint, idDestinationPoint);
-                await fetchBackRoutes(idPoint, idDestinationPoint);
+                await fetchRoutes(idPoint, idDestinationPoint, 0);
+                await fetchBackRoutes(idPoint, idDestinationPoint, 0);
                 await countPrice();
             });
 
-            $("#destinationCountryList").change(async function () {
+            $("#destinationCountryList").change(async function() {
                 var id = $(this).val();
-                await fetchDestinationCities(id);
+                await fetchDestinationCities(id, 0);
                 var idcity = $("#destinationCityList").val();
                 var idtransport = $("#transportList").val();
-                await fetchDestinationPoints(idcity, idtransport);
+                await fetchDestinationPoints(idcity, idtransport, 0);
                 var idPoint = $("#pointsList").val();
                 var idDestinationPoint = $("#destinationPointsList").val();
-                await fetchRoutes(idPoint, idDestinationPoint);
-                await fetchBackRoutes(idPoint, idDestinationPoint);
-                await fetchHotels(idcity);
+                await fetchRoutes(idPoint, idDestinationPoint, 0);
+                await fetchBackRoutes(idPoint, idDestinationPoint, 0);
+                await fetchHotels(idcity, 0);
                 var idHotel = $("#hotelsList").val();
                 await fetchExcursions(idHotel);
                 await countPrice();
             });
 
-            $("#destinationCityList").change(async function () {
+            $("#destinationCityList").change(async function() {
                 var id = $(this).val();
                 var idtransport = $("#transportList").val();
-                await fetchDestinationPoints(id, idtransport);
+                await fetchDestinationPoints(id, idtransport, 0);
                 var idPoint = $("#pointsList").val();
                 var idDestinationPoint = $("#destinationPointsList").val();
-                await fetchRoutes(idPoint, idDestinationPoint);
-                await fetchBackRoutes(idPoint, idDestinationPoint);
-                await fetchHotels(id);
+                await fetchRoutes(idPoint, idDestinationPoint, 0);
+                await fetchBackRoutes(idPoint, idDestinationPoint, 0);
+                await fetchHotels(id, 0);
                 var idHotel = $("#hotelsList").val();
                 await fetchExcursions(idHotel);
                 await countPrice();
             });
 
-            $("#pointsList").change(async function () {
+            $("#pointsList").change(async function() {
                 var id = $(this).val();
                 var idDestinationPoint = $("#destinationPointsList").val();
-                await fetchRoutes(id, idDestinationPoint);
-                await fetchBackRoutes(id, idDestinationPoint);
+                await fetchRoutes(id, idDestinationPoint, 0);
+                await fetchBackRoutes(id, idDestinationPoint, 0);
                 await countPrice();
             });
 
-            $("#destinationPointsList").change(async function () {
+            $("#destinationPointsList").change(async function() {
                 var id = $(this).val();
                 var idPoint = $("#pointsList").val();
-                await fetchRoutes(idPoint, id);
-                await fetchBackRoutes(idPoint, id);
+                await fetchRoutes(idPoint, id, 0);
+                await fetchBackRoutes(idPoint, id, 0);
                 await countPrice();
             });
 
@@ -588,59 +655,194 @@
                 await countPrice();
             });
 
-            $("#routesList").change(async function () {
+            $("#routesList").change(async function() {
                 await countPrice();
             });
 
-            $("#backRoutesList").change(async function () {
+            $("#backRoutesList").change(async function() {
                 await countPrice();
             });
 
-            $("#routeClass").change(async function () {
+            $("#routeClass").change(async function() {
                 await countPrice();
             });
 
-            $("#backRouteClass").change(async function () {
+            $("#backRouteClass").change(async function() {
                 await countPrice();
             });
 
-            $("#hotelClass").change(async function () {
+            $("#hotelClass").change(async function() {
                 await countPrice();
             });
 
-            $("#excursionsList1").change(async function () {
+            $("#excursionsList1").change(async function() {
                 await countPrice();
             });
 
-            $("#excursionsList2").change(async function () {
+            $("#excursionsList2").change(async function() {
                 await countPrice();
             });
 
-            $("#excursionsList3").change(async function () {
+            $("#excursionsList3").change(async function() {
                 await countPrice();
             });
 
-            $("#excursionsList4").change(async function () {
+            $("#excursionsList4").change(async function() {
                 await countPrice();
             });
 
-            $("#excursionsList5").change(async function () {
+            $("#excursionsList5").change(async function() {
                 await countPrice();
             });
 
-            $("#PeopleCount").change(async function () {
+            $("#PeopleCount").change(async function() {
                 await countPrice();
             });
 
-            await fetchCities($("#countryList").val());
-            await fetchPoints($("#cityList").val(), $("#transportList").val());
-            await fetchDestinationCities($("#destinationCountryList").val());
-            await fetchDestinationPoints($("#destinationCityList").val(), $("#transportList").val());
-            await fetchRoutes($("#pointsList").val(), $("#destinationPointsList").val());
-            await fetchHotels($("#destinationCityList").val());
-            await fetchExcursions($("#hotelsList").val());
-            await fetchBackRoutes($("#pointsList").val(), $("#destinationPointsList").val());
-            await fetchPrice($("#routesList").val(), false, $("#backRoutesList").val(), false, $("#hotelsList").val(), false, 0, 0, 0, 0, 0, $("#PeopleCount").val());
+            var Type = $("#Type").val();
+            if (Type === "Recommended") {
+                var CountryHint = $("#CountryHint").val();
+                var CityHint = $("#CityHint").val();
+                await fetchCities(CountryHint, CityHint);
+                var LeavePointHint = $("#LeavePointHint").val();
+                await fetchPoints($("#cityList").val(), $("#transportList").val(), LeavePointHint);
+                var DestinationCountryHint = $("#DestinationCountryHint").val();
+                var DestinationCityHint = $("#DestinationCityHint").val();
+                await fetchDestinationCities(DestinationCountryHint, DestinationCityHint);
+                var DestinationPointHint = $("#DestinationPointHint").val();
+                await fetchDestinationPoints($("#destinationCityList").val(),
+                    $("#transportList").val(),
+                    DestinationPointHint);
+                var RouteHint = $("#RouteHint").val();
+                await fetchRoutes($("#pointsList").val(), $("#destinationPointsList").val(), RouteHint);
+                var HotelHint = $("#HotelHint").val();
+                await fetchHotels($("#destinationCityList").val(), HotelHint);
+                var BackRouteHint = $("#BackRouteHint").val();
+                await fetchBackRoutes($("#pointsList").val(), $("#destinationPointsList").val(), BackRouteHint);
+
+                var ExcursionsCountHint = $("#ExcursionsCountHint").val();
+                var Excursion1Hint = $("#Excursion1Hint").val();
+                var Excursion2Hint = $("#Excursion2Hint").val();
+                var Excursion3Hint = $("#Excursion3Hint").val();
+                var Excursion4Hint = $("#Excursion4Hint").val();
+                var Excursion5Hint = $("#Excursion5Hint").val();
+
+                if (ExcursionsCountHint == 0) {
+                    await fetchExcursions($("#hotelsList").val());
+                }
+                else {
+
+                    onchangeevent();
+
+                    if (HotelHint == null) {
+                        return;
+                    }
+
+                    if (ExcursionsCountHint > 0) {
+                        excursions1.empty();
+                        await $.getJSON(urlexcursions,
+                            { hotelId: HotelHint, ExcursionHint: Excursion1Hint },
+                            function(response) {
+                                $.each(response,
+                                    function(index, item) {
+                                        excursions1.append($('<option value="' +
+                                            item.Id +
+                                            '">' +
+                                            item.Name +
+                                            '</option>'));
+                                    });
+                            });
+                    };
+
+                    if (ExcursionsCountHint > 1) {
+                        excursions2.empty();
+                        await $.getJSON(urlexcursions,
+                            { hotelId: HotelHint, ExcursionHint: Excursion2Hint },
+                            function (response) {
+                                $.each(response,
+                                    function (index, item) {
+                                        excursions2.append($('<option value="' +
+                                            item.Id +
+                                            '">' +
+                                            item.Name +
+                                            '</option>'));
+                                    });
+                            });
+                    };
+
+                    if (ExcursionsCountHint > 2) {
+                        excursions3.empty();
+                        await $.getJSON(urlexcursions,
+                            { hotelId: HotelHint, ExcursionHint: Excursion3Hint },
+                            function (response) {
+                                $.each(response,
+                                    function (index, item) {
+                                        excursions3.append($('<option value="' +
+                                            item.Id +
+                                            '">' +
+                                            item.Name +
+                                            '</option>'));
+                                    });
+                            });
+                    };
+
+                    if (ExcursionsCountHint > 3) {
+                        excursions4.empty();
+                        await $.getJSON(urlexcursions,
+                            { hotelId: HotelHint, ExcursionHint: Excursion4Hint },
+                            function (response) {
+                                $.each(response,
+                                    function (index, item) {
+                                        excursions4.append($('<option value="' +
+                                            item.Id +
+                                            '">' +
+                                            item.Name +
+                                            '</option>'));
+                                    });
+                            });
+                    };
+
+                    if (ExcursionsCountHint > 4) {
+                        excursions5.empty();
+                        await $.getJSON(urlexcursions,
+                            { hotelId: HotelHint, ExcursionHint: Excursion5Hint },
+                            function (response) {
+                                $.each(response,
+                                    function (index, item) {
+                                        excursions5.append($('<option value="' +
+                                            item.Id +
+                                            '">' +
+                                            item.Name +
+                                            '</option>'));
+                                    });
+                            });
+                    };
+                }
+
+                countPrice();
+
+            } else {
+                await fetchCities($("#countryList").val(), 0);
+                await fetchPoints($("#cityList").val(), $("#transportList").val(), 0);
+                await fetchDestinationCities($("#destinationCountryList").val(), 0);
+                await fetchDestinationPoints($("#destinationCityList").val(), $("#transportList").val(), 0);
+                await fetchRoutes($("#pointsList").val(), $("#destinationPointsList").val(), 0);
+                await fetchHotels($("#destinationCityList").val(), 0);
+                await fetchExcursions($("#hotelsList").val());
+                await fetchBackRoutes($("#pointsList").val(), $("#destinationPointsList").val(), 0);
+                await fetchPrice($("#routesList").val(),
+                    false,
+                    $("#backRoutesList").val(),
+                    false,
+                    $("#hotelsList").val(),
+                    false,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    $("#PeopleCount").val());
+            }
         });
     </script>
 }

@@ -7,6 +7,7 @@ using TouristWebSite.Models;
 using TouristWebSite.Helpers;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using DAL.Models;
 
 namespace TouristWebSite.Controllers
 {
@@ -75,20 +76,106 @@ namespace TouristWebSite.Controllers
         {
             try
             {
-                ConstructViewModel model = new ConstructViewModel()
+                ConstructedTour incomeTour = (ConstructedTour)TempData["tour"];
+                ConstructViewModel model = null;
+
+                if (incomeTour == null)
                 {
-                    Countries = CountriesDBHelper.GetCountries(),
-                    Transports = TransportsDBHelper.GetTransports(),
-                    DestinationCountries = DestinationCountriesDBHelper.GetCountries(),
-                    PeopleCount = 1
-                };
+                    model = new ConstructViewModel()
+                    {
+                        Countries = CountriesDBHelper.GetCountries(),
+                        Transports = TransportsDBHelper.GetTransports(),
+                        DestinationCountries = DestinationCountriesDBHelper.GetCountries(),
+                        PeopleCount = 1,
+                        Type = "Not recommended"
+                    };
+                }
+                else
+                {
+                    var route = RoutesDBHelper.GetRouteById(incomeTour.RouteId);
+                    var city = CitiesDBHelper.GetCityById(route.LeavePoint.CityId);
+                    var transports = TransportsDBHelper.GetTransports();
+                    var transport = transports.FirstOrDefault(x => x.Id == route.LeavePoint.TransportId);
+                    transports.Remove(transport);
+                    transports.Insert(0, transport);
+                    var backRoute = BackRoutesDBHelper.GetBackRouteById(incomeTour.BackRouteId);
+                    var destinationCity = DestinationCitiesDBHelper.GetCityById(route.DestinationPoint.DestinationCityId);
+                    var excursions = TourExcusionsDBHelper.GetByTourId(incomeTour.Id);
+
+                    long? ex1 = 0;
+                    long? ex2 = 0;
+                    long? ex3 = 0;
+                    long? ex4 = 0;
+                    long? ex5 = 0;
+
+                    if (excursions.Count > 0)
+                    {
+                        ex1 = excursions[0].ExcursionId;
+                    }
+
+                    if (excursions.Count > 1)
+                    {
+                        ex2 = excursions[1].ExcursionId;
+                    }
+
+                    if (excursions.Count > 2)
+                    {
+                        ex3 = excursions[2].ExcursionId;
+                    }
+
+                    if (excursions.Count > 3)
+                    {
+                        ex4 = excursions[3].ExcursionId;
+                    }
+
+                    if (excursions.Count > 4)
+                    {
+                        ex5 = excursions[4].ExcursionId;
+                    }
+
+                    model = new ConstructViewModel()
+                    {
+                        Countries = CountriesDBHelper.GetCountries(),
+                        Transports = transports,
+                        DestinationCountries = DestinationCountriesDBHelper.GetCountries(),
+                        Country = CountriesDBHelper.GetCountryById(city.CountryId).Id,
+                        City = city.Id,
+                        LeavePoint = route.LeavePointId,
+                        DestinationCountry = DestinationCountriesDBHelper.GetCountryById(destinationCity.DestinationCountryId).Id,
+                        DestinationCity = destinationCity.Id,
+                        DestinationPoint = route.DestinationPointId,
+                        Route = route.Id,
+                        Class = incomeTour.Class,
+                        Hotel = incomeTour.HotelId,
+                        HotelClass = incomeTour.HotelClass,
+                        PeopleCount = incomeTour.PeopleCount,
+                        ExcursionsCount = excursions.Count,
+                        Excursion1 = ex1,
+                        Excursion2 = ex2,
+                        Excursion3 = ex3,
+                        Excursion4 = ex4,
+                        Excursion5 = ex5,
+                        BackRoute = incomeTour.BackRouteId,
+                        BackClass = incomeTour.BackClass,
+                        Type = "Recommended"
+                    };
+                }
 
                 return View(model);
+
             }
             catch (Exception e)
             {
                 return RedirectToRoute(new { controller = "Helper", action = "Index" });
             }
+        }
+
+        [HttpGet]
+        public ActionResult RecommendationsConstruct(long itemId)
+        {
+            var tour = RecommendationsDBHelper.GetRecommendationById(itemId).ConstructedTour;
+            TempData["tour"] = tour;
+            return RedirectToAction("TourConstruct");
         }
 
         [HttpPost]
@@ -140,72 +227,138 @@ namespace TouristWebSite.Controllers
         }
 
         [HttpGet]
-        public JsonResult GetCities(long id)
+        public JsonResult GetCities(long CountryHint, long CityHint)
         {
-            return Json(CitiesDBHelper.GetCitiesForCountry(id), JsonRequestBehavior.AllowGet);
+            var cities = CitiesDBHelper.GetCitiesForCountry(CountryHint);
+
+            if (CityHint != 0)
+            {
+                var city = cities.FirstOrDefault(x => x.Id == CityHint);
+                cities.Remove(city);
+                cities.Insert(0, city);
+            }
+
+            return Json(cities, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
-        public JsonResult GetLeavePoints(long cityId, long transportId)
+        public JsonResult GetLeavePoints(long cityId, long transportId, long LeavePointHint)
         {
-            return Json(LeavePointDBHelper.GetLeavePointsByCityAndTransport(cityId, transportId), JsonRequestBehavior.AllowGet);
+            var leavePoints = LeavePointDBHelper.GetLeavePointsByCityAndTransport(cityId, transportId);
+
+            if (LeavePointHint != 0)
+            {
+                var leavePoint = leavePoints.FirstOrDefault(x => x.Id == LeavePointHint);
+                leavePoints.Remove(leavePoint);
+                leavePoints.Insert(0, leavePoint);
+            }
+
+            return Json(leavePoints, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
-        public JsonResult GetDestinationCities(long id)
+        public JsonResult GetDestinationCities(long id, long DestinationCityHint)
         {
-            return Json(DestinationCitiesDBHelper.GetCitiesForCountry(id), JsonRequestBehavior.AllowGet);
+            var destinationCities = DestinationCitiesDBHelper.GetCitiesForCountry(id);
+
+            if (DestinationCityHint != 0)
+            {
+                var destinationCity = destinationCities.FirstOrDefault(x => x.Id == DestinationCityHint);
+                destinationCities.Remove(destinationCity);
+                destinationCities.Insert(0, destinationCity);
+            }
+
+            return Json(destinationCities, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
-        public JsonResult GetDestinationPoints(long cityId, long transportId)
+        public JsonResult GetDestinationPoints(long cityId, long transportId, long DestinationPointHint)
         {
-            return Json(DestinationPointDBHelper.GetDestinationPointsByCityAndTransport(cityId, transportId), JsonRequestBehavior.AllowGet);
+            var destinationPoints = DestinationPointDBHelper.GetDestinationPointsByCityAndTransport(cityId, transportId);
+
+            if (DestinationPointHint != 0)
+            {
+                var destinationPoint = destinationPoints.FirstOrDefault(x => x.Id == DestinationPointHint);
+                destinationPoints.Remove(destinationPoint);
+                destinationPoints.Insert(0, destinationPoint);
+            }
+
+            return Json(destinationPoints, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
-        public JsonResult GetRoutes(long leavePointId, long destinationPointId)
+        public JsonResult GetRoutes(long leavePointId, long destinationPointId, long RouteHint)
         {
-            var temp = RoutesDBHelper.GetRoutes(leavePointId, destinationPointId);
+            var routes = RoutesDBHelper.GetRoutes(leavePointId, destinationPointId);
 
-            foreach (var item in temp)
+            if (RouteHint != 0)
+            {
+                var route = routes.FirstOrDefault(x => x.Id == RouteHint);
+                routes.Remove(route);
+                routes.Insert(0, route);
+            }
+
+            foreach (var item in routes)
             {
                 item.Name = $"{item.Name} ({item.Start.ToShortDateString()}, {item.Start.ToShortTimeString()} - {item.End.ToShortDateString()}, {item.End.ToShortTimeString()})";
             }
 
-            return Json(temp, JsonRequestBehavior.AllowGet);
+            return Json(routes, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
-        public JsonResult GetHotels(long destinationCityId)
+        public JsonResult GetHotels(long destinationCityId, long HotelHint)
         {
-            var temp = HotelsDBHelper.GetHotels(destinationCityId);
+            var hotels = HotelsDBHelper.GetHotels(destinationCityId);
 
-            foreach (var item in temp)
+            if (HotelHint!= 0)
+            {
+                var hotel = hotels.FirstOrDefault(x => x.Id == HotelHint);
+                hotels.Remove(hotel);
+                hotels.Insert(0, hotel);
+            }
+
+            foreach (var item in hotels)
             {
                 item.Name = $"{item.Name} ({item.PriceStandart}грн./{item.PriceLux}грн.)";
             }
 
-            return Json(temp, JsonRequestBehavior.AllowGet);
+            return Json(hotels, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
-        public JsonResult GetExcursions(long hotelId)
+        public JsonResult GetExcursions(long hotelId, long ExcursionHint)
         {
-            return Json(ExcursionsDBHelper.GetExcursions(hotelId), JsonRequestBehavior.AllowGet);
+            var excursions = ExcursionsDBHelper.GetExcursions(hotelId);
+
+            if (ExcursionHint != 0)
+            {
+                var excursion = excursions.FirstOrDefault(x => x.Id == ExcursionHint);
+                excursions.Remove(excursion);
+                excursions.Insert(0, excursion);
+            }
+
+            return Json(excursions, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
-        public JsonResult GetBackRoutes(long leavePointId, long destinationPointId)
+        public JsonResult GetBackRoutes(long leavePointId, long destinationPointId, long BackRouteHint)
         {
-            var temp = BackRoutesDBHelper.GetBackRoutes(leavePointId, destinationPointId);
+            var backRoutes = BackRoutesDBHelper.GetBackRoutes(leavePointId, destinationPointId);
 
-            foreach (var item in temp)
+            if (BackRouteHint != 0)
+            {
+                var backRoute = backRoutes.FirstOrDefault(x => x.Id == BackRouteHint);
+                backRoutes.Remove(backRoute);
+                backRoutes.Insert(0, backRoute);
+            }
+
+            foreach (var item in backRoutes)
             {
                 item.Name = $"{item.Name} ({item.Start.ToShortDateString()}, {item.Start.ToShortTimeString()} - {item.End.ToShortDateString()}, {item.End.ToShortTimeString()})";
             }
 
-            return Json(temp, JsonRequestBehavior.AllowGet);
+            return Json(backRoutes, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
@@ -346,7 +499,7 @@ namespace TouristWebSite.Controllers
             catch (Exception e)
             {
                 return RedirectToRoute(new { controller = "Helper", action = "Index" });
-            }          
+            }
         }
 
         [HttpGet]
@@ -385,7 +538,7 @@ namespace TouristWebSite.Controllers
                     {
                         Id = recommendation.Id,
                         DateStart = route.Start,
-                        DateEnd = route.End,
+                        DateEnd = backRoute.End,
                         PeopleCount = recommendation.ConstructedTour.PeopleCount,
                         Price = recommendation.ConstructedTour.Price,
                         Country = city.Country.Name,

@@ -17,6 +17,14 @@ namespace DAL.DBHelpers
             }
         }
 
+        public static Recommendation GetRecommendationById(long id)
+        {
+            using (context = new ApplicationDbContext())
+            {
+                return context.Recommendations.Include(y => y.ConstructedTour).FirstOrDefault(x => x.Id == id);
+            }
+        }
+
         public static void SaveRecommendations(List<ConstructedTour> tours, string userId)
         {
             using (context = new ApplicationDbContext())
