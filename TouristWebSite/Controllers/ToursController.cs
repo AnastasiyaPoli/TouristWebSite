@@ -135,12 +135,53 @@ namespace TouristWebSite.Controllers
 
                 foreach (var item in CommentsDBHelper.GetActiveForTour(itemId))
                 {
+                    string mark = "";
+
+                    switch (item.NumberMark)
+                    {
+                        case 5:
+                            {
+                                mark = "Ідеально";
+                            }
+                            break;
+
+                        case 4:
+                            {
+                                mark = "Добре";
+                            }
+                            break;
+
+                        case 3:
+                            {
+                                mark = "Задовільно";
+                            }
+                            break;
+
+                        case 2:
+                            {
+                                mark = "Погано";
+                            }
+                            break;
+
+                        case 1:
+                            {
+                                mark = "Жахливо";
+                            }
+                            break;
+
+                        default:
+                            {
+                                mark = "Не обрана";
+                            }
+                            break;
+                    }
+
                     list.Add(new CommentViewModel()
                     {
                         Id = item.Id,
                         User = item.User,
                         Text = item.Text,
-                        Mark = item.Mark,
+                        Mark = mark,
                         WasBooked = BookedToursDBHelper.Check(item.User.Id, itemId)
                     });
                 }

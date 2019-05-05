@@ -20,7 +20,7 @@ namespace DAL.Models
 
         public string Text { get; set; }
 
-        public string Mark { get; set; }
+        //public string Mark { get; set; }
 
         public int NumberMark { get; set; }
 

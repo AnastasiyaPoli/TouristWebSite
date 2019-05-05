@@ -311,7 +311,7 @@ namespace TouristWebSite.Controllers
         {
             var hotels = HotelsDBHelper.GetHotels(destinationCityId);
 
-            if (HotelHint!= 0)
+            if (HotelHint != 0)
             {
                 var hotel = hotels.FirstOrDefault(x => x.Id == HotelHint);
                 hotels.Remove(hotel);
@@ -534,6 +534,47 @@ namespace TouristWebSite.Controllers
                     var city = CitiesDBHelper.GetCityById(route.LeavePoint.CityId);
                     var destinationCity = DestinationCitiesDBHelper.GetCityById(route.DestinationPoint.DestinationCityId);
 
+                    string mark = "";
+
+                    switch (recommendation.ConstructedTour.NumberMark)
+                    {
+                        case 5:
+                            {
+                                mark = "Ідеально";
+                            }
+                            break;
+
+                        case 4:
+                            {
+                                mark = "Добре";
+                            }
+                            break;
+
+                        case 3:
+                            {
+                                mark = "Задовільно";
+                            }
+                            break;
+
+                        case 2:
+                            {
+                                mark = "Погано";
+                            }
+                            break;
+
+                        case 1:
+                            {
+                                mark = "Жахливо";
+                            }
+                            break;
+
+                        default:
+                            {
+                                mark = "Не обрана";
+                            }
+                            break;
+                    }
+
                     list.ConstructRateViewModels.Add(new ConstructRateViewModel()
                     {
                         Id = recommendation.Id,
@@ -556,7 +597,7 @@ namespace TouristWebSite.Controllers
                         BackRoute = backRoute.Name + "(" + backRoute.Start.ToShortDateString() + ", " + backRoute.Start.ToShortTimeString() + " - " + backRoute.End.ToShortDateString() + ", " + backRoute.End.ToShortTimeString() + ")",
                         BackClass = recommendation.ConstructedTour.BackClass,
                         Comment = recommendation.ConstructedTour.Comment,
-                        Mark = recommendation.ConstructedTour.Mark
+                        Mark = mark
                     });
                 }
 
@@ -600,11 +641,52 @@ namespace TouristWebSite.Controllers
                     var city = CitiesDBHelper.GetCityById(route.LeavePoint.CityId);
                     var destinationCity = DestinationCitiesDBHelper.GetCityById(route.DestinationPoint.DestinationCityId);
 
+                    string mark = "";
+
+                    switch (tour.NumberMark)
+                    {
+                        case 5:
+                            {
+                                mark = "Ідеально";
+                            }
+                            break;
+
+                        case 4:
+                            {
+                                mark = "Добре";
+                            }
+                            break;
+
+                        case 3:
+                            {
+                                mark = "Задовільно";
+                            }
+                            break;
+
+                        case 2:
+                            {
+                                mark = "Погано";
+                            }
+                            break;
+
+                        case 1:
+                            {
+                                mark = "Жахливо";
+                            }
+                            break;
+
+                        default:
+                            {
+                                mark = "Не обрана";
+                            }
+                            break;
+                    }
+
                     list.ConstructRateViewModels.Add(new ConstructRateViewModel()
                     {
                         Id = tour.Id,
                         DateStart = route.Start,
-                        DateEnd = route.End,
+                        DateEnd = backRoute.End,
                         PeopleCount = tour.PeopleCount,
                         Price = tour.Price,
                         Country = city.Country.Name,
@@ -622,7 +704,7 @@ namespace TouristWebSite.Controllers
                         BackRoute = backRoute.Name + "(" + backRoute.Start.ToShortDateString() + ", " + backRoute.Start.ToShortTimeString() + " - " + backRoute.End.ToShortDateString() + ", " + backRoute.End.ToShortTimeString() + ")",
                         BackClass = tour.BackClass,
                         Comment = tour.Comment,
-                        Mark = tour.Mark
+                        Mark = mark
                     });
                 }
 

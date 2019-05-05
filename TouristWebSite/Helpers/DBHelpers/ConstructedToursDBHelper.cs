@@ -150,7 +150,6 @@ namespace DAL.DBHelpers
             using (context = new ApplicationDbContext())
             {
                 var tour = context.ConstructedTours.FirstOrDefault(x => x.Id == id);
-                tour.Mark = mark;
                 tour.NumberMark = numberMark;
                 tour.Comment = comment;
                 context.SaveChanges();

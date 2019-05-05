@@ -76,7 +76,6 @@ namespace DAL.DBHelpers
                     ApplicationUserId = userId,
                     TourId = tourId,
                     Text = text,
-                    Mark = mark,
                     NumberMark = numberMark,
                     IsActive = true
                 };

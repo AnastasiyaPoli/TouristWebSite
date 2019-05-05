@@ -39,8 +39,6 @@ namespace DAL.Models
 
         public string Comment { get; set; }
 
-        public string Mark { get; set; }
-
         public int NumberMark { get; set; }
     }
 }
