@@ -160,9 +160,9 @@ namespace TouristWebSite.Controllers
         public ActionResult Statistics()
         {
             Dictionary<string, int> Data = new Dictionary<string, int>();
-
-            int all = BookedToursDBHelper.GetBookedToursForUser(User.Identity.GetUserId()).Count();
-            var grouped = BookedToursDBHelper.GetBookedToursForUser(User.Identity.GetUserId()).OrderBy(x => x.Tour.DateStart).GroupBy(ms => string.Format("{0}-{1}", ms.Tour.DateStart.Month, ms.Tour.DateStart.Year));
+            var grouped = BookedToursDBHelper.GetBookedToursForUser(User.Identity.GetUserId())
+                .OrderBy(x => x.Tour.DateStart)
+                .GroupBy(ms => string.Format("{0}-{1}", ms.Tour.DateStart.Month, ms.Tour.DateStart.Year));
 
             foreach (var group in grouped)
             {
@@ -246,6 +246,94 @@ namespace TouristWebSite.Controllers
                 Data[temp] = group.Count();
             };
 
+            Dictionary<string, int> DataConstructed = new Dictionary<string, int>();
+            var groupedConstructed = ConstructedToursDBHelper.GetByUserId(User.Identity.GetUserId())
+                .OrderBy(x => x.Route.Start)
+                .GroupBy(ms => string.Format("{0}-{1}", ms.Route.Start.Month, ms.Route.Start.Year));
+
+            foreach (var group in groupedConstructed)
+            {
+                var temp = group.Key;
+
+                switch (temp.Substring(0, 2))
+                {
+                    case "1-":
+                        {
+                            temp = string.Concat("Січень ", temp.Substring(2, (temp.Length - 2)));
+                        }
+                        break;
+
+                    case "2-":
+                        {
+                            temp = string.Concat("Лютий ", temp.Substring(2, (temp.Length - 2)));
+                        }
+                        break;
+
+                    case "3-":
+                        {
+                            temp = string.Concat("Березень ", temp.Substring(2, (temp.Length - 2)));
+                        }
+                        break;
+
+                    case "4-":
+                        {
+                            temp = string.Concat("Квітень ", temp.Substring(2, (temp.Length - 2)));
+                        }
+                        break;
+
+                    case "5-":
+                        {
+                            temp = string.Concat("Травень ", temp.Substring(2, (temp.Length - 2)));
+                        }
+                        break;
+
+                    case "6-":
+                        {
+                            temp = string.Concat("Червень ", temp.Substring(2, (temp.Length - 2)));
+                        }
+                        break;
+
+                    case "7-":
+                        {
+                            temp = string.Concat("Липень ", temp.Substring(2, (temp.Length - 2)));
+                        }
+                        break;
+
+                    case "8-":
+                        {
+                            temp = string.Concat("Серпень ", temp.Substring(2, (temp.Length - 2)));
+                        }
+                        break;
+
+                    case "9-":
+                        {
+                            temp = string.Concat("Вересень ", temp.Substring(2, (temp.Length - 2)));
+                        }
+                        break;
+
+                    case "10":
+                        {
+                            temp = string.Concat("Жовтень ", temp.Substring(3, (temp.Length - 3)));
+                        }
+                        break;
+
+                    case "11":
+                        {
+                            temp = string.Concat("Листопад ", temp.Substring(3, (temp.Length - 3)));
+                        }
+                        break;
+
+                    case "12":
+                        {
+                            temp = string.Concat("Грудень ", temp.Substring(3, (temp.Length - 3)));
+                        }
+                        break;
+                }
+
+                DataConstructed[temp] = group.Count();
+            };
+
+
             var userId = User.Identity.GetUserId();
 
             StatisticsViewModel model = new StatisticsViewModel()
@@ -253,7 +341,8 @@ namespace TouristWebSite.Controllers
                 ToursCount = BookedToursDBHelper.GetBookedToursForUser(userId).Count(),
                 IndividualToursCount = ConstructedToursDBHelper.GetByUserId(userId).Count(),
                 QuestionsCount = QuestionsDBHelper.GetForUser(userId).Count(),
-                Data = Data
+                Data = Data,
+                DataConstrcuted = DataConstructed
             };
 
             return View(model);

@@ -53,6 +53,7 @@ namespace TouristWebSite.Models
         public int IndividualToursCount { get; set; }
         public int QuestionsCount { get; set; }
         public Dictionary<string, int> Data { get; set; }
+        public Dictionary<string, int> DataConstrcuted { get; set; }
     }
 
     public class BookedToursViewModel

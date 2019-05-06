@@ -7,74 +7,179 @@
 <dl class="dl-horizontal">
     <dt class="aligner-300">Кількість заданих питань:</dt>
     <dd>@Model.QuestionsCount</dd>
+    <br />
     <dt class="aligner-300">Кількість заброньованих пакетних турів:</dt>
-    <dd>@Model.ToursCount</dd>
+    <dd id="ToursCount">@Model.ToursCount</dd>
     <dt class="aligner-300">Заброньовані раніше тури:</dt>
     <dd>@Html.ActionLink("Переглянути список", "BookedTours")</dd>
+</dl>
+
+@if (Model.ToursCount > 0)
+{
+    <div id="first">
+        <div id="piechart" style="width: 100%; height: 350px;"></div>
+        <br />
+        <div id="chart_div" style="width: 100%; height: 500px;"></div>
+    </div>
+}
+
+<br />
+
+<dl class="dl-horizontal">
     <dt class="aligner-300">Кількість сконструйованих індивідуальних турів:</dt>
     <dd>@Model.IndividualToursCount</dd>
     <dt class="aligner-300">Сконструйовані раніше тури:</dt>
     <dd>@Html.ActionLink("Переглянути список", "RateConstruct", "Helper")</dd>
 </dl>
 
-<div id="piechart" style="width: 100%; height: 350px;"></div>
-<br />
-<div id="chart_div" style="width: 100%; height: 500px;"></div>
+@if (Model.IndividualToursCount > 0)
+{
+    <div id="second">
+        <div id="piechart_constructed" style="width: 100%; height: 350px;"></div>
+        <br />
+        <div id="chart_div_constructed" style="width: 100%; height: 500px;"></div>
+    </div>
+}
 
 @section Scripts {
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
 
-      google.charts.load('current', { 'packages': ['corechart'] });
-      google.charts.setOnLoadCallback(drawChart);
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(drawChart);
 
-    function drawChart() {
+        function drawChart() {
 
-        var data = google.visualization.arrayToDataTable([
-            ['', 'Кількість заброньованих турів'],
+            //tours
+            var toursCount = @Model.ToursCount;
+            if (toursCount > 0) {
+                var data = google.visualization.arrayToDataTable([
+                    ['', 'Кількість заброньованих пакетних турів'],
 
-              @foreach(var item in Model.Data)
-              {
-                @:["@item.Key", @item.Value],
-              }
-        ]);
+                    @foreach (var item in Model.Data)
+                    {
+                        @:["@item.Key", @item.Value],
+                    }
+                ]);
 
-        var options = {
-            title: 'Замовлені тури за місяцями',
-            is3D: true,
-        };
-
-        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-        chart.draw(data, options);
-
-            var options1 = {
-                title: 'Замовлені тури за місяцями',
-                hAxis: {
-                    title: '',
-                    textStyle: {
+                var options = {
+                    title: 'Заброньовані пакетні тури за місяцями',
+                    titleTextStyle: {
                         color: 'white'
                     },
-                },
-                vAxis: {
-                    minValue: 0,
-                    textStyle: {
+                    legend: {
+                        textStyle: {
+                            color: 'white'
+                        }
+                    },
+                    is3D: true
+                };
+
+                var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+                chart.draw(data, options);
+
+                var options1 = {
+                    title: 'Заброньовані пакетні тури за місяцями',
+                    hAxis: {
+                        title: '',
+                        textStyle: {
+                            color: 'white'
+                        }
+                    },
+                    legend: {
+                        textStyle: {
+                            color: 'white'
+                        }
+                    },
+                    vAxis: {
+                        minValue: 0,
+                        textStyle: {
+                            color: 'white'
+                        }
+                    },
+                    titleTextStyle: {
                         color: 'white'
                     },
-                },
-                colors: ['white'],
-            };
+                    colors: ['white'],
+                };
 
-            var chart1 = new google.visualization.AreaChart(document.getElementById('chart_div'));
-        chart1.draw(data, options1);
+                var chart1 = new google.visualization.AreaChart(document.getElementById('chart_div'));
+                chart1.draw(data, options1);
 
-        var list = document.getElementsByTagName("rect");
+                var list = document.querySelectorAll("#first rect");
 
-        for (var i = 0; i < list.length; i++) {
-            if (i != 0 && i != 4+@Model.Data.Count()) {
-                list[i].style.fillOpacity = 0;
+                for (var i = 0; i < list.length; i++) {
+                    if (i != 0 && i != 4 + @Model.Data.Count()) {
+                        list[i].style.fillOpacity = 0;
+                    }
+                }
+            }
+
+            //constructed tours
+            var toursCount = @Model.IndividualToursCount;
+            if (toursCount > 0) {
+                var dataconstructed = google.visualization.arrayToDataTable([
+                    ['', 'Кількість сконструйованих індивідуальних турів'],
+
+                    @foreach (var item in Model.DataConstrcuted)
+                    {
+                        @:["@item.Key", @item.Value],
+                    }
+                ]);
+
+                var optionsconstructed = {
+                    title: 'Сконструйовані індивідуальні тури за місяцями',
+                    titleTextStyle: {
+                        color: 'white'
+                    },
+                    is3D: true,
+                    legend: {
+                        textStyle: {
+                            color: 'white'
+                        }
+                    },
+                };
+
+                var chartconstructed =
+                    new google.visualization.PieChart(document.getElementById('piechart_constructed'));
+                chartconstructed.draw(dataconstructed, optionsconstructed);
+
+                var options1constructed = {
+                    title: 'Сконструйовані індивідуальні тури за місяцями',
+                    hAxis: {
+                        title: '',
+                        textStyle: {
+                            color: 'white'
+                        },
+                    },
+                    legend: { textStyle: {
+                            color: 'white'
+                        }
+                    },
+                    vAxis: {
+                        minValue: 0,
+                        textStyle: {
+                            color: 'white'
+                        },
+                    },
+                    titleTextStyle: {
+                        color: 'white'
+                    },
+                    colors: ['white'],
+                };
+
+                var chart1constructed = new google.visualization.AreaChart(document.getElementById('chart_div_constructed'));
+                chart1constructed.draw(dataconstructed, options1constructed);
+
+                var list = document.querySelectorAll("#second rect");
+
+                for (var i = 0; i < list.length; i++) {
+                    if (i != 0 && i != 4 + @Model.DataConstrcuted.Count()) {
+                        list[i].style.fillOpacity = 0;
+                    }
+                }
             }
         }
-    }
     </script>
 
     @Scripts.Render("~/bundles/jqueryval")
