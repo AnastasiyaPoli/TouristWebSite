@@ -3,8 +3,7 @@ body {
     padding-top: 50px;
     padding-bottom: 20px;
     font-family: "Comic Sans MS", cursive, sans-serif;
-    background-size: cover;
-    background-repeat: revert;
+    background-repeat: repeat;
 }
 
 @media(max-width: 1100px) {
@@ -67,12 +66,12 @@ body {
 }
 
     .btn-default:hover {
-        background-color: #d68180 !important;
+        background-color: #e7a88f !important;
         border: 1px solid #333;
     }
 
     .btn-default:active:focus {
-        background-color: #d68180 !important;
+        background-color: #e7a88f !important;
         border: 1px solid #333;
     }
 
@@ -83,7 +82,7 @@ a {
 }
 
     a:hover {
-        color: #7A898C;
+        color: #666266;
     }
 
 .link {
@@ -116,7 +115,7 @@ h, h1, h2, h3, h4, h5, h6, p, label {
 }
 
 .transparent {
-    background-color: rgba(150, 150, 150, 0.5);
+    background-color: rgba(100, 100, 100, 0.25);
 }
 
 .no-underline {
