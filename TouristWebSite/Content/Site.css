@@ -150,8 +150,8 @@ h, h1, h2, h3, h4, h5, h6, p, label {
 }
 
 rect {
-    fill: #2C4A55 !important;
-    fill-opacity: 0.6;
+    fill: rgb(100, 100, 100) !important;
+    fill-opacity: 0.25;
 }
 
 .flexhorizontal {

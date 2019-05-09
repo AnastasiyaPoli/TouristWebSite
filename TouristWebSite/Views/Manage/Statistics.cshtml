@@ -65,14 +65,18 @@
                 var options = {
                     title: 'Заброньовані пакетні тури за місяцями',
                     titleTextStyle: {
-                        color: 'white'
+                        color: 'rgb(51, 51, 51)'
                     },
                     legend: {
                         textStyle: {
-                            color: 'white'
+                            color: 'rgb(51, 51, 51)'
                         }
                     },
-                    is3D: true
+                    is3D: true,
+                    pieSliceTextStyle: {
+                        color: 'rgb(51, 51, 51)',
+                        bold: true
+                    }
                 };
 
                 var chart = new google.visualization.PieChart(document.getElementById('piechart'));
@@ -83,24 +87,24 @@
                     hAxis: {
                         title: '',
                         textStyle: {
-                            color: 'white'
+                            color: 'rgb(51, 51, 51)'
                         }
                     },
                     legend: {
                         textStyle: {
-                            color: 'white'
+                            color: 'rgb(51, 51, 51)'
                         }
                     },
                     vAxis: {
                         minValue: 0,
                         textStyle: {
-                            color: 'white'
+                            color: 'rgb(51, 51, 51)'
                         }
                     },
                     titleTextStyle: {
-                        color: 'white'
+                        color: 'rgb(51, 51, 51)'
                     },
-                    colors: ['white'],
+                    colors: ['rgb(51, 51, 51)'],
                 };
 
                 var chart1 = new google.visualization.AreaChart(document.getElementById('chart_div'));
@@ -130,14 +134,13 @@
                 var optionsconstructed = {
                     title: 'Сконструйовані індивідуальні тури за місяцями',
                     titleTextStyle: {
-                        color: 'white'
+                        color: 'rgb(51, 51, 51)'
                     },
                     is3D: true,
-                    legend: {
-                        textStyle: {
-                            color: 'white'
-                        }
-                    },
+                    pieSliceTextStyle: {
+                        color: 'rgb(51, 51, 51)',
+                        bold: true,
+                    }
                 };
 
                 var chartconstructed =
@@ -149,26 +152,28 @@
                     hAxis: {
                         title: '',
                         textStyle: {
-                            color: 'white'
+                            color: 'rgb(51, 51, 51)'
                         },
                     },
-                    legend: { textStyle: {
-                            color: 'white'
+                    legend: {
+                        textStyle: {
+                            color: 'rgb(51, 51, 51)'
                         }
                     },
                     vAxis: {
                         minValue: 0,
                         textStyle: {
-                            color: 'white'
+                            color: 'rgb(51, 51, 51)'
                         },
                     },
                     titleTextStyle: {
-                        color: 'white'
+                        color: 'rgb(51, 51, 51)'
                     },
-                    colors: ['white'],
+                    colors: ['rgb(51, 51, 51)'],
                 };
 
-                var chart1constructed = new google.visualization.AreaChart(document.getElementById('chart_div_constructed'));
+                var chart1constructed =
+                    new google.visualization.AreaChart(document.getElementById('chart_div_constructed'));
                 chart1constructed.draw(dataconstructed, options1constructed);
 
                 var list = document.querySelectorAll("#second rect");
