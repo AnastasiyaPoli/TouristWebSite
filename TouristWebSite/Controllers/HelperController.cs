@@ -63,7 +63,7 @@ namespace TouristWebSite.Controllers
                 }
 
                 UsersDBHelper.UpdateUserAdditional(model);
-                return RedirectToAction("Index", new { Message = "Зміни було успішно внесено." });
+                return RedirectToAction("Index", new { Message = "Зміни було успішно збережено." });
             }
             catch (Exception e)
             {

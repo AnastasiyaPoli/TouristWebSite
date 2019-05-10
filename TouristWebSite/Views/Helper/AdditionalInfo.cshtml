@@ -5,7 +5,9 @@
 @using (Html.BeginForm("AdditionalInfo", "Helper", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     <div>
-        <h4>Редагуйте додаткову інформацію, що допоможе нам скласти кращий туристичний маршрут.</h4>
+        <h4>Редагуйте додаткову інформацію про себе.</h4>
+        <h4>Для внесення змін необхідно дати згоду на обробку персональних даних, відмітивши відповідну опцію в нижній частині сторінки. </h4>
+        <h4>Внесена інформація буде використана для більш точного підбору рекомендацій індивідуальних турів.</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(m => m.Id)
@@ -96,7 +98,7 @@
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-9">
-                <button type="submit" class="btn btn-success" disabled="true" id="confirmbutton"> <i class="fas fa-check"></i> Зберегти </button>
+                <button type="submit" class="btn btn-success" disabled="true" id="confirmbutton" title="Зберегти зміни"> <i class="fas fa-check"></i> Зберегти </button>
             </div>
         </div>
     </div>

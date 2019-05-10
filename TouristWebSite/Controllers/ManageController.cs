@@ -59,7 +59,7 @@ namespace TouristWebSite.Controllers
                 message == ManageMessageId.ChangePasswordSuccess ? "Пароль було успішно змінено."
                 : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
                 : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
-                : message == ManageMessageId.Changes ? "Зміни було успішно внесено."
+                : message == ManageMessageId.Changes ? "Зміни було успішно збережено."
                 : message == ManageMessageId.Error ? "Під час оновлення інформації сталась помилка."
                 : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
@@ -417,7 +417,7 @@ namespace TouristWebSite.Controllers
             try
             {
                 QuestionsDBHelper.Add(model.Text, model.Theme, User.Identity.GetUserId());
-                return RedirectToRoute(new { controller = "Manage", action = "Questions", message = "Запитання адміністратору було успішно додано." });
+                return RedirectToRoute(new { controller = "Manage", action = "Questions", message = "Запитання адміністраторам сайту було успішно додано." });
             }
             catch (Exception ex)
             {
@@ -483,36 +483,14 @@ namespace TouristWebSite.Controllers
             }
         }
 
-        [HttpGet]
-        public ActionResult Answer(long questionId)
-        {
-            try
-            {
-                var question = QuestionsDBHelper.GetById(questionId);
-
-                QuestionViewModel model = new QuestionViewModel()
-                {
-                    Question = question,
-                    QuestionId = questionId,
-                    UserId = question.User.Id,
-                    Text = question.Answer
-                };
-
-                return View(model);
-            }
-            catch (Exception ex)
-            {
-                return RedirectToRoute(new { controller = "Manage", action = "Index" });
-            }
-        }
-
         [HttpPost]
-        public ActionResult Answer(QuestionViewModel Question)
+        public ActionResult Answer(long id, string answer)
         {
             try
             {
-                QuestionsDBHelper.Answer(Question.Text, Question.QuestionId);
-                EmailSenderHelper.SendEmail(UsersDBHelper.GetById(Question.UserId).Email, "Відповідь на запитання", "На Ваше запитання на сайті туристичної фірми \"Формула відпочинку \" надано відповідь. Ви можете переглянути її в особистому кабінеті.");
+                QuestionsDBHelper.Answer(answer, id);
+                var userId = QuestionsDBHelper.GetById(id).ApplicationUserId;
+                EmailSenderHelper.SendEmail(UsersDBHelper.GetById(userId).Email, "Відповідь на запитання", "На Ваше запитання на сайті туристичної фірми \"Формула відпочинку \" надано відповідь. Ви можете переглянути її в особистому кабінеті.");
                 return RedirectToRoute(new { controller = "Manage", action = "AllQuestions", message = "Відповідь на запитання було успішно надано." });
             }
             catch (Exception ex)
@@ -728,6 +706,35 @@ namespace TouristWebSite.Controllers
             return result.Succeeded
                 ? RedirectToAction("ManageLogins")
                 : RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public ActionResult Users(string message = "")
+        {
+            ViewBag.StatusMessage = message;
+
+            AllUsersViewModel model = new AllUsersViewModel()
+            {
+                Users = UsersDBHelper.GetAll()
+            };
+
+            return View(model);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public ActionResult BlockingStatus(string userId)
+        {
+            try
+            {
+                UsersDBHelper.ChangeBlockStatus(userId);
+                return RedirectToAction("Users", new { Message = "Зміни було успішно збережено." });
+            }
+            catch (Exception e)
+            {
+                return RedirectToRoute(new { controller = "Users", action = "Index" });
+            }
         }
 
         protected override void Dispose(bool disposing)

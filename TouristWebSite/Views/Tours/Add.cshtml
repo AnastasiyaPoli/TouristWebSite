@@ -1,11 +1,11 @@
 ﻿@using TouristWebSite.Models
 @model TourViewModel
 
-<h2>Додати тур</h2>
+<h2>Додавання туру</h2>
 @using (Html.BeginForm("Add", "Tours", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    <h4>Додайте новий тур для сайту.</h4>
+    <h4>Додавайте новий пакетний тур туристичної фірми.</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
@@ -59,7 +59,7 @@
     </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-9">
-            <button type="submit" class="btn btn-success"> <i class="fas fa-plus"></i> Додати </button>
+            <button type="submit" class="btn btn-success"  title="Додати тур"> <i class="fas fa-plus"></i> Додати </button>
         </div>
     </div>
 }

@@ -1,8 +1,9 @@
 ﻿@model TouristWebSite.Models.ListConstructRateViewModels
-<h2>Сконструйовані раніше тури.</h2>
+<h2>Сконструйовані тури</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
-<h4>Переглядайте тури, які були сконструйовані для Вас раніше.</h4>
+<h4>Переглядайте сконструйовані раніше індивідуальні тури.</h4>
+<h4>Оцінюйте тури та додавайте свої коментарі для покращення підбору рекомендацій індивідуальних турів.</h4>
 
 @{
     int i = 0;
@@ -39,7 +40,7 @@
                 {
                     <h4><strong>Екскурсії: </strong> @item.Excursions</h4>
                 }
-                <br/>
+                <br />
                 <h4><strong>Інформація про маршрут зворотньої подорожі</strong></h4>
                 <h4><strong>Маршрут: </strong> @item.BackRoute</h4>
                 <h4><strong>Клас: </strong> @item.BackClass</h4>
@@ -70,7 +71,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-9">
-                <button class="btn btn-success" onclick="postMark(@i)"> <i class="fas fa-check"></i> Зберегти </button>
+                <button class="btn btn-success" onclick="postMark(@i)" title="Зберегти зміни"> <i class="fas fa-check"></i> Зберегти </button>
             </div>
         </div>
     </div>

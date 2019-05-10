@@ -1,0 +1,35 @@
+﻿@using Microsoft.AspNet.Identity
+@model TouristWebSite.Models.AllUsersViewModel
+
+<h2>Користувачі сайту</h2>
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+
+<div>
+    <h4>Управляйте акаунтами користувачів сайту.</h4>
+    <h4>Для блокування чи розблокування акаунта натисність на відповідну опцію біля обраного користувача.</h4>
+    @foreach (var item in Model.Users)
+    {
+        <div class="jumbotron transparent transp-container">
+            <h3>@item.Name @item.Surname</h3>
+            <h4>@item.Email</h4>
+            @if (item.DateOfBirth != null)
+            {
+                <h4><strong>Вік:</strong> @(DateTime.Now.Year - ((DateTime)item.DateOfBirth).Year) р.</h4>
+            }
+            @if (item.Country != null && item.Country != "")
+            {
+                <h4><strong>Країна:</strong> @item.Country </h4>
+            }
+
+            @if (item.IsActive)
+            {
+                <a class="btn btn-default no-underline" href="/Manage/BlockingStatus?userId=@item.Id" title="Заблокувати користувача"><span> <i class="fas fa-times"></i> Заблокувати користувача </span></a>
+            }
+            else
+            {
+                <a class="btn btn-default no-underline" href="/Manage/BlockingStatus?userId=@item.Id" title="Розблокувати користувача"><span> <i class="fas fa-check"></i> Розблокувати користувача </span></a>
+            }
+        </div>
+    }
+</div>

@@ -17,15 +17,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Формула відпочинку", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Формула відпочинку", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", title = "Перейти до розділу «Головна сторінка»" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Головна", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Новини та акції", "Index", "News")</li>
-                    <li>@Html.ActionLink("Пакетні тури", "Index", "Tours")</li>
-                    <li>@Html.ActionLink("Конструктор турів", "Index", "Helper")</li>
-                    <li>@Html.ActionLink("Контактна інформація", "Contacts", "Home")</li>
+                    <li>@Html.ActionLink("Головна", "Index", "Home", null, new {title = "Перейти до розділу «Головна сторінка»"})</li>
+                    <li>@Html.ActionLink("Новини та акції", "Index", "News", null, new { title = "Перейти до розділу «Новини та акції»" })</li>
+                    <li>@Html.ActionLink("Пакетні тури", "Index", "Tours", null, new { title = "Перейти до розділу «Пакетні тури»"})</li>
+                    <li>@Html.ActionLink("Конструктор турів", "Index", "Helper", null, new { title = "Перейти до розділу «Конструктор турів»" })</li>
+                    <li>@Html.ActionLink("Контактна інформація", "Contacts", "Home", null, new { title = "Перейти до розділу «Контактна інформація»" })</li>
                     <li class="nav-divider" style="background-color:black;"></li>
                 </ul>
                 @Html.Partial("_LoginPartial")

@@ -1,8 +1,8 @@
 ﻿@model TouristWebSite.Models.BookedToursViewModel
-<h2>Заброньовані раніше тури.</h2>
+<h2>Заброньовані тури</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
-<h4>Переглядайте тури, які Ви замовляли раніше.</h4>
+<h4>Переглядайте заброньовані раніше пакетні тури. Перейти до детальнішої інформації можна натиснувши на заголовок туру.</h4>
 
 @foreach (var item in Model.BookedTours)
 {
@@ -12,7 +12,7 @@
         <br />
         <div class="flex-container">
             <div>
-                <h3><a href="@Url.Action("Details", "Tours", new {itemId = item.TourId})"><strong>@item.Tour.Name (@item.Tour.Place)</strong></a></h3>
+                <h3><a href="@Url.Action("Details", "Tours", new {itemId = item.TourId})", title="Перейти до більш детальної інформації про тур"><strong>@item.Tour.Name (@item.Tour.Place)</strong></a></h3>
                 <h4><strong>Дати: </strong> @item.Tour.DateStart.ToShortDateString() - @item.Tour.DateEnd.ToShortDateString()</h4>
                 <h4><strong>Ціна: </strong> @item.Tour.Price грн.</h4>
 

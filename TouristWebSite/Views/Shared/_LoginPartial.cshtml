@@ -7,16 +7,16 @@
 
     <ul class="nav navbar-nav navbar-right">
         <li>
-            @Html.ActionLink("Особистий кабінет", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+            @Html.ActionLink("Особистий кабінет", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Перейти до розділу «Особистий кабінет»" })
         </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Вихід</a></li>
+        <li><a href="javascript:document.getElementById('logoutForm').submit()", title = "Вийти з акаунта">Вихід</a></li>
     </ul>
     }
 }
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Реєстрація", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Вхід", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        <li>@Html.ActionLink("Реєстрація", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", title = "Перейти до розділу «Реєстрація»" })</li>
+        <li>@Html.ActionLink("Вхід", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", title = "Перейти до розділу «Вхід»" })</li>
     </ul>
 }

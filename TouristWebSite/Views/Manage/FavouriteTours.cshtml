@@ -5,21 +5,20 @@
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div>
-    <h4>Переглядайте та редагуйте список улюблених турів.</h4>
-    <hr />
+    <h4>Переглядайте та редагуйте список улюблених турів. Перейти до детальнішої інформації можна натиснувши на заголовок туру.</h4>
 
     @foreach (var item in Model.Favourites)
     {
         <div class="jumbotron transparent transp-container">
             <div>
-                <a href="@Url.Action("RemoveFavouriteCab", "Tours", new {itemId = item.Id})" title="Прибрати зі списку улюблених">
+                <a href="@Url.Action("RemoveFavouriteCab", "Tours", new {itemId = item.Id})" title="Видалити тур зі списку улюблених">
                     <i class="fas fa-times fa-lg" style="float:right;"></i>
                 </a>
             </div>
             <br />
             <div class="flex-container">
                 <div>
-                    <h3><a href="@Url.Action("Details", "Tours", new {itemId = item.Id})"><strong>@item.Tour.Name (@item.Tour.Place)</strong></a></h3>
+                    <h3><a href="@Url.Action("Details", "Tours", new {itemId = item.Id})" title="Перейти до більш детальної інформації про тур"><strong>@item.Tour.Name (@item.Tour.Place)</strong></a></h3>
                     <h4><strong>Дати: </strong> @item.Tour.DateStart.ToShortDateString() - @item.Tour.DateEnd.ToShortDateString()</h4>
                     <h4><strong>Ціна: </strong> @item.Tour.Price грн.</h4>
 
@@ -42,7 +41,7 @@
 
             @if (User.Identity.IsAuthenticated)
             {
-                <a style="margin-top: 5px" class="btn btn-default no-underline" href="@Url.Action("TourBooking", "Tours", new {itemId = item.TourId})"> <span> <i class="fas fa-check"></i> Забронювати тур </span> </a>
+                <a style="margin-top: 5px" class="btn btn-default no-underline" href="@Url.Action("TourBooking", "Tours", new {itemId = item.TourId})" title="Перейти до сторінки бронювання туру"> <span> <i class="fas fa-check"></i> Забронювати тур </span> </a>
             }
         </div>
     }

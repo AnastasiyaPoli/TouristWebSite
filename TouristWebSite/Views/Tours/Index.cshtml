@@ -2,14 +2,17 @@
 <h2>Пакетні тури</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
-<h4>Переглядайте та бронюйте наші пакетні тури.</h4>
+<h4>Переглядайте наші пакетні тури. Перейти до детальнішої інформації можна натиснувши на заголовок туру.</h4>
+<h4>Для більшої зручності використовуйте пошук та фільтрування. </h4>
+<h4>Для замовлення обраного туру натисність на опцію бронювання біля нього. </h4>
+<h4>Також, є можливість додавати тури в список улюблених, який можна потім переглядати та редагувати в розділі «Особистий кабінет».</h4>
 
 @using (Html.BeginForm("Search", "Tours", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     <div class="flexhorizontal" style="margin-bottom: 10px">
         @Html.TextBoxFor(m => m.Search, new { @id = "searchBox", @class = "form-control search-text-box" })
-        <button type="submit" class="btn btn-default no-underline"> <span> <i class="fas fa-search"></i> </span> </button>
-        <a class="btn btn-default no-underline" href="@Url.Action("Index", "Tours")"> <span> <i class="fas fa-times"></i> </span> </a>
+        <button type="submit" class="btn btn-default no-underline" title="Здійснити пошук"> <span> <i class="fas fa-search"></i> </span> </button>
+        <a class="btn btn-default no-underline" href="@Url.Action("Index", "Tours")" title="Очистити поле пошуку"> <span> <i class="fas fa-times"></i> </span> </a>
     </div>
 }
 
@@ -47,8 +50,8 @@
     </div>
 
     <div class="flexhorizontalstart" style="margin-top: 10px; margin-bottom: 10px">
-        <button type="submit" class="btn btn-default no-underline" style="margin-right: 5px;"> <span> <i class="fas fa-filter"></i> Застосувати фільтр</span> </button>
-        <a class="btn btn-default no-underline" href="@Url.Action("Index", "Tours")"> <span> <i class="fas fa-times"></i> Прибрати фільтр</span> </a>
+        <button type="submit" class="btn btn-default no-underline" style="margin-right: 5px;" title="Застосувати фільтри"> <span> <i class="fas fa-filter"></i> Застосувати фільтри</span> </button>
+        <a class="btn btn-default no-underline" href="@Url.Action("Index", "Tours")" title="Прибрати фільтри"> <span> <i class="fas fa-times"></i> Прибрати фільтри </span> </a>
     </div>
 }
 
@@ -58,10 +61,10 @@
         <div>
             @if (User.IsInRole("Admin"))
             {
-                <a href="@Url.Action("Delete", "Tours", new {itemId = item.Id})" title="Видалити">
+                <a href="@Url.Action("Delete", "Tours", new {itemId = item.Id})" title="Видалити тур">
                     <i class="fas fa-times fa-lg" style="float:right;"></i>
                 </a>
-                <a href="@Url.Action("Update", "Tours", new {itemId = item.Id})" title="Редагувати">
+                <a href="@Url.Action("Update", "Tours", new {itemId = item.Id})" title="Редагувати тур">
                     <i class="fas fa-edit fa-lg" style="float:right; margin-right: 5px"></i>
                 </a>
                 <a href="@Url.Action("Photos", "Tours", new {itemId = item.Id})" title="Редагувати фотографії">
@@ -70,13 +73,13 @@
             }
             @if (Model.Favourites.Find(x => x.TourId == item.Id) == null)
             {
-                <a href="@Url.Action("Favourite", "Tours", new {itemId = item.Id})" title="Додати у список улюблених">
+                <a href="@Url.Action("Favourite", "Tours", new {itemId = item.Id})" title="Додати тур у список улюблених">
                     <i class="far fa-heart fa-lg" style="float:right; margin-right: 5px"></i>
                 </a>
             }
             else
             {
-                <a href="@Url.Action("RemoveFavourite", "Tours", new {itemId = Model.Favourites.Find(x => x.TourId == item.Id).Id})" title="Прибрати зі списку улюблених">
+                <a href="@Url.Action("RemoveFavourite", "Tours", new {itemId = Model.Favourites.Find(x => x.TourId == item.Id).Id})" title="Видалити тур зі списку улюблених">
                     <i class="fas fa-heart fa-lg" style="float:right; margin-right: 5px"></i>
                 </a>
             }
@@ -85,7 +88,7 @@
         <br />
         <div class="flex-container">
             <div>
-                <h3><a href="@Url.Action("Details", "Tours", new {itemId = item.Id})"><strong>@item.Name (@item.Place)</strong></a></h3>
+                <h3><a href="@Url.Action("Details", "Tours", new {itemId = item.Id})" title="Перейти до більш детальної інформації про тур"><strong>@item.Name (@item.Place)</strong></a></h3>
                 <h4><strong>Дати: </strong> @item.DateStart.ToShortDateString() - @item.DateEnd.ToShortDateString()</h4>
                 <h4><strong>Ціна: </strong> @item.Price грн.</h4>
 
@@ -108,12 +111,12 @@
 
         @if (User.Identity.IsAuthenticated)
         {
-            <a style="margin-top: 5px" class="btn btn-default no-underline" href="@Url.Action("TourBooking", "Tours", new {itemId = item.Id})"> <span> <i class="fas fa-check"></i> Забронювати тур </span> </a>
+            <a style="margin-top: 5px" class="btn btn-default no-underline" href="@Url.Action("TourBooking", "Tours", new {itemId = item.Id})" title="Перейти до сторінки бронювання туру"> <span> <i class="fas fa-check"></i> Забронювати тур </span> </a>
         }
     </div>
 }
 
 @if (User.IsInRole("Admin"))
 {
-    <a class="btn btn-default no-underline" href="@Url.Action("Add", "Tours")"> <span> <i class="fas fa-plus"></i> Додати новий тур </span> </a>
+    <a class="btn btn-default no-underline" href="@Url.Action("Add", "Tours")"  title="Перейти до сторінки додавання нового туру"> <span> <i class="fas fa-plus"></i> Додати новий тур </span> </a>
 }

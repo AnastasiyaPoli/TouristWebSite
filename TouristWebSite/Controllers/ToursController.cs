@@ -294,7 +294,7 @@ namespace TouristWebSite.Controllers
                 }
 
                 ToursDBHelper.Update(model);
-                return RedirectToRoute(new { controller = "Tours", action = "Index", message = "Зміни було успішно внесено." });
+                return RedirectToRoute(new { controller = "Tours", action = "Index", message = "Зміни було успішно збережено." });
             }
             catch (Exception e)
             {
@@ -443,11 +443,11 @@ namespace TouristWebSite.Controllers
                 }
                 else
                 {
-                    return RedirectToRoute(new { controller = "Tours", action = "Photos", itemId = img.TourId, message = "Додайте фото для завантаження." });
+                    return RedirectToRoute(new { controller = "Tours", action = "Photos", itemId = img.TourId, message = "Завантажте фотографію спочатку." });
                 }
 
                 ToursDBHelper.AddNewPhoto(img.TourId);
-                return RedirectToRoute(new { controller = "Tours", action = "Photos", itemId = img.TourId, successMessage = "Фото було успішно додано." });
+                return RedirectToRoute(new { controller = "Tours", action = "Photos", itemId = img.TourId, successMessage = "Фотографію було успішно додано." });
             }
             return View(img);
         }

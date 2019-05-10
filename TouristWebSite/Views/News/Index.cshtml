@@ -1,18 +1,18 @@
 ﻿@model TouristWebSite.Models.ActiveNewsViewModel
 
-<h2>Найсвіжіші новини</h2>
+<h2>Наші новини</h2>
 <p class="text-success">@ViewBag.StatusMessage</p>
-<h4>Переглядайте наші новини.</h4>
+<h4>Переглядайте найсвіжіші новини нашої фірми! Якщо бажаєте ознайомитись із подією детальніше - переходьте за посиланням.</h4>
 
 @foreach (var item in Model.ActiveNews)
 {
     <div class="jumbotron transparent transp-container">
         @if (User.IsInRole("Admin"))
         {
-            <a href="@Url.Action("DeleteNew", "News", new {itemId = item.Id})" title="Видалити">
+            <a href="@Url.Action("DeleteNew", "News", new {itemId = item.Id})" title="Видалити новину">
                 <i class="fas fa-times fa-lg" style="float:right;"></i>
             </a>
-            <a href="@Url.Action("EditNew", "News", new {itemId = item.Id})" title="Редагувати">
+            <a href="@Url.Action("EditNew", "News", new {itemId = item.Id})" title="Редагувати новину">
                 <i class="fas fa-edit fa-lg" style="float:right; margin-right: 5px"></i>
             </a>
         }
@@ -20,7 +20,7 @@
         <h4>@item.Content</h4>
         @if (item.Link != null && item.Link != string.Empty)
         {
-            <h4><a href=@item.Link>Детальніше за посиланням...</a></h4>
+            <h4><a title="Перейти до більш детальної інформації про новину" href=@item.Link>Детальніше за посиланням...</a></h4>
         }
         <label style="float: right"><i>@item.Date.ToShortDateString()</i></label>
     </div>
@@ -28,19 +28,19 @@
 
 @if (User.IsInRole("Admin"))
 {
-    <a class="btn btn-default no-underline" href="@Url.Action("AddNew", "News")"> <span> <i class="fas fa-plus"></i> Додати нову новину </span> </a>
+    <a class="btn btn-default no-underline" href="@Url.Action("AddNew", "News")" title="Перейти до сторінки додавання нової новини"> <span> <i class="fas fa-plus"></i> Додати нову новину </span> </a>
 }
 
 <h2>Наші акції</h2>
 <p class="text-success">@ViewBag.StatusMessage1</p>
-<h4>Переглядайте наші акції.</h4>
+<h4>Переглядайте наші акції. Якщо бажаєте ознайомитись із пропозицією детальніше - переходьте за посиланням.</h4>
 
 @foreach (var item in Model.ActiveDiscounts)
 {
     <div class="jumbotron transparent transp-container">
         @if (User.IsInRole("Admin"))
         {
-            <a href="@Url.Action("EditDiscount", "News", new {itemId = item.Id})" title="Редагувати">
+            <a href="@Url.Action("EditDiscount", "News", new {itemId = item.Id})" title="Редагувати акцію">
                 <i class="fas fa-edit fa-lg" style="float:right;"></i>
             </a>
         }
@@ -49,7 +49,7 @@
         <h4>@item.Content</h4>
         @if (item.Link != null && item.Link != string.Empty)
         {
-            <h4><a href=@item.Link>Детальніше за посиланням...</a></h4>
+            <h4><a href=@item.Link title="Перейти до більш детальної інформації про акцію">Детальніше за посиланням...</a></h4>
         }
         <label style="float: right"><i>@item.StartDate.ToShortDateString() - @item.EndDate.ToShortDateString() </i></label>
     </div>
@@ -57,5 +57,5 @@
 
 @if (User.IsInRole("Admin"))
 {
-    <a class="btn btn-default no-underline" href="@Url.Action("AddDiscount", "News")"> <span> <i class="fas fa-plus"></i> Додати нову акцію </span> </a>
+    <a class="btn btn-default no-underline" href="@Url.Action("AddDiscount", "News")" title="Перейти до сторінки додавання нової акції"> <span> <i class="fas fa-plus"></i> Додати нову акцію </span> </a>
 }

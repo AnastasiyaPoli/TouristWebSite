@@ -18,6 +18,7 @@ namespace DAL.Models
 
         public string Text { get; set; }
 
+        [Display(Name = "Відповідь: ")]
         public string Answer { get; set; }
     }
 }

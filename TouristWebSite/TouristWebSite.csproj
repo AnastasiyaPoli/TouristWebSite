@@ -202,7 +202,6 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HelperController.cs" />
-    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ToursController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -238,7 +237,6 @@
     <Compile Include="Helpers\PDFGeneratorHelper.cs" />
     <Compile Include="Models\TourBookingViewModel.cs" />
     <Compile Include="Models\HelperViewModels.cs" />
-    <Compile Include="Models\UserViewModels.cs" />
     <Compile Include="Models\TourViewModels.cs" />
     <Compile Include="Models\NewsViewModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -247,7 +245,6 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Custom\Statistics.css" />
     <Content Include="Content\Documents\Constructed\TemplateConstructed.html" />
     <Content Include="Content\Documents\Recommendations\TemplateRecommendations.html" />
     <Content Include="Content\Img\Mountains.png" />
@@ -325,14 +322,13 @@
     <Content Include="Views\Tours\Details.cshtml" />
     <Content Include="Views\Manage\UserInfo.cshtml" />
     <Content Include="Views\Tours\TourBooking.cshtml" />
-    <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\Manage\Users.cshtml" />
     <Content Include="Views\Helper\AdditionalInfo.cshtml" />
     <Content Include="Views\Tours\Add.cshtml" />
     <Content Include="Views\Tours\Update.cshtml" />
     <Content Include="Views\Tours\Photos.cshtml" />
     <Content Include="Views\Manage\Questions.cshtml" />
     <Content Include="Views\Manage\AllQuestions.cshtml" />
-    <Content Include="Views\Manage\Answer.cshtml" />
     <Content Include="Views\Manage\FavouriteTours.cshtml" />
     <Content Include="Views\Manage\BookedTours.cshtml" />
     <Content Include="Views\Helper\TourConstruct.cshtml" />

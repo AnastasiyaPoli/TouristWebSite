@@ -3,9 +3,12 @@
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 
-<h4>Переглядайте запитання користувачів та відповідайте на них.</h4>
+<h4>Переглядайте запитання користувачів адміністраторам сайту та відповідайте на них.</h4>
 <hr />
 
+@{
+    int i = 0;
+}
 @foreach (var item in Model.Questions)
 {
     <div class="jumbotron transparent transp-container">
@@ -19,12 +22,47 @@
         }
         <h4><strong>Тема: </strong>@item.Theme</h4>
         <h4><strong>Запитання: </strong>@item.Text</h4>
-        <h4><strong>Відповідь: </strong>@item.Answer</h4>
-
-        <a class="btn btn-default no-underline" href="/Manage/Answer?questionId=@item.Id"><span> <i class="fas fa-check"></i> Відповісти на запитання </span></a>
     </div>
+
+    @Html.HiddenFor(m => m.Questions[i].Id, new { @id = "id" + i })
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            @Html.LabelFor(m => m.Questions[i].Answer, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(m => m.Questions[i].Answer, new { @class = "form-control", @style = "min-width: 100% !important", @id = "answer" + i })
+                <div class="text-danger" id="error_@i">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-9">
+                <button class="btn btn-success" onclick="postAnswer(@i)" title="Зберегти зміни"> <i class="fas fa-check"></i> Зберегти </button>
+            </div>
+        </div>
+    </div>
+    i++;
 }
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    
+    <script>
+        async function postAnswer(i) {
+            var id = $("#id" + i).val();
+            var e = document.getElementById("mark" + i);
+            var answer = $("#answer" + i).val();
+
+            if (answer == "" || answer == null) {
+                document.getElementById("error_" + i).innerHTML = " Необхідно заповнити поле \"Відповідь\".";
+            }
+            else {
+                await $.post("/Manage/Answer", { answer: answer, id: id }, function (response) {
+                    location.reload();
+                });
+            };
+        }
+    </script>
 }

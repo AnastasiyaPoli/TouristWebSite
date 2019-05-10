@@ -10,22 +10,26 @@
     <h4>Управляйте фотографіями туру.</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>Всі фото (@Model.Tour.NumberOfPhotos):</dt>
+        <dt class="aligner-350">Всі фотографії пакетного туру (@Model.Tour.NumberOfPhotos):</dt>
         <dd>
-            <a href="/Tours/DeleteAll?itemId=@Model.Tour.Id">Видалити всі фото </a>
+            <a href="/Tours/DeleteAll?itemId=@Model.Tour.Id" title="Видалити всі фотографії">Видалити всі фотографії</a>
         </dd>
 
-        <dt>Додати фото:</dt>
+        <dt class="aligner-350">Додати нове фото для пакетного туру:</dt>
         <dd>
             @using (Html.BeginForm("AddPhoto", "Tours", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 @Html.AntiForgeryToken()
                 @Html.HiddenFor(m => m.TourId)
 
-                <label class="link" for="ImagePath">Завантажити зображення</label> <i id="tick" style="display: none" class="fas fa-check"></i>
+                <label class="link" for="ImagePath" title="Завантажити фотографію">Завантажити фотографію</label> <i id="tick" style="display: none" class="fas fa-check"></i>
                 <input id="ImagePath" title="Upload a product image" type="file" name="file" style="display:none;" onchange="showtick()" />
                 <br />
-                <button type="submit" class="btn btn-success"> <i class="fas fa-plus"></i> Додати </button>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-9">
+                        <button type="submit" class="btn btn-success" title="Зберегти зміни"> <i class="fas fa-check"></i> Зберегти </button>
+                    </div>
+                </div>
             }
         </dd>
     </dl>

@@ -206,7 +206,7 @@ namespace TouristWebSite.Controllers
                 if (errorWrongPassword1 != null || errorWrongPassword2 != null || errorWrongPassword3 != null || errorWrongPassword4 != null || errorWrongPassword5 != null || errorWrongPassword6 != null || errorWrongPassword7 != null || errorWrongPassword8 != null || errorWrongPassword9 != null || errorWrongPassword10 != null || errorWrongPassword11 != null || errorWrongPassword12 != null || errorWrongPassword13 != null || errorWrongPassword14 != null)
                 {
                     string[] Errors = new string[1];
-                    Errors[0] = "У паролі повинен бути хоча б один символ або цифра, хоча б одна велика літера a-z та одна мала літера A-Z.";
+                    Errors[0] = "У паролі повинен бути хоча б один символ, цифра, одна велика літера a-z та одна мала літера A-Z.";
                     var rez = new IdentityResult(Errors);
                     AddErrors(rez);
                     return View(model);

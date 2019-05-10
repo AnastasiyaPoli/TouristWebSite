@@ -119,7 +119,7 @@ namespace TouristWebSite.Controllers
                 }
 
                 NewsDBHelper.Edit(model);
-                return RedirectToRoute(new { controller = "News", action = "Index", message = "Зміни було успішно внесено." });
+                return RedirectToRoute(new { controller = "News", action = "Index", message = "Зміни було успішно збережено." });
             }
             catch (Exception e)
             {
@@ -222,7 +222,7 @@ namespace TouristWebSite.Controllers
                 }
 
                 DiscountsDBHelper.Edit(model);
-                return RedirectToRoute(new { controller = "News", action = "Index", message1 = "Зміни було успішно внесено." });
+                return RedirectToRoute(new { controller = "News", action = "Index", message1 = "Зміни було успішно збережено." });
             }
             catch (Exception e)
             {

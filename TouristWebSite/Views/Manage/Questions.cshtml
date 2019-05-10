@@ -1,10 +1,10 @@
 ﻿@model TouristWebSite.Models.QuestionsViewModel
-<h2>Запитання до адміністратрів сайту</h2>
+<h2>Запитання адміністраторам сайту</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 
-<h4>Переглядайте ваші запитання до адміністраторів сайту та відповіді на них.</h4>
-<hr />
+<h4>Переглядайте свої запитання адміністраторам сайту та відповіді на них.</h4>
+<h4>Додавайте нове запитання адміністраторам сайту. Коли на нього буде отримано відповідь, вона відобразиться на цій сторінці під відповідним запитанням.</h4>
 
 @foreach (var item in Model.Questions)
 {
@@ -16,8 +16,6 @@
 }
 
 <br />
-
-<h2>Додайте запитання</h2>
 
 @using (Html.BeginForm("AddQuestions", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
@@ -37,7 +35,7 @@
     </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-9">
-            <button type="submit" class="btn btn-success"> <i class="fas fa-plus"></i> Додати </button>
+            <button type="submit" class="btn btn-success" title="Додати запитання"> <i class="fas fa-plus"></i> Додати </button>
         </div>
     </div>
 }

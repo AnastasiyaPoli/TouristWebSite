@@ -1,17 +1,18 @@
 ﻿@model TouristWebSite.Models.StatisticsViewModel
 
 <h2>Статистика</h2>
-<h4>Переглядайте свою статистику.</h4>
+<h4>Переглядайте свою статистику по заданим запитанням адміністраторам сайту, заброньованим пакетним турам та сконструйованим індивідуальним турам.</h4>
+<h4>Для більшої наочності статистика відображається із використанням двох видів діаграм: кругової та діаграми області.</h4>
 <hr />
 
 <dl class="dl-horizontal">
-    <dt class="aligner-300">Кількість заданих питань:</dt>
+    <dt class="aligner-350">Кількість запитань адміністраторам сайту:</dt>
     <dd>@Model.QuestionsCount</dd>
     <br />
-    <dt class="aligner-300">Кількість заброньованих пакетних турів:</dt>
+    <dt class="aligner-350">Кількість заброньованих пакетних турів:</dt>
     <dd id="ToursCount">@Model.ToursCount</dd>
-    <dt class="aligner-300">Заброньовані раніше тури:</dt>
-    <dd>@Html.ActionLink("Переглянути список", "BookedTours")</dd>
+    <dt class="aligner-350">Заброньовані пакетні тури:</dt>
+    <dd>@Html.ActionLink("Переглянути список", "BookedTours", null, new { title = "Перейти до сторінки зі списком заброньованих пакетних турів" })</dd>
 </dl>
 
 @if (Model.ToursCount > 0)
@@ -26,10 +27,10 @@
 <br />
 
 <dl class="dl-horizontal">
-    <dt class="aligner-300">Кількість сконструйованих індивідуальних турів:</dt>
+    <dt class="aligner-350">Кількість сконструйованих індивідуальних турів:</dt>
     <dd>@Model.IndividualToursCount</dd>
-    <dt class="aligner-300">Сконструйовані раніше тури:</dt>
-    <dd>@Html.ActionLink("Переглянути список", "RateConstruct", "Helper")</dd>
+    <dt class="aligner-350">Сконструйовані індивідуальні тури:</dt>
+    <dd>@Html.ActionLink("Переглянути список", "RateConstruct", "Helper", null, new { title = "Перейти до сторінки зі списком сконструйованих індивідуальних турів" })</dd>
 </dl>
 
 @if (Model.IndividualToursCount > 0)

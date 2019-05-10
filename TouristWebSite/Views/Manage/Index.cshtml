@@ -5,69 +5,72 @@
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div>
-    <h4>Управляйте особистою інформацією.</h4>
+    <h4>Управляйте особистою інформацією та задавайте запитання адміністраторам сайту.</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>Загальна інформація:</dt>
+        <dt class="aligner-350">Загальна інформація:</dt>
         <dd>
-            @Html.ActionLink("Переглянути та редагувати", "UserInfo", new { itemId = User.Identity.GetUserId() })
+            @Html.ActionLink("Переглянути та редагувати", "UserInfo", new { itemId = User.Identity.GetUserId() }, new {title = "Перейти до сторінки редагування загальної інформації"})
         </dd>
 
-        <dt>Пароль:</dt>
+        <dt class="aligner-350">Пароль:</dt>
         <dd>
             @if (Model.HasPassword)
             {
-                @Html.ActionLink("Змінити пароль", "ChangePassword")
+                @Html.ActionLink("Змінити", "ChangePassword", null, new { title = "Перейти до сторінки зміни паролю" })
             }
             else
             {
-                @Html.ActionLink("Задати пароль", "SetPassword")
+                @Html.ActionLink("Встановити", "SetPassword")
             }
         </dd>
 
-        <dt>Оновлення:</dt>
+        <dt class="aligner-350">Оновлення (новини та акції) туристичної фірми:</dt>
         <dd>
             @if (Model.IsSubscribed)
             {
-                @Html.ActionLink("Відписатись від оновлень", "Subscription", "Manage")
+                @Html.ActionLink("Відмінити підписку", "Subscription", "Manage", null, new { title = "Відмінити підписку на оновлення туристичної фірми" })
             }
             else
             {
-                @Html.ActionLink("Підписатись на оновлення", "Subscription", "Manage")
+                @Html.ActionLink("Підписатись", "Subscription", "Manage", null, new { title = "Підписатись на оновлення туристичної фірми" })
             }
         </dd>
 
-        <dt>Список улюблених турів:</dt>
+        <dt class="aligner-350">Список улюблених пакетних турів:</dt>
         <dd>
-            @Html.ActionLink("Переглянути та редагувати", "FavouriteTours")
+            @Html.ActionLink("Переглянути та редагувати", "FavouriteTours", null, new { title = "Перейти до сторінки зі списком улюблених пакетних турів" })
+        </dd>
+        
+        <dt class="aligner-350">Запитання адміністраторам сайту:</dt>
+        <dd>
+            @Html.ActionLink("Переглянути та запитати", "Questions", null, new { title = "Перейти до сторінки запитань адміністраторам сайту" })
         </dd>
 
-        <dt>Статистика:</dt>
-        <dd>
-            @Html.ActionLink("Переглянути статистику", "Statistics")
-        </dd>
 
-        <dt>Запитання адміністратору:</dt>
+        <dt class="aligner-350">Статистика замовлень та запитань:</dt>
         <dd>
-            @Html.ActionLink("Переглянути та запитати", "Questions")
+            @Html.ActionLink("Переглянути", "Statistics", null, new { title = "Перейти до сторінки статистики" })
         </dd>
     </dl>
-
-    <br />
-    
+ 
     @if (User.IsInRole("Admin"))
     {
-        <h4>Управляйте користувачами.</h4>
+        <hr />
+        
+        <h2>Адміністрування користувачів</h2>
+        <h4>Управляйте акаунтами користувачів сайту та їх запитаннями адміністраторам сайту.</h4>
+        <hr />
 
         <dl class="dl-horizontal">
-            <dt>Список користувачів:</dt>
+            <dt class="aligner-350">Список користувачів:</dt>
             <dd>
-                @Html.ActionLink("Переглянути та редагувати", "Index", "Users" )
+                @Html.ActionLink("Переглянути та редагувати", "Users", null, new { title = "Перейти до сторінки зі списком користувачів" })
             </dd>
             
-            <dt>Запитання користувачів:</dt>
+            <dt class="aligner-350">Запитання користувачів адміністраторам сайту:</dt>
             <dd>
-                @Html.ActionLink("Переглянути та відповісти", "AllQuestions")
+                @Html.ActionLink("Переглянути та відповісти", "AllQuestions", null, new { title = "Перейти до сторінки відповідей на запитання користувачів" })
             </dd>
         </dl>
     }

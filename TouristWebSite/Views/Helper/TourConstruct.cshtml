@@ -1,9 +1,9 @@
 ﻿@using TouristWebSite.Models
 @model ConstructViewModel
 
-<h2>Конструктор турів.</h2>
+<h2>Конструктор турів</h2>
 @Html.AntiForgeryToken()
-<h4>Сконструюйте тур для себе.</h4>
+<h4>Сконструюйте індивідуальний тур для себе, обираючи його характеристики.</h4>
 <hr />
 
 @Html.HiddenFor(m => m.Type, new { @id = "Type" })
@@ -220,7 +220,7 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-9">
-            <button type="submit" class="btn btn-success" id="constructButton"> <i class="fas fa-check"></i> Сконструювати </button>
+            <button type="submit" class="btn btn-success" id="constructButton" title="Сконструювати індивідуальний тур"> <i class="fas fa-check"></i> Сконструювати </button>
         </div>
     </div>
 }

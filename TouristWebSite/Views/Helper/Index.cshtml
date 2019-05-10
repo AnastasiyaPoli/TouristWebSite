@@ -1,31 +1,32 @@
 ﻿@using Microsoft.AspNet.Identity
-<h2>Помічник</h2>
+<h2>Конструктор турів</h2>
 <p class="text-success">@ViewBag.StatusMessage</p>
 
 <div>
-    <h4>Користуйтесь нашим помічником для того, щоб створити ідеальний туристичний маршрут саме для себе.</h4>
+    <h4>Користуйтесь конструктором турів для того, щоб створити ідеальну подорож саме для себе.</h4>
+    <h4>Також є можливість отримати рекомендації індивідуальних турів на основі попередніх замовлень інших користувачів та наданої про себе інформації (загальної та додаткової).</h4>
 </div>
 
 <hr />
 <dl class="dl-horizontal">
-    <dt>Додаткова інформація:</dt>
+    <dt class="aligner-350">Додаткова інформація:</dt>
     <dd>
-        @Html.ActionLink("Переглянути та редагувати", "AdditionalInfo", new { itemId = User.Identity.GetUserId() })
+        @Html.ActionLink("Переглянути та редагувати", "AdditionalInfo", new { itemId = User.Identity.GetUserId() }, new { title = "Перейти до сторінки редагування додаткової інформації" })
     </dd>
-    <dt>Конструктор турів:</dt>
+    <dt class="aligner-350">Конструктор індивідуальних турів:</dt>
     <dd>
-        @Html.ActionLink("Сконструювати тур", "TourConstruct")
+        @Html.ActionLink("Сконструювати тур", "TourConstruct", null, new { title = "Перейти до сторінки конструювання індивідуального туру" })
     </dd>
-    <dt>Сконструйовані раніше тури:</dt>
+    <dt class="aligner-350">Сконструйовані індивідуальні тури:</dt>
     <dd>
-        @Html.ActionLink("Переглянути та оцінити", "RateConstruct")
+        @Html.ActionLink("Переглянути та оцінити", "RateConstruct", null, new { title = "Перейти до сторінки зі списком сконструйованих індивідуальних турів" })
     </dd>
-    <dt>Помічник:</dt>
+    <dt class="aligner-350">Рекомендації індивідуальних турів:</dt>
     <dd>
-        @Html.ActionLink("Надати рекомендації турів", "HelpConstruct")
+        @Html.ActionLink("Надати", "HelpConstruct", null, new { title = "Надати рекомендації індивідуальних турів" })
     </dd>
-    <dt>Надані раніше рекомендації:</dt>
+    <dt class="aligner-350">Надані рекомендації індивідуальних турів:</dt>
     <dd>
-        @Html.ActionLink("Переглянути", "Recommendations")
+        @Html.ActionLink("Переглянути", "Recommendations", null, new { title = "Перейти до сторінки зі списком рекомендацій індивідуальних турів" })
     </dd>
 </dl>

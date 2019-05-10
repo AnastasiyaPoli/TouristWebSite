@@ -89,6 +89,7 @@ a {
     color: #2C4A55;
     text-decoration: underline;
     font-weight: normal;
+    cursor: pointer;
 }
 
     .link:hover {
@@ -178,4 +179,9 @@ rect {
         flex-direction: column;
         justify-content: space-between;
     }
+}
+
+.aligner-350 {
+    text-align: left !important;
+    width: 350px !important;
 }

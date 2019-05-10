@@ -22,7 +22,7 @@ namespace DAL.DBHelpers
         {
             using (context = new ApplicationDbContext())
             {
-                return context.Tours.FirstOrDefault(x => x.IsActive && x.Id == id);
+                return context.Tours.FirstOrDefault(x => x.Id == id);
             }
         }
 
