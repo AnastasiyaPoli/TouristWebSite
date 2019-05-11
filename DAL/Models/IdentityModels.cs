@@ -20,6 +20,7 @@ namespace TouristWebSite.Models
         public string Profession { get; set; }
         public string Biography { get; set; }
         public bool IsActive { get; set; }
+        public Guid? EmailGuid { get; set; }
 
         public string TypeOfStudies { get; set; }
         public string StudiesDescription { get; set; }

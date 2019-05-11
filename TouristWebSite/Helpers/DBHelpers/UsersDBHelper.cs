@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using TouristWebSite.Models;
 
@@ -88,6 +89,24 @@ namespace DAL.DBHelpers
                 userForUpdate.PetsDescription = user.PetsDescription;
                 userForUpdate.OtherInfo = user.OtherInfo;
 
+                context.SaveChanges();
+            }
+        }
+
+        public static void AddEmailGuid(string id, Guid guid)
+        {
+            using (context = new ApplicationDbContext())
+            {
+                context.Users.FirstOrDefault(x => x.Id == id).EmailGuid = guid;
+                context.SaveChanges();
+            }
+        }
+
+        public static void ConfirmEmail(string id)
+        {
+            using (context = new ApplicationDbContext())
+            {
+                context.Users.FirstOrDefault(x => x.Id == id).EmailConfirmed = true;
                 context.SaveChanges();
             }
         }

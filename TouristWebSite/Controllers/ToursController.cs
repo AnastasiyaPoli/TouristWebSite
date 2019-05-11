@@ -355,7 +355,7 @@ namespace TouristWebSite.Controllers
                     EmailSenderHelper.SendEmail(UsersDBHelper.GetById(User.Identity.GetUserId()).Email, "Рекомендації до туру.", "У цьому документі Ви знайдете рекомендації турів, приємного перегляду!", filenameRecommend);
                 }
 
-                return RedirectToAction("Index", new { Message = "Тур було успішно заброньовано. Документ про бронювання відправлено на електронну пошту." });
+                return RedirectToAction("Index", new { Message = "Тур було успішно заброньовано. Документ про бронювання надіслано на електронну пошту." });
             }
             catch (Exception e)
             {
@@ -428,6 +428,7 @@ namespace TouristWebSite.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult AddPhoto(ImageViewModel img, IEnumerable<HttpPostedFileBase> incomeFiles)
         {
             if (ModelState.IsValid)

@@ -15,6 +15,7 @@ namespace TouristWebSite.Models
         public string PhoneNumber { get; set; }
         public bool TwoFactor { get; set; }
         public bool BrowserRemembered { get; set; }
+        public bool EmailConfirmed { get; set; }
     }
 
     public class QuestionsViewModel

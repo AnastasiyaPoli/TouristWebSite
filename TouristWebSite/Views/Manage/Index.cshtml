@@ -6,11 +6,28 @@
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div>
     <h4>Управляйте особистою інформацією та задавайте запитання адміністраторам сайту.</h4>
+    @if (!Model.EmailConfirmed)
+    {
+        <h4>Підтвердження електронної пошти є важливим, адже тільки підтвердженну електронну пошту можна буде використати для відновлення паролю до акаунта у випадку його втрати.</h4>
+    }
     <hr />
     <dl class="dl-horizontal">
         <dt class="aligner-350">Загальна інформація:</dt>
         <dd>
-            @Html.ActionLink("Переглянути та редагувати", "UserInfo", new { itemId = User.Identity.GetUserId() }, new {title = "Перейти до сторінки редагування загальної інформації"})
+            @Html.ActionLink("Переглянути та редагувати", "UserInfo", new { itemId = User.Identity.GetUserId() }, new { title = "Перейти до сторінки редагування загальної інформації" })
+        </dd>
+
+        <dt class="aligner-350">Електронна пошта:</dt>
+        <dd>
+            @if (Model.EmailConfirmed)
+            {
+                string a = "Підтверджена";
+                @a
+            }
+            else
+            {
+                @Html.ActionLink("Підтвердити", "ConfirmEmail", null, new { title = "Надіслати на електронну пошту посилання для підтвердження" })
+            }
         </dd>
 
         <dt class="aligner-350">Пароль:</dt>
@@ -41,7 +58,7 @@
         <dd>
             @Html.ActionLink("Переглянути та редагувати", "FavouriteTours", null, new { title = "Перейти до сторінки зі списком улюблених пакетних турів" })
         </dd>
-        
+
         <dt class="aligner-350">Запитання адміністраторам сайту:</dt>
         <dd>
             @Html.ActionLink("Переглянути та запитати", "Questions", null, new { title = "Перейти до сторінки запитань адміністраторам сайту" })
@@ -53,11 +70,11 @@
             @Html.ActionLink("Переглянути", "Statistics", null, new { title = "Перейти до сторінки статистики" })
         </dd>
     </dl>
- 
+
     @if (User.IsInRole("Admin"))
     {
         <hr />
-        
+
         <h2>Адміністрування користувачів</h2>
         <h4>Управляйте акаунтами користувачів сайту та їх запитаннями адміністраторам сайту.</h4>
         <hr />
@@ -67,7 +84,7 @@
             <dd>
                 @Html.ActionLink("Переглянути та редагувати", "Users", null, new { title = "Перейти до сторінки зі списком користувачів" })
             </dd>
-            
+
             <dt class="aligner-350">Запитання користувачів адміністраторам сайту:</dt>
             <dd>
                 @Html.ActionLink("Переглянути та відповісти", "AllQuestions", null, new { title = "Перейти до сторінки відповідей на запитання користувачів" })

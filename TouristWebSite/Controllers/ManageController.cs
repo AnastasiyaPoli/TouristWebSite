@@ -63,6 +63,8 @@ namespace TouristWebSite.Controllers
                 : message == ManageMessageId.Error ? "Під час оновлення інформації сталась помилка."
                 : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
+                : message == ManageMessageId.EmailConfirmation ? "На електронну пошту було надіслано посилання, за яким необхідно перейти для підтвердження."
+                : message == ManageMessageId.EmailConfirmationSuccess ? "Електронну пошту було успішно підтверджено. Тепер її можна буде використати для відновлення паролю."
                 : "";
 
             var userId = User.Identity.GetUserId();
@@ -73,7 +75,8 @@ namespace TouristWebSite.Controllers
                 PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
                 Logins = await UserManager.GetLoginsAsync(userId),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
+                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
+                EmailConfirmed = UsersDBHelper.GetById(userId).EmailConfirmed
             };
             return View(model);
         }
@@ -82,6 +85,36 @@ namespace TouristWebSite.Controllers
         {
             return View();
         }
+
+        [HttpGet]
+        public ActionResult ConfirmEmail()
+        {
+            var user = UsersDBHelper.GetById(User.Identity.GetUserId());
+            var guid = Guid.NewGuid();
+            EmailSenderHelper.SendEmail(user.Email, "Підтвердження електронної пошти", "Для підтвердження електронної пошти, необхідно перейти за наступним посиланням: http://localhost:61206/Manage/ContinueConfirmation?id="
+                                                                                       + user.Id
+                                                                                       + "&token="
+                                                                                       + guid);
+            UsersDBHelper.AddEmailGuid(user.Id, guid);
+            return RedirectToAction("Index", new { Message = ManageMessageId.EmailConfirmation });
+        }
+
+        [HttpGet]
+        public ActionResult ContinueConfirmation(string id, string token)
+        {
+            var user = UsersDBHelper.GetById(id);
+
+            if (user.EmailGuid.ToString() == token)
+            {
+                UsersDBHelper.ConfirmEmail(id);
+                return RedirectToAction("Index", new { Message = ManageMessageId.EmailConfirmationSuccess });
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+        }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -796,6 +829,8 @@ namespace TouristWebSite.Controllers
             SetPasswordSuccess,
             RemoveLoginSuccess,
             RemovePhoneSuccess,
+            EmailConfirmation,
+            EmailConfirmationSuccess,
             Changes,
             Error
         }
