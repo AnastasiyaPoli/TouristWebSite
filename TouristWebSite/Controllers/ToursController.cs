@@ -244,6 +244,12 @@ namespace TouristWebSite.Controllers
                     return View(model);
                 }
 
+                if (model.DateStart <= DateTime.Now)
+                {
+                    ModelState.AddModelError("DateStart", "Дата початку туру повинна бути пізнішою за сьогоднішню дату.");
+                    return View(model);
+                }
+
                 ToursDBHelper.Add(model);
                 return RedirectToRoute(new { controller = "Tours", action = "Index", message = "Тур було успішно додано." });
             }
@@ -358,7 +364,7 @@ namespace TouristWebSite.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public ActionResult Photos(long itemId, string message = "", string successMessage = "")
+        public ActionResult Photos(long itemId, string message = "", string successMessage = "", string errorMessage = "")
         {
             try
             {
@@ -422,32 +428,41 @@ namespace TouristWebSite.Controllers
             }
         }
 
-        public ActionResult AddPhoto(ImageViewModel img, HttpPostedFileBase file)
+        public ActionResult AddPhoto(ImageViewModel img, IEnumerable<HttpPostedFileBase> incomeFiles)
         {
             if (ModelState.IsValid)
             {
-                if (file != null)
+                if (incomeFiles != null && incomeFiles.Count()!= 0 && incomeFiles.First() != null)
                 {
+                    var files = incomeFiles.ToList();
+
                     var tour = ToursDBHelper.GetById(img.TourId);
 
                     if (ToursDBHelper.GetById(img.TourId).NumberOfPhotos == 0)
                     {
-                        file.SaveAs(HttpContext.Server.MapPath("~/Content/Img/Tours/" + img.TourId + ".jpg"));
-                        img.ImagePath = file.FileName;
+                        files[0].SaveAs(HttpContext.Server.MapPath("~/Content/Img/Tours/" + img.TourId + ".jpg"));
+                        img.ImagePath = files[0].FileName;
+                        files.RemoveAt(0);
                     }
-                    else
+
+                    var i = tour.NumberOfPhotos;
+                    if (i == 0)
                     {
-                        file.SaveAs(HttpContext.Server.MapPath("~/Content/Img/Tours/" + img.TourId + "_" + (tour.NumberOfPhotos) + ".jpg"));
+                        i++;
+                    }
+                    foreach (var file in files)
+                    {
+                        file.SaveAs(HttpContext.Server.MapPath("~/Content/Img/Tours/" + img.TourId + "_" + (i++) + ".jpg"));
                         img.ImagePath = file.FileName;
                     }
                 }
                 else
                 {
-                    return RedirectToRoute(new { controller = "Tours", action = "Photos", itemId = img.TourId, message = "Завантажте фотографію спочатку." });
+                    return RedirectToRoute(new { controller = "Tours", action = "Photos", itemId = img.TourId, message = "Завантажте фотографії спочатку." });
                 }
 
-                ToursDBHelper.AddNewPhoto(img.TourId);
-                return RedirectToRoute(new { controller = "Tours", action = "Photos", itemId = img.TourId, successMessage = "Фотографію було успішно додано." });
+                ToursDBHelper.AddNewPhotos(img.TourId, incomeFiles.Count());
+                return RedirectToRoute(new { controller = "Tours", action = "Photos", itemId = img.TourId, successMessage = "Фотографії було успішно додано." });
             }
             return View(img);
         }

@@ -14,7 +14,7 @@ namespace DAL.DBHelpers
         {
             using (context = new ApplicationDbContext())
             {
-                return context.Tours.Where(x => x.IsActive && x.DateStart > DateTime.Now).ToList();
+                return context.Tours.Where(x => x.IsActive && x.DateStart >= DateTime.Now).ToList();
             }
         }
 
@@ -84,11 +84,11 @@ namespace DAL.DBHelpers
             }
         }
 
-        public static void AddNewPhoto(long id)
+        public static void AddNewPhotos(long id, int number)
         {
             using (context = new ApplicationDbContext())
             {
-                context.Tours.FirstOrDefault(x => x.Id == id).NumberOfPhotos = context.Tours.FirstOrDefault(x => x.Id == id).NumberOfPhotos + 1;
+                context.Tours.FirstOrDefault(x => x.Id == id).NumberOfPhotos = context.Tours.FirstOrDefault(x => x.Id == id).NumberOfPhotos + number;
                 context.SaveChanges();
             }
         }

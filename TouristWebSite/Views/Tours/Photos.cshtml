@@ -3,7 +3,8 @@
 
 <h2>Фотографії туру @Model.Tour.Name (@Model.Tour.Place)</h2>
 
-<p class="text-success">@ViewBag.StatusMessage</p>
+<p class="text-success" id="success">@ViewBag.StatusMessage</p>
+<p class="text-danger" id="error"></p>
 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
 <div>
@@ -14,29 +15,40 @@
         <dd>
             <a href="/Tours/DeleteAll?itemId=@Model.Tour.Id" title="Видалити всі фотографії">Видалити всі фотографії</a>
         </dd>
+        @using (Html.BeginForm("AddPhoto", "Tours", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <dt class="aligner-350">Додати нові фотографії для пакетного туру:</dt>
+            <dd>
 
-        <dt class="aligner-350">Додати нове фото для пакетного туру:</dt>
-        <dd>
-            @using (Html.BeginForm("AddPhoto", "Tours", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
                 @Html.AntiForgeryToken()
                 @Html.HiddenFor(m => m.TourId)
 
-                <label class="link" for="ImagePath" title="Завантажити фотографію">Завантажити фотографію</label> <i id="tick" style="display: none" class="fas fa-check"></i>
-                <input id="ImagePath" title="Upload a product image" type="file" name="file" style="display:none;" onchange="showtick()" />
+                <label class="link" for="ImagePath" title="Завантажити фотографії">Завантажити фотографії</label> <i id="tick" style="display: none" class="fas fa-check"></i>
+                <input id="ImagePath" title="Upload a product image" type="file" name="incomeFiles" multiple style="display:none;" onchange="showtick()" max="10" />
                 <br />
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-9">
-                        <button type="submit" class="btn btn-success" title="Зберегти зміни"> <i class="fas fa-check"></i> Зберегти </button>
-                    </div>
-                </div>
-            }
-        </dd>
+
+
+            </dd>
+            <dt class="aligner-350" style="color:transparent; font-size: 1px">123</dt>
+            <dd>
+                <button type="submit" class="btn btn-success" title="Зберегти зміни" disabled="true" id="confirm"> <i class="fas fa-check"></i> Зберегти </button>
+            </dd>
+        }
     </dl>
 </div>
 
 <script>
     function showtick() {
-        document.getElementById("tick").style.display = "inline";
+        var $fileUpload = $("input[type='file']");
+        if (parseInt($fileUpload.get(0).files.length) > 10) {
+            document.getElementById("confirm").disabled = true;
+            document.getElementById("error").innerHTML = "Ви можете завантажити не більше 10 фотографій за один раз.";
+            document.getElementById("success").innerHTML = "";
+            document.getElementById("tick").style.display = "none";
+        } else {
+            document.getElementById("confirm").disabled = false;
+            document.getElementById("tick").style.display = "inline";
+            document.getElementById("error").innerHTML = "";
+        }
     }
 </script>
