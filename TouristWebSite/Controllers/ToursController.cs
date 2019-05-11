@@ -420,7 +420,7 @@ namespace TouristWebSite.Controllers
                 }
 
                 ToursDBHelper.DeleteAllPhotos(itemId);
-                return RedirectToRoute(new { controller = "Tours", action = "Photos", itemId = itemId, successMessage = "Всі фото було успішно видалено." });
+                return RedirectToRoute(new { controller = "Tours", action = "Photos", itemId = itemId, successMessage = "Всі фотографії було успішно видалено." });
             }
             catch (Exception e)
             {
@@ -472,7 +472,7 @@ namespace TouristWebSite.Controllers
                 }
 
                 ToursDBHelper.DeletePhoto(tourId);
-                return RedirectToRoute(new { controller = "Tours", action = "Photos", itemId = tourId, successMessage = "Фото було успішно видалено." });
+                return RedirectToRoute(new { controller = "Tours", action = "Photos", itemId = tourId, successMessage = "Фотографію було успішно видалено." });
             }
             catch (Exception e)
             {
@@ -515,7 +515,7 @@ namespace TouristWebSite.Controllers
                 }
 
                 ToursDBHelper.AddNewPhotos(img.TourId, incomeFiles.Count());
-                return RedirectToRoute(new { controller = "Tours", action = "Photos", itemId = img.TourId, successMessage = "Фотографії було успішно додано." });
+                return RedirectToRoute(new { controller = "Tours", action = "Photos", itemId = img.TourId, successMessage = "Фотографії було успішно збережено." });
             }
             return View(img);
         }
@@ -542,7 +542,7 @@ namespace TouristWebSite.Controllers
                     }
                 }
 
-                return RedirectToRoute(new { controller = "Tours", action = "Details", itemId = model.ChosenTourId, message = "Коментар було успішно додано." });
+                return RedirectToRoute(new { controller = "Tours", action = "Details", itemId = model.ChosenTourId, message = "Коментар було успішно збережено." });
             }
             catch (Exception e)
             {
