@@ -61,7 +61,7 @@
         <div>
             @if (User.IsInRole("Admin"))
             {
-                <a href="@Url.Action("Delete", "Tours", new {itemId = item.Id})" title="Видалити тур">
+                <a href="@Url.Action("Delete", "Tours", new {itemId = item.Id})" title="Видалити тур" onclick="return confirm('Ви впевнені, що хочете видалити пакетний тур?')">
                     <i class="fas fa-times fa-lg" style="float:right;"></i>
                 </a>
                 <a href="@Url.Action("Update", "Tours", new {itemId = item.Id})" title="Редагувати тур">

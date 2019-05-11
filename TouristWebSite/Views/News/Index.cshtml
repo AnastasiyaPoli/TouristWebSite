@@ -9,7 +9,7 @@
     <div class="jumbotron transparent transp-container">
         @if (User.IsInRole("Admin"))
         {
-            <a href="@Url.Action("DeleteNew", "News", new {itemId = item.Id})" title="Видалити новину">
+            <a href="@Url.Action("DeleteNew", "News", new {itemId = item.Id})" title="Видалити новину" onclick="return confirm('Ви впевнені, що хочете видалити новину?')">
                 <i class="fas fa-times fa-lg" style="float:right;"></i>
             </a>
             <a href="@Url.Action("EditNew", "News", new {itemId = item.Id})" title="Редагувати новину">

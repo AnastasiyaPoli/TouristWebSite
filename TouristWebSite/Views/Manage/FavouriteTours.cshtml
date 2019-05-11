@@ -11,7 +11,7 @@
     {
         <div class="jumbotron transparent transp-container">
             <div>
-                <a href="@Url.Action("RemoveFavouriteCab", "Tours", new {itemId = item.Id})" title="Видалити тур зі списку улюблених">
+                <a href="@Url.Action("RemoveFavouriteCab", "Tours", new {itemId = item.Id})" onclick="return confirm('Ви впевнені, що хочете видалити пакетний тур зі списку улюблених?')" title="Видалити тур зі списку улюблених">
                     <i class="fas fa-times fa-lg" style="float:right;"></i>
                 </a>
             </div>

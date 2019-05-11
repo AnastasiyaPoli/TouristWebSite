@@ -59,7 +59,7 @@
 
 @if (User.IsInRole("Admin"))
 {
-    <a class="btn btn-default no-underline" title="Видалити тур" href="@Url.Action("Delete", "Tours", new {itemId = Model.ChosenTour.Id})"> <span> <i class="fas fa-times"></i> Видалити тур </span> </a>
+    <a class="btn btn-default no-underline" title="Видалити тур" href="@Url.Action("Delete", "Tours", new {itemId = Model.ChosenTour.Id})" onclick="return confirm('Ви впевнені, що хочете видалити пакетний тур?')"> <span> <i class="fas fa-times"></i> Видалити тур </span> </a>
     <a class="btn btn-default no-underline" title="Редагувати тур" href="@Url.Action("Update", "Tours", new {itemId = Model.ChosenTour.Id})"> <span> <i class="fas fa-edit"></i> Редагувати тур </span> </a>
     <a class="btn btn-default no-underline"  title="Редагувати фотографії" href="@Url.Action("Photos", "Tours", new {itemId = Model.ChosenTour.Id})"> <span> <i class="fas fa-images"></i> Редагувати фотографії </span> </a>
     <br />
@@ -74,7 +74,7 @@
     <div class="jumbotron transparent transp-container">
         @if (User.IsInRole("Admin"))
         {
-            <a href="@Url.Action("DeleteComment", "Tours", new {itemId = item.Id, tourId = Model.ChosenTour.Id})" title="Видалити коментар">
+            <a href="@Url.Action("DeleteComment", "Tours", new {itemId = item.Id, tourId = Model.ChosenTour.Id})" onclick="return confirm('Ви впевнені, що хочете видалити коментар?')" title="Видалити коментар">
                 <i class="fas fa-times fa-lg" style="float:right;"></i>
             </a>
         }
