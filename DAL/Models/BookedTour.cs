@@ -20,6 +20,6 @@ namespace DAL.Models
 
         public int PeopleCount { get; set; }
 
-        public string Comment { get; set; }
+        public string AdditionalInfo { get; set; }
     }
 }

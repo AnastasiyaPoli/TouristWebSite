@@ -48,7 +48,7 @@ namespace TouristWebSite.Helpers
 
                     case "comment":
                         {
-                            node.InnerHtml = "<strong>Ваш коментар: </strong>" + comment;
+                            node.InnerHtml = "<strong>Зауваження / додаткова інформація: </strong>" + comment;
                         }
                         break;
 
@@ -210,6 +210,13 @@ namespace TouristWebSite.Helpers
                             node.InnerHtml += model.BackClass;
                         }
                         break;
+
+                    case "comment":
+                        {
+                            node.InnerHtml = "<strong>Зауваження / додаткова інформація: </strong>" + model.AdditionalInfo;
+                        }
+                        break;
+
                 }
             }
 

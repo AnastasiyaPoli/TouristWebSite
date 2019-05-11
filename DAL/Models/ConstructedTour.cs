@@ -35,6 +35,8 @@ namespace DAL.Models
         public string ApplicationUserId { get; set; }
         public ApplicationUser User { get; set; }
 
+        public string AdditionalInfo { get; set; }
+
         public long Price { get; set; }
 
         public string Comment { get; set; }

@@ -19,7 +19,7 @@ namespace DAL.DBHelpers
                     TourId = model.TourId,
                     ApplicationUserId = UserId,
                     PeopleCount = model.PeopleCount,
-                    Comment = model.Comment
+                    AdditionalInfo = model.Comment
                 };
 
                 var newTour = context.BookedTours.Add(tour);

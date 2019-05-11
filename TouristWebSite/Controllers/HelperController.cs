@@ -217,7 +217,7 @@ namespace TouristWebSite.Controllers
                 model.Price = PriceCounterHelper.CountPrice(model.Route, model.Class == "Бізнес", model.BackRoute, model.BackClass == "Бізнес", model.Hotel, model.HotelClass == "Люкс", (long)ex1, (long)ex2, (long)ex3, (long)ex4, (long)ex5, model.PeopleCount);
                 long newId = ConstructedToursDBHelper.Add(model, User.Identity.GetUserId());
                 string filename = PDFGeneratorHelper.GenerateConstructPDF(model, newId);
-                EmailSenderHelper.SendEmail(UsersDBHelper.GetById(User.Identity.GetUserId()).Email, "Підтвердження бронювання туру.", "Тур було успішно заброньовано, деталі можна переглянути у прикріпленому документі.", filename);
+                EmailSenderHelper.SendEmail(UsersDBHelper.GetById(User.Identity.GetUserId()).Email, "Підтвердження бронювання туру.", "Тур було успішно сконструйовано, деталі можна переглянути у прикріпленому документі.", filename);
                 return RedirectToAction("Index", new { Message = "Тур було успішно сконструйовано. Документ про бронювання відправлено на електронну пошту." });
             }
             catch (Exception e)
@@ -717,7 +717,8 @@ namespace TouristWebSite.Controllers
                         BackRoute = backRoute.Name + "(" + backRoute.Start.ToShortDateString() + ", " + backRoute.Start.ToShortTimeString() + " - " + backRoute.End.ToShortDateString() + ", " + backRoute.End.ToShortTimeString() + ")",
                         BackClass = tour.BackClass,
                         Comment = tour.Comment,
-                        Mark = mark
+                        Mark = mark,
+                        AdditionalInfo = tour.AdditionalInfo
                     });
                 }
 

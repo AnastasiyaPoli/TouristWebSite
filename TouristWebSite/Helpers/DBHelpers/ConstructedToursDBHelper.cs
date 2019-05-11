@@ -84,7 +84,8 @@ namespace DAL.DBHelpers
                     BackRouteId = model.BackRoute,
                     BackClass = model.BackClass,
                     ApplicationUserId = userId,
-                    Price = model.Price 
+                    Price = model.Price,
+                    AdditionalInfo = model.AdditionalInfo
                 };
 
                 context.ConstructedTours.Add(newTour);

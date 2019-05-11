@@ -17,7 +17,7 @@ namespace TouristWebSite.Models
         [Range(1, 20, ErrorMessage = "Кількість людей повинна бути числом від 1 до 20.")]
         public int PeopleCount { get; set; }
 
-        [Display(Name = "Коментар: ")]
+        [Display(Name = "Зауваження / додаткова інформація: ")]
         public string Comment { get; set; }
     }
 }

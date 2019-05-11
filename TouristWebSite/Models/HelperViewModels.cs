@@ -127,6 +127,9 @@ namespace TouristWebSite.Models
         [Required(ErrorMessage = "Необхідно заповнити поле \"Клас\".")]
         public string BackClass { get; set; }
 
+        [Display(Name = "Зауваження / додаткова інформація: ")]
+        public string AdditionalInfo { get; set; }
+
         public long Price { get; set; }
 
         public string Type { get; set; }
@@ -153,6 +156,7 @@ namespace TouristWebSite.Models
         public string Excursions { get; set; }
         public string BackRoute { get; set; }
         public string BackClass { get; set; }
+        public string AdditionalInfo { get; set; }
 
         [Display(Name = "Додайте коментар: ")]
         [Required(ErrorMessage = "Необхідно заповнити поле \"Коментар\".")]
