@@ -93,7 +93,7 @@ namespace DAL.DBHelpers
             }
         }
 
-        public static void AddEmailGuid(string id, Guid guid)
+        public static void AddEmailGuid(string id, Guid? guid)
         {
             using (context = new ApplicationDbContext())
             {

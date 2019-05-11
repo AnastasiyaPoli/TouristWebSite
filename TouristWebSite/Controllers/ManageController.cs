@@ -94,7 +94,7 @@ namespace TouristWebSite.Controllers
             var callbackUrl = Url.Action("ContinueConfirmation", "Manage", new { id = user.Id, token = guid }, protocol: Request.Url.Scheme);
             EmailSenderHelper.SendEmail(user.Email, "Підтвердження електронної пошти",
                 "Для підтвердження електронної пошти, необхідно перейти за <a href=\"" + callbackUrl +
-                "\">посиланням</a>");
+                "\">посиланням</a>.");
                                                                                        
             UsersDBHelper.AddEmailGuid(user.Id, guid);
             return RedirectToAction("Index", new { Message = ManageMessageId.EmailConfirmation });
@@ -108,6 +108,7 @@ namespace TouristWebSite.Controllers
             if (user.EmailGuid.ToString() == token)
             {
                 UsersDBHelper.ConfirmEmail(id);
+                UsersDBHelper.AddEmailGuid(user.Id, null);
                 return RedirectToAction("Index", new { Message = ManageMessageId.EmailConfirmationSuccess });
             }
             else
