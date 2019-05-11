@@ -2,6 +2,15 @@
 <h2>Рекомендації індивідуальних турів</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
+<p class="text-danger">
+    @ViewBag.noRecommendations
+    @if (ViewBag.endNoRecommendations != null && ViewBag.endNoRecommendations != string.Empty)
+    {
+        @Html.ActionLink("посиланням", "HelpConstruct", null, new { title = "Надати рекомендації індивідуальних турів" }, new {@class = "text-danger", title= "Надати рекомендації індивідуальних турів" }) 
+        @ViewBag.endNoRecommendations
+    }
+</p>
+
 <h4>Переглядайте рекомендації індивідуальних турів, що були надані на основі попередніх замовлень інших користувачів та наданої про себе інформації (загальної та додаткової). </h4>
 <h4>Для продовження конструювання індивідуального туру на основі рекомендації, натисніть на відповідну опцію біля обраного варіанту. </h4>
 

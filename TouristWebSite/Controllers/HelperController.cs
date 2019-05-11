@@ -494,7 +494,7 @@ namespace TouristWebSite.Controllers
 
                 RecommendationsDBHelper.SaveRecommendations(bestTours, User.Identity.GetUserId());
 
-                return RedirectToRoute(new { controller = "Helper", action = "Recommendations" });
+                return RedirectToAction("Recommendations", new { noRecommend = (bestTours.Count == 0) });
             }
             catch (Exception e)
             {
@@ -503,7 +503,7 @@ namespace TouristWebSite.Controllers
         }
 
         [HttpGet]
-        public ActionResult Recommendations()
+        public ActionResult Recommendations(bool noRecommend = false)
         {
             try
             {
@@ -599,6 +599,19 @@ namespace TouristWebSite.Controllers
                         Comment = recommendation.ConstructedTour.Comment,
                         Mark = mark
                     });
+                }
+
+                if (recommendations.Count == 0)
+                {
+                    if (noRecommend == true)
+                    {
+                        ViewBag.noRecommendations = "На жаль, на основі наявної інформації жодних рекомендацій не може бути надано. Необхідно доповнити та розширити загальну і додаткову інформацію про себе або зачекати, доки у системі з'явиться більша кількість користувачів.";
+                    }
+                    else
+                    {
+                        ViewBag.noRecommendations = "Рекомендацій ще не було надано. Перейдіть за ";
+                        ViewBag.endNoRecommendations = " для надання рекомендацій.";
+                    }
                 }
 
                 return View(list);
