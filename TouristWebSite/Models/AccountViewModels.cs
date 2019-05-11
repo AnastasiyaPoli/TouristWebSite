@@ -104,9 +104,9 @@ namespace TouristWebSite.Models
 
     public class ForgotPasswordViewModel
     {
-        [Required]
-        [EmailAddress]
-        [Display(Name = "Email")]
+        [Required(ErrorMessage = "Необхідно заповнити поле \"Електронна пошта\".")]
+        [EmailAddress(ErrorMessage = "Поле \"Електронна пошта\" повинно бути заповненим адресою електронної пошти у правильному форматі.")]
+        [Display(Name = "Електронна пошта:")]
         public string Email { get; set; }
     }
 }

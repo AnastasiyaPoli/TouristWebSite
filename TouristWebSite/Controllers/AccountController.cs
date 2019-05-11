@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using System;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using TouristWebSite.Helpers;
 using TouristWebSite.Models;
 
 namespace TouristWebSite.Controllers
@@ -255,28 +257,24 @@ namespace TouristWebSite.Controllers
             if (ModelState.IsValid)
             {
                 var user = await UserManager.FindByNameAsync(model.Email);
-                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+                if (user != null && user.EmailConfirmed)
                 {
-                    // Don't reveal that the user does not exist or is not confirmed
-                    return View("ForgotPasswordConfirmation");
-                }
+                    var newPassword = PasswordGeneratorHelper.GenerateRandomPassword(); 
+                    var callbackUrl = Url.Action("Index", "Home", null, protocol: Request.Url.Scheme);
+                    EmailSenderHelper.SendEmail(user.Email, "Відновлення паролю", "Тимчасовий пароль для входу на сайт <a href=\""
+                                                                                  + callbackUrl
+                                                                                  + "\">\"Формула відпочинку\"</a>: "
+                                                                                  + newPassword
+                                                                                  + " Пароль завжди можна змінити в особистому кабінеті.");
 
-                // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                    string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                    UserManager.RemovePassword(user.Id);
+                    var task = UserManager.AddPassword(user.Id, newPassword);
+                }
             }
 
-            // If we got this far, something failed, redisplay form
+            ViewBag.StatusMessage = "Якщо електронну пошту було введено коректно та попередньо підтверджено, на неї було надіслано тимчасовий пароль для входу в акаунт.";
             return View(model);
-        }
-
-        [AllowAnonymous]
-        public ActionResult ForgotPasswordConfirmation()
-        {
-            return View();
         }
 
         [AllowAnonymous]
@@ -306,12 +304,6 @@ namespace TouristWebSite.Controllers
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
             AddErrors(result);
-            return View();
-        }
-
-        [AllowAnonymous]
-        public ActionResult ResetPasswordConfirmation()
-        {
             return View();
         }
 

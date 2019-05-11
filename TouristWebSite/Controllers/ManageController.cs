@@ -91,10 +91,11 @@ namespace TouristWebSite.Controllers
         {
             var user = UsersDBHelper.GetById(User.Identity.GetUserId());
             var guid = Guid.NewGuid();
-            EmailSenderHelper.SendEmail(user.Email, "Підтвердження електронної пошти", "Для підтвердження електронної пошти, необхідно перейти за наступним посиланням: http://localhost:61206/Manage/ContinueConfirmation?id="
-                                                                                       + user.Id
-                                                                                       + "&token="
-                                                                                       + guid);
+            var callbackUrl = Url.Action("ContinueConfirmation", "Manage", new { id = user.Id, token = guid }, protocol: Request.Url.Scheme);
+            EmailSenderHelper.SendEmail(user.Email, "Підтвердження електронної пошти",
+                "Для підтвердження електронної пошти, необхідно перейти за <a href=\"" + callbackUrl +
+                "\">посиланням</a>");
+                                                                                       
             UsersDBHelper.AddEmailGuid(user.Id, guid);
             return RedirectToAction("Index", new { Message = ManageMessageId.EmailConfirmation });
         }
