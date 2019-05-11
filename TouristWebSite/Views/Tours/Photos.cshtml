@@ -10,31 +10,53 @@
 <div>
     <h4>Управляйте фотографіями туру.</h4>
     <hr />
-    <dl class="dl-horizontal">
+    <dl class="dl-horizontal" style="margin-bottom: 5px">
         <dt class="aligner-350">Всі фотографії пакетного туру (@Model.Tour.NumberOfPhotos):</dt>
         <dd>
             <a href="/Tours/DeleteAll?itemId=@Model.Tour.Id" title="Видалити всі фотографії">Видалити всі фотографії</a>
         </dd>
-        @using (Html.BeginForm("AddPhoto", "Tours", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {
+    </dl>
+    
+    @if (Model.Tour.NumberOfPhotos > 0)
+    {
+        <dl style="margin-bottom: 5px">
+            <dt class="aligner-350" style="display: inline; margin-right: 25px">
+                <img src="~/Content/Img/Tours/@(Model.TourId).jpg" width="320" style="margin-bottom: 5px">
+            </dt>
+            <dd style="display: inline">
+                <a href="@Url.Action("DeletePhoto", "Tours", new {tourId = Model.TourId, photoId = 0})" title="Видалити">Видалити фотографію</a>
+            </dd>
+        </dl>
+    }
+
+    @for (int i = 1; i < Model.Tour.NumberOfPhotos; i++)
+    {
+        <dl style="margin-bottom: 5px">
+            <dt class="aligner-350" style="display: inline; margin-right: 25px">
+                <img src="~/Content/Img/Tours/@(Model.TourId)_@(i).jpg" width="320" style="margin-bottom: 5px">
+            </dt>
+            <dd style="display: inline">
+                <a href="@Url.Action("DeletePhoto", "Tours", new {tourId = Model.TourId, photoId = i})" title="Видалити">Видалити фотографію</a>
+            </dd>
+        </dl>
+    }
+
+    @using (Html.BeginForm("AddPhoto", "Tours", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.HiddenFor(m => m.TourId)
+
+        <dl class="dl-horizontal">
             <dt class="aligner-350">Додати нові фотографії для пакетного туру:</dt>
             <dd>
-
-                @Html.AntiForgeryToken()
-                @Html.HiddenFor(m => m.TourId)
-
                 <label class="link" for="ImagePath" title="Завантажити фотографії">Завантажити фотографії</label> <i id="tick" style="display: none" class="fas fa-check"></i>
                 <input id="ImagePath" title="Upload a product image" type="file" name="incomeFiles" multiple style="display:none;" onchange="showtick()" max="10" />
-                <br />
-
-
             </dd>
             <dt class="aligner-350" style="color:transparent; font-size: 1px">123</dt>
             <dd>
                 <button type="submit" class="btn btn-success" title="Зберегти зміни" disabled="true" id="confirm"> <i class="fas fa-check"></i> Зберегти </button>
             </dd>
-        }
-    </dl>
+        </dl>
+    }
 </div>
 
 <script>

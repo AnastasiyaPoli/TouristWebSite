@@ -429,11 +429,63 @@ namespace TouristWebSite.Controllers
         }
 
         [Authorize(Roles = "Admin")]
+        public ActionResult DeletePhoto(long tourId, long photoId)
+        {
+            try
+            {
+                var tour = ToursDBHelper.GetById(tourId);
+                var deletePath = "";
+                var path = "";
+                var newPath = "";
+
+                if (photoId == 0)
+                {
+                    deletePath = HostingEnvironment.ApplicationPhysicalPath + "\\Content\\Img\\Tours\\" + tourId + ".jpg";
+                }
+                else
+                {
+                    deletePath = HostingEnvironment.ApplicationPhysicalPath + "\\Content\\Img\\Tours\\" + tourId + "_" + photoId + ".jpg";
+
+                }
+
+                if (System.IO.File.Exists(deletePath))
+                {
+                    System.IO.File.Delete(deletePath);
+                }
+
+
+                for (long i = photoId + 1; i < tour.NumberOfPhotos; i++)
+                {
+                    path = HostingEnvironment.ApplicationPhysicalPath + "\\Content\\Img\\Tours\\" + tourId + "_" + i + ".jpg";
+
+                    if (i == 1)
+                    {
+                        newPath = HostingEnvironment.ApplicationPhysicalPath + "\\Content\\Img\\Tours\\" + tourId + ".jpg";
+
+                    }
+                    else
+                    {
+                        newPath = HostingEnvironment.ApplicationPhysicalPath + "\\Content\\Img\\Tours\\" + tourId + "_" + (i-1) + ".jpg";
+                    }
+
+                    System.IO.File.Move(path, newPath);
+                }
+
+                ToursDBHelper.DeletePhoto(tourId);
+                return RedirectToRoute(new { controller = "Tours", action = "Photos", itemId = tourId, successMessage = "Фото було успішно видалено." });
+            }
+            catch (Exception e)
+            {
+                return RedirectToRoute(new { controller = "Tours", action = "Index" });
+            }
+        }
+
+        [Authorize(Roles = "Admin")]
         public ActionResult AddPhoto(ImageViewModel img, IEnumerable<HttpPostedFileBase> incomeFiles)
         {
             if (ModelState.IsValid)
             {
-                if (incomeFiles != null && incomeFiles.Count()!= 0 && incomeFiles.First() != null)
+                if (incomeFiles != null && incomeFiles.Count() != 0 && incomeFiles.First() != null)
                 {
                     var files = incomeFiles.ToList();
 
