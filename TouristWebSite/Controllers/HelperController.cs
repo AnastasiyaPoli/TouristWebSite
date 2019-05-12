@@ -218,7 +218,7 @@ namespace TouristWebSite.Controllers
                 long newId = ConstructedToursDBHelper.Add(model, User.Identity.GetUserId());
                 string filename = PDFGeneratorHelper.GenerateConstructPDF(model, newId);
                 EmailSenderHelper.SendEmail(UsersDBHelper.GetById(User.Identity.GetUserId()).Email, "Підтвердження бронювання туру.", "Тур було успішно сконструйовано, деталі можна переглянути у прикріпленому документі.", filename);
-                return RedirectToAction("Index", new { Message = "Тур було успішно сконструйовано. Документ про бронювання надіслано на електронну пошту." });
+                return RedirectToAction("Index", new { Message = "Тур було успішно сконструйовано. Документ про замовлення надіслано на електронну пошту." });
             }
             catch (Exception e)
             {
