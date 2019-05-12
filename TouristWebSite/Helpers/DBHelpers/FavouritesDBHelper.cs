@@ -13,7 +13,7 @@ namespace DAL.DBHelpers
         {
             using (context = new ApplicationDbContext())
             {
-                return context.Favourites.Where(x => x.ApplicationUserId == userId).Include(x => x.User).Include(y => y.Tour).ToList();
+                return context.Favourites.Where(x => x.ApplicationUserId == userId && x.Tour.IsActive).Include(x => x.User).Include(y => y.Tour).ToList();
             }
         }
 
