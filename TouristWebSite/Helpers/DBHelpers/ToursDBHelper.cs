@@ -8,8 +8,15 @@ namespace DAL.DBHelpers
 {
     public static class ToursDBHelper
     {
+        /// <summary>
+        /// Database context
+        /// </summary>
         private static ApplicationDbContext context;
 
+        /// <summary>
+        /// Getting active tours
+        /// </summary>
+        /// <returns> List of active tours </returns>
         public static List<Tour> GetActive()
         {
             using (context = new ApplicationDbContext())
@@ -18,6 +25,11 @@ namespace DAL.DBHelpers
             }
         }
 
+        /// <summary>
+        /// Getting tour by id
+        /// </summary>
+        /// <param name="id"> Tour id </param>
+        /// <returns> Tour </returns>
         public static Tour GetById(long id)
         {
             using (context = new ApplicationDbContext())
@@ -26,15 +38,10 @@ namespace DAL.DBHelpers
             }
         }
 
-        public static void Deactivate(long id)
-        {
-            using (context = new ApplicationDbContext())
-            {
-                context.Tours.FirstOrDefault(x => x.Id == id).IsActive = false;
-                context.SaveChanges();
-            }
-        }
-
+        /// <summary>
+        /// Adding new tour
+        /// </summary>
+        /// <param name="tour"> Tour view model </param>
         public static void Add(TourViewModel tour)
         {
             using (context = new ApplicationDbContext())
@@ -57,6 +64,10 @@ namespace DAL.DBHelpers
             }
         }
 
+        /// <summary>
+        /// Updating tour
+        /// </summary>
+        /// <param name="tour"> Tour view model </param>
         public static void Update(TourViewModel tour)
         {
             using (context = new ApplicationDbContext())
@@ -75,15 +86,24 @@ namespace DAL.DBHelpers
             }
         }
 
-        public static void DeleteAllPhotos(long id)
+        /// <summary>
+        /// Deactivating tour
+        /// </summary>
+        /// <param name="id"> Tour id </param>
+        public static void Deactivate(long id)
         {
             using (context = new ApplicationDbContext())
             {
-                context.Tours.FirstOrDefault(x => x.Id == id).NumberOfPhotos = 0;
+                context.Tours.FirstOrDefault(x => x.Id == id).IsActive = false;
                 context.SaveChanges();
             }
         }
 
+        /// <summary>
+        /// Adding new photos for tour
+        /// </summary>
+        /// <param name="id"> Tour id </param>
+        /// <param name="number"> Number of photots </param>
         public static void AddNewPhotos(long id, int number)
         {
             using (context = new ApplicationDbContext())
@@ -93,6 +113,23 @@ namespace DAL.DBHelpers
             }
         }
 
+        /// <summary>
+        /// Deleting all photos for tour
+        /// </summary>
+        /// <param name="id"> Tour id </param>
+        public static void DeleteAllPhotos(long id)
+        {
+            using (context = new ApplicationDbContext())
+            {
+                context.Tours.FirstOrDefault(x => x.Id == id).NumberOfPhotos = 0;
+                context.SaveChanges();
+            }
+        }
+
+        /// <summary>
+        /// Deleting photo for tour
+        /// </summary>
+        /// <param name="id"> Tour id </param>
         public static void DeletePhoto(long id)
         {
             using (context = new ApplicationDbContext())

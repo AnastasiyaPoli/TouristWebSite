@@ -178,13 +178,20 @@ namespace TouristWebSite.Controllers
             return View(model);
         }
 
-        public ActionResult Subscription()
+        public ActionResult Subscription(bool subscribeOnly = false)
         {
             try
             {
-                var userId = User.Identity.GetUserId();
-                UsersDBHelper.ChangeSubscription(userId);
-                return RedirectToAction("Index", new { Message = ManageMessageId.Changes });
+                if (!(subscribeOnly && UsersDBHelper.GetById(User.Identity.GetUserId()).IsSubscribed))
+                {
+                    var userId = User.Identity.GetUserId();
+                    UsersDBHelper.ChangeSubscription(userId);
+                    return RedirectToAction("Index", new { Message = ManageMessageId.Changes });
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
             }
             catch (Exception e)
             {

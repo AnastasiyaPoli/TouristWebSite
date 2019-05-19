@@ -15,6 +15,12 @@ namespace TouristWebSite.Controllers
     [Authorize]
     public class ToursController : Controller
     {
+        /// <summary>
+        /// For displaying tours page (default nd after search)
+        /// </summary>
+        /// <param name="message"> Success message </param>
+        /// <param name="search"> Search string </param>
+        /// <returns> Tours page </returns>
         [AllowAnonymous]
         [HttpGet]
         public ActionResult Index(string message = "", string search = "")
@@ -27,7 +33,6 @@ namespace TouristWebSite.Controllers
 
             DateTime max = DateTime.Now;
             long maxPrice = 0;
-
             if (tours.Count > 0)
             {
                 max = tours[0].DateEnd;
@@ -78,6 +83,11 @@ namespace TouristWebSite.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// For displaying tours page (after filtering)
+        /// </summary>
+        /// <param name="model"> Active tours view model </param>
+        /// <returns> Tours page </returns>
         [AllowAnonymous]
         [HttpPost]
         public ActionResult Index(ActiveToursViewModel model)
@@ -118,6 +128,11 @@ namespace TouristWebSite.Controllers
             return View(newModel);
         }
 
+        /// <summary>
+        /// For searching tours
+        /// </summary>
+        /// <param name="model">Active view tours model</param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpPost]
         public ActionResult Search(ActiveToursViewModel model)
@@ -125,6 +140,12 @@ namespace TouristWebSite.Controllers
             return RedirectToRoute(new { controller = "Tours", action = "Index", message = "Пошук було успішно виконано.", search = model.Search });
         }
 
+        /// <summary>
+        /// For displaying tour details page
+        /// </summary>
+        /// <param name="itemId"> Tour id </param>
+        /// <param name="message"> Success message </param>
+        /// <returns> Tour details page </returns>
         [AllowAnonymous]
         [HttpGet]
         public ActionResult Details(long itemId, string message)
@@ -194,7 +215,6 @@ namespace TouristWebSite.Controllers
                 };
 
                 ViewBag.StatusMessage = message;
-
                 return View(model);
             }
             catch (Exception e)
@@ -203,6 +223,11 @@ namespace TouristWebSite.Controllers
             }
         }
 
+        /// <summary>
+        /// For deleting tour
+        /// </summary>
+        /// <param name="itemId"> Tour id </param>
+        /// <returns> Redirect to route (Index) </returns>
         [Authorize(Roles = "Admin")]
         [HttpGet]
         public ActionResult Delete(long itemId)
@@ -218,6 +243,10 @@ namespace TouristWebSite.Controllers
             }
         }
 
+        /// <summary>
+        /// For displaying tour add page
+        /// </summary>
+        /// <returns> Tour add page </returns>
         [Authorize(Roles = "Admin")]
         [HttpGet]
         public ActionResult Add()
@@ -232,6 +261,11 @@ namespace TouristWebSite.Controllers
             }
         }
 
+        /// <summary>
+        /// For adding new tour
+        /// </summary>
+        /// <param name="model"> Tour view model </param>
+        /// <returns> Redirect to route (Index) </returns>
         [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult Add(TourViewModel model)
@@ -259,6 +293,11 @@ namespace TouristWebSite.Controllers
             }
         }
 
+        /// <summary>
+        /// For displaying tour update page 
+        /// </summary>
+        /// <param name="itemId"> Tour id </param>
+        /// <returns> Tour update page </returns>
         [Authorize(Roles = "Admin")]
         [HttpGet]
         public ActionResult Update(long itemId)
@@ -287,6 +326,11 @@ namespace TouristWebSite.Controllers
             }
         }
 
+        /// <summary>
+        /// For updating a tour
+        /// </summary>
+        /// <param name="model"> Tour view model </param>
+        /// <returns> Redirect to route (Index) </returns>
         [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult Update(TourViewModel model)
@@ -308,6 +352,11 @@ namespace TouristWebSite.Controllers
             }
         }
 
+        /// <summary>
+        /// For displaying tour booking page
+        /// </summary>
+        /// <param name="itemId"> Tour id </param>
+        /// <returns> Tour booking page </returns>
         public ActionResult TourBooking(long itemId)
         {
             try
@@ -330,6 +379,11 @@ namespace TouristWebSite.Controllers
             }
         }
 
+        /// <summary>
+        /// For booking a tour
+        /// </summary>
+        /// <param name="model"> Tour booking view model </param>
+        /// <returns> Redirect to route (Index) </returns>
         [HttpPost]
         public ActionResult TourBooking(TourBookingViewModel model)
         {
@@ -363,8 +417,15 @@ namespace TouristWebSite.Controllers
             }
         }
 
+        /// <summary>
+        /// For displaying tour photos editing page
+        /// </summary>
+        /// <param name="itemId"> Tour id </param>
+        /// <param name="message"> Error message </param>
+        /// <param name="successMessage"> Success message </param>
+        /// <returns> Tour photos editing page </returns>
         [Authorize(Roles = "Admin")]
-        public ActionResult Photos(long itemId, string message = "", string successMessage = "", string errorMessage = "")
+        public ActionResult Photos(long itemId, string message = "", string successMessage = "")
         {
             try
             {
@@ -384,7 +445,7 @@ namespace TouristWebSite.Controllers
                     AddErrors(rez);
                 }
 
-                if (successMessage != String.Empty)
+                if (successMessage != string.Empty)
                 {
                     ViewBag.StatusMessage = successMessage;
                 }
@@ -397,6 +458,11 @@ namespace TouristWebSite.Controllers
             }
         }
 
+        /// <summary>
+        /// For deleting all tour photos
+        /// </summary>
+        /// <param name="itemId"> Tour id </param>
+        /// <returns> Redirect to route (Photos) </returns>
         [Authorize(Roles = "Admin")]
         public ActionResult DeleteAll(long itemId)
         {
@@ -428,6 +494,12 @@ namespace TouristWebSite.Controllers
             }
         }
 
+        /// <summary>
+        /// For deleting one photo
+        /// </summary>
+        /// <param name="tourId"> Tour id </param>
+        /// <param name="photoId"> Photo id </param>
+        /// <returns> Redirect to route (Photos) </returns>
         [Authorize(Roles = "Admin")]
         public ActionResult DeletePhoto(long tourId, long photoId)
         {
@@ -465,7 +537,7 @@ namespace TouristWebSite.Controllers
                     }
                     else
                     {
-                        newPath = HostingEnvironment.ApplicationPhysicalPath + "\\Content\\Img\\Tours\\" + tourId + "_" + (i-1) + ".jpg";
+                        newPath = HostingEnvironment.ApplicationPhysicalPath + "\\Content\\Img\\Tours\\" + tourId + "_" + (i - 1) + ".jpg";
                     }
 
                     System.IO.File.Move(path, newPath);
@@ -480,6 +552,12 @@ namespace TouristWebSite.Controllers
             }
         }
 
+        /// <summary>
+        /// For adding new photo
+        /// </summary>
+        /// <param name="img"> Image view model </param>
+        /// <param name="incomeFiles"> List of income files </param>
+        /// <returns> Redirect to route (Photos) </returns>
         [Authorize(Roles = "Admin")]
         public ActionResult AddPhoto(ImageViewModel img, IEnumerable<HttpPostedFileBase> incomeFiles)
         {
@@ -520,6 +598,11 @@ namespace TouristWebSite.Controllers
             return View(img);
         }
 
+        /// <summary>
+        /// For adding new comment
+        /// </summary>
+        /// <param name="model"> Chosen tour view model </param>
+        /// <returns> Redirect to route (Details) </returns>
         public ActionResult AddComment(ChosenTourViewModel model)
         {
             try
@@ -550,6 +633,12 @@ namespace TouristWebSite.Controllers
             }
         }
 
+        /// <summary>
+        /// For deleting comment
+        /// </summary>
+        /// <param name="itemId"> Comment id </param>
+        /// <param name="tourId"> Tour id </param>
+        /// <returns> Redirect to route (Details) </returns>
         [Authorize(Roles = "Admin")]
         [HttpGet]
         public ActionResult DeleteComment(long itemId, long tourId)
@@ -565,6 +654,11 @@ namespace TouristWebSite.Controllers
             }
         }
 
+        /// <summary>
+        /// For adding tour to favourite
+        /// </summary>
+        /// <param name="itemId"> Tour id </param>
+        /// <returns> Redirect to route (Index) </returns>
         [HttpGet]
         public ActionResult Favourite(long itemId)
         {
@@ -580,6 +674,11 @@ namespace TouristWebSite.Controllers
             }
         }
 
+        /// <summary>
+        /// For removing tour from favourite
+        /// </summary>
+        /// <param name="itemId"> Tour id </param>
+        /// <returns> Redirect to route (Index) </returns>
         [HttpGet]
         public ActionResult RemoveFavourite(long itemId)
         {
@@ -595,6 +694,11 @@ namespace TouristWebSite.Controllers
             }
         }
 
+        /// <summary>
+        /// For removing tour from favourite from favourites list page
+        /// </summary>
+        /// <param name="itemId"> Tour id </param>
+        /// <returns> Redirect to route (Manage|FavouriteTours) </returns>
         [HttpGet]
         public ActionResult RemoveFavouriteCab(long itemId)
         {
@@ -610,6 +714,10 @@ namespace TouristWebSite.Controllers
             }
         }
 
+        /// <summary>
+        /// For adding errors to model
+        /// </summary>
+        /// <param name="result"> Identity result with errors </param>
         private void AddErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)
