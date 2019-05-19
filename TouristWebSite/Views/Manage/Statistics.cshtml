@@ -1,7 +1,7 @@
 ﻿@model TouristWebSite.Models.StatisticsViewModel
 
 <h2>Статистика</h2>
-<h4>Переглядайте свою статистику по заданим запитанням адміністраторам сайту, заброньованим пакетним турам та сконструйованим індивідуальним турам.</h4>
+<h4>Переглядайте свою статистику по заданим запитанням адміністраторам сайту, заброньованим пакетним турам та сконструйованим унікальним турам.</h4>
 <h4>Для більшої наочності статистика відображається із використанням двох видів діаграм: кругової та діаграми області.</h4>
 <hr />
 
@@ -27,10 +27,10 @@
 <br />
 
 <dl class="dl-horizontal">
-    <dt class="aligner-350">Кількість сконструйованих індивідуальних турів:</dt>
+    <dt class="aligner-350">Кількість сконструйованих унікальних турів:</dt>
     <dd>@Model.IndividualToursCount</dd>
-    <dt class="aligner-350">Сконструйовані індивідуальні тури:</dt>
-    <dd>@Html.ActionLink("Переглянути список", "RateConstruct", "Helper", null, new { title = "Перейти до сторінки зі списком сконструйованих індивідуальних турів" })</dd>
+    <dt class="aligner-350">Сконструйовані унікальні тури:</dt>
+    <dd>@Html.ActionLink("Переглянути список", "RateConstruct", "Helper", null, new { title = "Перейти до сторінки зі списком сконструйованих унікальних турів" })</dd>
 </dl>
 
 @if (Model.IndividualToursCount > 0)
@@ -124,7 +124,7 @@
             var toursCount = @Model.IndividualToursCount;
             if (toursCount > 0) {
                 var dataconstructed = google.visualization.arrayToDataTable([
-                    ['', 'Кількість сконструйованих індивідуальних турів'],
+                    ['', 'Кількість сконструйованих унікальних турів'],
 
                     @foreach (var item in Model.DataConstrcuted)
                     {
@@ -133,7 +133,7 @@
                 ]);
 
                 var optionsconstructed = {
-                    title: 'Сконструйовані індивідуальні тури за місяцями',
+                    title: 'Сконструйовані унікальні тури за місяцями',
                     titleTextStyle: {
                         color: 'rgb(51, 51, 51)'
                     },
@@ -149,7 +149,7 @@
                 chartconstructed.draw(dataconstructed, optionsconstructed);
 
                 var options1constructed = {
-                    title: 'Сконструйовані індивідуальні тури за місяцями',
+                    title: 'Сконструйовані унікальні тури за місяцями',
                     hAxis: {
                         title: '',
                         textStyle: {

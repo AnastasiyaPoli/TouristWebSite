@@ -3,7 +3,7 @@
 
 <h2>Конструктор турів</h2>
 @Html.AntiForgeryToken()
-<h4>Сконструюйте індивідуальний тур для себе, обираючи його характеристики.</h4>
+<h4>Сконструюйте унікальний тур для себе, обираючи його характеристики.</h4>
 <hr />
 
 @Html.HiddenFor(m => m.Type, new { @id = "Type" })
@@ -228,7 +228,7 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-9">
-            <button type="submit" class="btn btn-success" id="constructButton" title="Сконструювати індивідуальний тур"> <i class="fas fa-check"></i> Сконструювати </button>
+            <button type="submit" class="btn btn-success" id="constructButton" title="Сконструювати унікальний тур"> <i class="fas fa-check"></i> Сконструювати </button>
         </div>
     </div>
 }
@@ -427,7 +427,7 @@
             peopleCount) {
             if (routeId == null || backRouteId == null || hotelId == null) {
                 document.getElementById("PriceCount").innerHTML =
-                    "Індивідуальний тур із заданими параметрами не може бути сконструйовано.";
+                    "Унікальний тур із заданими параметрами не може бути сконструйовано.";
                 document.getElementById("constructButton").disabled = true;
                 return;
             }
@@ -449,7 +449,7 @@
                 },
                 function(response) {
                     document.getElementById("PriceCount").innerHTML =
-                        "Вартість індивідуального туру на обрану кількість людей: " + response + " грн.";
+                        "Вартість унікального туру на обрану кількість людей: " + response + " грн.";
                     document.getElementById("constructButton").disabled = false;
                 });
         }

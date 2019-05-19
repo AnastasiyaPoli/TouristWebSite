@@ -109,14 +109,11 @@
             }
         </div>
 
-        @if (User.Identity.IsAuthenticated)
-        {
-            <a style="margin-top: 5px" class="btn btn-default no-underline" href="@Url.Action("TourBooking", "Tours", new {itemId = item.Id})" title="Перейти до сторінки бронювання туру"> <span> <i class="fas fa-check"></i> Забронювати тур </span> </a>
-        }
+        <a style="margin-top: 5px" class="btn btn-default no-underline" href="@Url.Action("TourBooking", "Tours", new {itemId = item.Id})" title="Перейти до сторінки бронювання туру"> <span> <i class="fas fa-check"></i> Забронювати тур </span> </a>
     </div>
 }
 
 @if (User.IsInRole("Admin"))
 {
-    <a class="btn btn-default no-underline" href="@Url.Action("Add", "Tours")"  title="Перейти до сторінки додавання нового туру"> <span> <i class="fas fa-plus"></i> Додати новий тур </span> </a>
+    <a class="btn btn-default no-underline" href="@Url.Action("Add", "Tours")" title="Перейти до сторінки додавання нового туру"> <span> <i class="fas fa-plus"></i> Додати новий тур </span> </a>
 }
