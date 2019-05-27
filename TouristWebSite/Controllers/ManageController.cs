@@ -193,7 +193,7 @@ namespace TouristWebSite.Controllers
                     return RedirectToAction("Index");
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return RedirectToRoute(new { controller = "Manage", action = "Index" });
             }
@@ -426,7 +426,7 @@ namespace TouristWebSite.Controllers
 
                 return View(model);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return RedirectToRoute(new { controller = "Manage", action = "Index" });
             }
@@ -447,7 +447,7 @@ namespace TouristWebSite.Controllers
 
                 return View(model);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return RedirectToRoute(new { controller = "Manage", action = "Index" });
             }
@@ -461,7 +461,7 @@ namespace TouristWebSite.Controllers
                 QuestionsDBHelper.Add(model.Text, model.Theme, User.Identity.GetUserId());
                 return RedirectToRoute(new { controller = "Manage", action = "Questions", message = "Запитання адміністраторам сайту було успішно додано." });
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return RedirectToRoute(new { controller = "Manage", action = "Index" });
             }
@@ -494,7 +494,7 @@ namespace TouristWebSite.Controllers
 
                 return View(model);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return RedirectToRoute(new { controller = "Manage", action = "Index" });
             }
@@ -519,7 +519,7 @@ namespace TouristWebSite.Controllers
                 UsersDBHelper.UpdateUser(model);
                 return RedirectToAction("Index", new { Message = ManageMessageId.Changes });
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return RedirectToRoute(new { controller = "Manage", action = "Index" });
             }
@@ -535,7 +535,7 @@ namespace TouristWebSite.Controllers
                 EmailSenderHelper.SendEmail(UsersDBHelper.GetById(userId).Email, "Відповідь на запитання", "На Ваше запитання на сайті туристичної фірми \"Формула відпочинку \" надано відповідь. Ви можете переглянути її в особистому кабінеті.");
                 return RedirectToRoute(new { controller = "Manage", action = "AllQuestions", message = "Відповідь на запитання було успішно надано." });
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return RedirectToRoute(new { controller = "Manage", action = "Index" });
             }
@@ -773,7 +773,7 @@ namespace TouristWebSite.Controllers
                 UsersDBHelper.ChangeBlockStatus(userId);
                 return RedirectToAction("Users", new { Message = "Зміни було успішно збережено." });
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return RedirectToRoute(new { controller = "Users", action = "Index" });
             }

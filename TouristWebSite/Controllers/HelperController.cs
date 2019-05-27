@@ -46,7 +46,7 @@ namespace TouristWebSite.Controllers
 
                 return View(model);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return RedirectToRoute(new { controller = "Helper", action = "Index" });
             }
@@ -65,7 +65,7 @@ namespace TouristWebSite.Controllers
                 UsersDBHelper.UpdateUserAdditional(model);
                 return RedirectToAction("Index", new { Message = "Зміни було успішно збережено." });
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return RedirectToRoute(new { controller = "Helper", action = "Index" });
             }
@@ -164,7 +164,7 @@ namespace TouristWebSite.Controllers
                 return View(model);
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return RedirectToRoute(new { controller = "Helper", action = "Index" });
             }
@@ -220,7 +220,7 @@ namespace TouristWebSite.Controllers
                 EmailSenderHelper.SendEmail(UsersDBHelper.GetById(User.Identity.GetUserId()).Email, "Підтвердження бронювання туру.", "Тур було успішно сконструйовано, деталі можна переглянути у прикріпленому документі.", filename);
                 return RedirectToAction("Index", new { Message = "Тур було успішно сконструйовано. Документ про замовлення надіслано на електронну пошту." });
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return RedirectToRoute(new { controller = "Helper", action = "Index" });
             }
@@ -375,8 +375,7 @@ namespace TouristWebSite.Controllers
                 var currentUser = UsersDBHelper.GetById(User.Identity.GetUserId());
                 var usersFromSamePlace = UsersDBHelper.GetAllActive()
                     .Where(x => x.Id != currentUser.Id &&
-                                x.Country == currentUser.Country &&
-                                x.City == currentUser.City).ToList();
+                                x.Country == currentUser.Country).ToList();
 
                 List<ApplicationUser> sameUsers = new List<ApplicationUser>();
 
@@ -496,7 +495,7 @@ namespace TouristWebSite.Controllers
 
                 return RedirectToAction("Recommendations", new { noRecommend = (bestTours.Count == 0) });
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return RedirectToRoute(new { controller = "Helper", action = "Index" });
             }
@@ -616,7 +615,7 @@ namespace TouristWebSite.Controllers
 
                 return View(list);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return RedirectToRoute(new { controller = "Helper", action = "Index" });
             }
@@ -724,7 +723,7 @@ namespace TouristWebSite.Controllers
 
                 return View(list);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return RedirectToRoute(new { controller = "Helper", action = "Index" });
             }
@@ -739,7 +738,7 @@ namespace TouristWebSite.Controllers
 
                 return RedirectToRoute(new { controller = "Helper", action = "RateConstruct" });
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return RedirectToRoute(new { controller = "Helper", action = "RateConstruct" });
             }

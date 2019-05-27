@@ -32,7 +32,7 @@ namespace TouristWebSite.Controllers
                 NewsDBHelper.Deactivate(itemId);
                 return RedirectToRoute(new { controller = "News", action = "Index", message = "Новину було успішно видалено." });
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return RedirectToRoute(new { controller = "News", action = "Index" });
             }
@@ -70,7 +70,7 @@ namespace TouristWebSite.Controllers
 
                             EmailSenderHelper.SendEmail(user.Email, "Турфірма \"Формула відпочинку\" має нову новину!", text);
                         }
-                        catch (Exception e)
+                        catch (Exception)
                         {
 
                         }
@@ -79,7 +79,7 @@ namespace TouristWebSite.Controllers
 
                 return RedirectToRoute(new { controller = "News", action = "Index", message = "Новину було успішно додано." });
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return RedirectToRoute(new { controller = "News", action = "Index" });
             }
@@ -102,7 +102,7 @@ namespace TouristWebSite.Controllers
 
                 return View(model);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return RedirectToRoute(new { controller = "News", action = "Index" });
             }
@@ -121,7 +121,7 @@ namespace TouristWebSite.Controllers
                 NewsDBHelper.Edit(model);
                 return RedirectToRoute(new { controller = "News", action = "Index", message = "Зміни було успішно збережено." });
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return RedirectToRoute(new { controller = "News", action = "Index" });
             }
@@ -165,7 +165,7 @@ namespace TouristWebSite.Controllers
 
                             EmailSenderHelper.SendEmail(user.Email, "Турфірма \"Формула відпочинку\" має нову акцію!", text);
                         }
-                        catch (Exception e)
+                        catch (Exception)
                         {
 
                         }
@@ -174,7 +174,7 @@ namespace TouristWebSite.Controllers
 
                 return RedirectToRoute(new { controller = "News", action = "Index", message1 = "Акцію було успішно додано." });
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return RedirectToRoute(new { controller = "News", action = "Index" });
             }
@@ -198,7 +198,7 @@ namespace TouristWebSite.Controllers
 
                 return View(model);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return RedirectToRoute(new { controller = "News", action = "Index" });
             }
@@ -224,7 +224,7 @@ namespace TouristWebSite.Controllers
                 DiscountsDBHelper.Edit(model);
                 return RedirectToRoute(new { controller = "News", action = "Index", message1 = "Зміни було успішно збережено." });
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return RedirectToRoute(new { controller = "News", action = "Index" });
             }

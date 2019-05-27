@@ -217,7 +217,7 @@ namespace TouristWebSite.Controllers
                 ViewBag.StatusMessage = message;
                 return View(model);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return RedirectToRoute(new { controller = "Tours", action = "Index" });
             }
@@ -237,7 +237,7 @@ namespace TouristWebSite.Controllers
                 ToursDBHelper.Deactivate(itemId);
                 return RedirectToRoute(new { controller = "Tours", action = "Index", message = "Тур було успішно видалено." });
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return RedirectToRoute(new { controller = "Tours", action = "Index" });
             }
@@ -255,7 +255,7 @@ namespace TouristWebSite.Controllers
             {
                 return View();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return RedirectToRoute(new { controller = "Tours", action = "Index" });
             }
@@ -287,7 +287,7 @@ namespace TouristWebSite.Controllers
                 ToursDBHelper.Add(model);
                 return RedirectToRoute(new { controller = "Tours", action = "Index", message = "Тур було успішно додано." });
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return RedirectToRoute(new { controller = "Tours", action = "Index" });
             }
@@ -320,7 +320,7 @@ namespace TouristWebSite.Controllers
 
                 return View(model);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return RedirectToRoute(new { controller = "Tours", action = "Index" });
             }
@@ -346,7 +346,7 @@ namespace TouristWebSite.Controllers
                 ToursDBHelper.Update(model);
                 return RedirectToRoute(new { controller = "Tours", action = "Index", message = "Зміни було успішно збережено." });
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return RedirectToRoute(new { controller = "Tours", action = "Index" });
             }
@@ -373,7 +373,7 @@ namespace TouristWebSite.Controllers
 
                 return View(model);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return RedirectToRoute(new { controller = "Manage", action = "Index" });
             }
@@ -411,7 +411,7 @@ namespace TouristWebSite.Controllers
 
                 return RedirectToAction("Index", new { Message = "Тур було успішно заброньовано. Документ про замовлення надіслано на електронну пошту." });
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return RedirectToRoute(new { controller = "Tours", action = "Index" });
             }
@@ -452,7 +452,7 @@ namespace TouristWebSite.Controllers
 
                 return View(model);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return RedirectToRoute(new { controller = "Tours", action = "Index" });
             }
@@ -488,7 +488,7 @@ namespace TouristWebSite.Controllers
                 ToursDBHelper.DeleteAllPhotos(itemId);
                 return RedirectToRoute(new { controller = "Tours", action = "Photos", itemId = itemId, successMessage = "Всі фотографії було успішно видалено." });
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return RedirectToRoute(new { controller = "Tours", action = "Index" });
             }
@@ -546,7 +546,7 @@ namespace TouristWebSite.Controllers
                 ToursDBHelper.DeletePhoto(tourId);
                 return RedirectToRoute(new { controller = "Tours", action = "Photos", itemId = tourId, successMessage = "Фотографію було успішно видалено." });
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return RedirectToRoute(new { controller = "Tours", action = "Index" });
             }
@@ -627,7 +627,7 @@ namespace TouristWebSite.Controllers
 
                 return RedirectToRoute(new { controller = "Tours", action = "Details", itemId = model.ChosenTourId, message = "Коментар було успішно збережено." });
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return RedirectToRoute(new { controller = "Tours", action = "Details", itemId = model.ChosenTourId });
             }
@@ -648,7 +648,7 @@ namespace TouristWebSite.Controllers
                 CommentsDBHelper.Deactivate(itemId);
                 return RedirectToRoute(new { controller = "Tours", action = "Details", itemId = tourId, message = "Коментар було успішно видалено." });
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return RedirectToRoute(new { controller = "Tours", action = "Index" });
             }
@@ -668,7 +668,7 @@ namespace TouristWebSite.Controllers
 
                 return RedirectToRoute(new { controller = "Tours", action = "Index", message = "Тур було успішно додано до списку улюблених." });
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return RedirectToRoute(new { controller = "Tours", action = "Index" });
             }
@@ -688,7 +688,7 @@ namespace TouristWebSite.Controllers
 
                 return RedirectToRoute(new { controller = "Tours", action = "Index", message = "Тур було успішно видалено зі списку улюблених." });
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return RedirectToRoute(new { controller = "Tours", action = "Index" });
             }
@@ -708,7 +708,7 @@ namespace TouristWebSite.Controllers
 
                 return RedirectToRoute(new { controller = "Manage", action = "FavouriteTours", message = "Тур було успішно видалено зі списку улюблених." });
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return RedirectToRoute(new { controller = "Tours", action = "Index" });
             }
