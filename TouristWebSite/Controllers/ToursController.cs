@@ -312,6 +312,10 @@ namespace TouristWebSite.Controllers
                     Name = tour.Name,
                     Place = tour.Place,
                     Description = tour.Description,
+                    Routes = tour.Routes,
+                    Hotel = tour.Hotel,
+                    Excursions = tour.Excursions,
+                    BackRoutes = tour.BackRoutes,
                     Price = tour.Price,
                     DateStart = tour.DateStart,
                     DateEnd = tour.DateEnd,
@@ -396,7 +400,7 @@ namespace TouristWebSite.Controllers
 
                 var newId = BookedToursDBHelper.BookTour(model, User.Identity.GetUserId());
                 string filename = PDFGeneratorHelper.GeneratePDF(ToursDBHelper.GetById(model.TourId), model.PeopleCount, model.Comment, newId);
-                EmailSenderHelper.SendEmail(UsersDBHelper.GetById(User.Identity.GetUserId()).Email, "Підтвердження бронювання туру.", "Тур було успішно заброньовано, деталі можна переглянути у прикріпленому документі.", filename);
+                EmailSenderHelper.SendEmail(UsersDBHelper.GetById(User.Identity.GetUserId()).Email, "Підтвердження замовлення туру.", "Тур було успішно заброньовано, деталі можна переглянути у прикріпленому документі.", filename);
 
                 //recommendations
                 var bookedTour = ToursDBHelper.GetById(model.TourId);

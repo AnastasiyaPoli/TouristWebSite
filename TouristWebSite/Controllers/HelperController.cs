@@ -108,29 +108,41 @@ namespace TouristWebSite.Controllers
                     long? ex4 = 0;
                     long? ex5 = 0;
 
+                    string ex1link = string.Empty;
+                    string ex2link = string.Empty;
+                    string ex3link = string.Empty;
+                    string ex4link = string.Empty;
+                    string ex5link = string.Empty;
+
                     if (excursions.Count > 0)
                     {
                         ex1 = excursions[0].ExcursionId;
+                        ex1link = excursions[0].Excursion.Link;
                     }
 
                     if (excursions.Count > 1)
                     {
                         ex2 = excursions[1].ExcursionId;
+                        ex2link = excursions[1].Excursion.Link;
+
                     }
 
                     if (excursions.Count > 2)
                     {
                         ex3 = excursions[2].ExcursionId;
+                        ex3link = excursions[2].Excursion.Link;
                     }
 
                     if (excursions.Count > 3)
                     {
                         ex4 = excursions[3].ExcursionId;
+                        ex4link = excursions[3].Excursion.Link;
                     }
 
                     if (excursions.Count > 4)
                     {
                         ex5 = excursions[4].ExcursionId;
+                        ex5link = excursions[4].Excursion.Link;
                     }
 
                     model = new ConstructViewModel()
@@ -155,6 +167,11 @@ namespace TouristWebSite.Controllers
                         Excursion3 = ex3,
                         Excursion4 = ex4,
                         Excursion5 = ex5,
+                        Excursion1Link = ex1link,
+                        Excursion2Link = ex2link,
+                        Excursion3Link = ex3link,
+                        Excursion4Link = ex4link,
+                        Excursion5Link = ex5link,
                         BackRoute = incomeTour.BackRouteId,
                         BackClass = incomeTour.BackClass,
                         Type = "Recommended"
@@ -217,7 +234,7 @@ namespace TouristWebSite.Controllers
                 model.Price = PriceCounterHelper.CountPrice(model.Route, model.Class == "Бізнес", model.BackRoute, model.BackClass == "Бізнес", model.Hotel, model.HotelClass == "Люкс", (long)ex1, (long)ex2, (long)ex3, (long)ex4, (long)ex5, model.PeopleCount);
                 long newId = ConstructedToursDBHelper.Add(model, User.Identity.GetUserId());
                 string filename = PDFGeneratorHelper.GenerateConstructPDF(model, newId);
-                EmailSenderHelper.SendEmail(UsersDBHelper.GetById(User.Identity.GetUserId()).Email, "Підтвердження бронювання туру.", "Тур було успішно сконструйовано, деталі можна переглянути у прикріпленому документі.", filename);
+                EmailSenderHelper.SendEmail(UsersDBHelper.GetById(User.Identity.GetUserId()).Email, "Підтвердження замовлення туру.", "Тур було успішно сконструйовано, деталі можна переглянути у прикріпленому документі.", filename);
                 return RedirectToAction("Index", new { Message = "Тур було успішно сконструйовано. Документ про замовлення надіслано на електронну пошту." });
             }
             catch (Exception)
@@ -365,6 +382,12 @@ namespace TouristWebSite.Controllers
         public long GetPrice(long routeId, bool isBusiness, long backRouteId, bool isBackBusiness, long hotelId, bool isLux, long ex1, long ex2, long ex3, long ex4, long ex5, long peopleCount)
         {
             return PriceCounterHelper.CountPrice(routeId, isBusiness, backRouteId, isBackBusiness, hotelId, isLux, ex1, ex2, ex3, ex4, ex5, peopleCount);
+        }
+
+        [HttpGet]
+        public JsonResult GetLink(long excursionId)
+        {
+            return Json(ExcursionsDBHelper.GetExcursionById(excursionId), JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]

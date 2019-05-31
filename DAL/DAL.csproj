@@ -363,6 +363,14 @@
     <Compile Include="Migrations\201905111520366_76.Designer.cs">
       <DependentUpon>201905111520366_76.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905281856466_77.cs" />
+    <Compile Include="Migrations\201905281856466_77.Designer.cs">
+      <DependentUpon>201905281856466_77.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905311310497_78.cs" />
+    <Compile Include="Migrations\201905311310497_78.Designer.cs">
+      <DependentUpon>201905311310497_78.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\TourExcursion.cs" />
     <Compile Include="Models\Recommendation.cs" />
@@ -623,6 +631,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905111520366_76.resx">
       <DependentUpon>201905111520366_76.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905281856466_77.resx">
+      <DependentUpon>201905281856466_77.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905311310497_78.resx">
+      <DependentUpon>201905311310497_78.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

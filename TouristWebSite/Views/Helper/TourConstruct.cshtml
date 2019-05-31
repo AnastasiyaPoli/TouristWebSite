@@ -161,6 +161,7 @@
         <div class="col-md-9">
             @Html.DropDownListFor(model => model.Excursion1, Enumerable.Empty<SelectListItem>(), new { @class = "form-control", @Id = "excursionsList1" })
             @Html.ValidationMessageFor(m => m.Excursion1, "", new { @class = "text-danger" })
+            <a id="link1" href="@Model.Excursion1Link">Детальніше...</a>
         </div>
     </div>
 
@@ -169,6 +170,7 @@
         <div class="col-md-9">
             @Html.DropDownListFor(model => model.Excursion2, Enumerable.Empty<SelectListItem>(), new { @class = "form-control", @Id = "excursionsList2" })
             @Html.ValidationMessageFor(m => m.Excursion2, "", new { @class = "text-danger" })
+            <a id="link2" href="@Model.Excursion2Link">Детальніше...</a>
         </div>
     </div>
 
@@ -177,6 +179,7 @@
         <div class="col-md-9">
             @Html.DropDownListFor(model => model.Excursion3, Enumerable.Empty<SelectListItem>(), new { @class = "form-control", @Id = "excursionsList3" })
             @Html.ValidationMessageFor(m => m.Excursion3, "", new { @class = "text-danger" })
+            <a id="link3" href="@Model.Excursion3Link">Детальніше...</a>
         </div>
     </div>
 
@@ -185,6 +188,7 @@
         <div class="col-md-9">
             @Html.DropDownListFor(model => model.Excursion4, Enumerable.Empty<SelectListItem>(), new { @class = "form-control", @Id = "excursionsList4" })
             @Html.ValidationMessageFor(m => m.Excursion4, "", new { @class = "text-danger" })
+            <a id="link4" href="@Model.Excursion4Link">Детальніше...</a>
         </div>
     </div>
 
@@ -193,6 +197,7 @@
         <div class="col-md-9">
             @Html.DropDownListFor(model => model.Excursion5, Enumerable.Empty<SelectListItem>(), new { @class = "form-control", @Id = "excursionsList5" })
             @Html.ValidationMessageFor(m => m.Excursion5, "", new { @class = "text-danger" })
+            <a id="link5" href="@Model.Excursion5Link">Детальніше...</a>
         </div>
     </div>
 
@@ -247,6 +252,7 @@
         var urlexcursions = '@Url.Action("GetExcursions", "Helper")';
         var urlbackroutes = '@Url.Action("GetBackRoutes", "Helper")';
         var urlprice = '@Url.Action("GetPrice", "Helper")';
+        var urllink = '@Url.Action("GetLink", "Helper")';
 
         var cities = $('#cityList');
         var points = $('#pointsList');
@@ -369,7 +375,14 @@
 
             await $.getJSON(urlexcursions,
                 { hotelId: hotelId, ExcursionHint: 0 },
-                function(response) {
+                function (response) {
+
+                    document.getElementById("link1").href = response[0].Link;
+                    document.getElementById("link2").href = response[0].Link;
+                    document.getElementById("link3").href = response[0].Link;
+                    document.getElementById("link4").href = response[0].Link;
+                    document.getElementById("link5").href = response[0].Link;
+
                     $.each(response,
                         function(index, item) {
                             excursions1.append($('<option value="' + item.Id + '">' + item.Name + '</option>'));
@@ -683,23 +696,66 @@
                 await countPrice();
             });
 
-            $("#excursionsList1").change(async function() {
+            $("#excursionsList1").change(async function () {
+
+                await $.getJSON(urllink,
+                    {
+                        excursionId: document.getElementById("excursionsList1").value
+                    },
+                    function (response) {
+                        document.getElementById("link1").href = response.Link;
+                    });
+
                 await countPrice();
             });
 
-            $("#excursionsList2").change(async function() {
+            $("#excursionsList2").change(async function () {
+                
+                await $.getJSON(urllink,
+                    {
+                        excursionId: document.getElementById("excursionsList2").value
+                    },
+                    function (response) {
+                        document.getElementById("link2").href = response.Link;
+                    });
+
                 await countPrice();
             });
 
-            $("#excursionsList3").change(async function() {
+            $("#excursionsList3").change(async function () {
+
+                await $.getJSON(urllink,
+                    {
+                        excursionId: document.getElementById("excursionsList3").value
+                    },
+                    function (response) {
+                        document.getElementById("link3").href = response.Link;
+                    });
+
                 await countPrice();
             });
 
-            $("#excursionsList4").change(async function() {
+            $("#excursionsList4").change(async function () {
+                await $.getJSON(urllink,
+                    {
+                        excursionId: document.getElementById("excursionsList4").value
+                    },
+                    function (response) {
+                        document.getElementById("link4").href = response.Link;
+                    });
+
                 await countPrice();
             });
 
-            $("#excursionsList5").change(async function() {
+            $("#excursionsList5").change(async function () {
+                await $.getJSON(urllink,
+                    {
+                        excursionId: document.getElementById("excursionsList5").value
+                    },
+                    function (response) {
+                        document.getElementById("link5").href = response.Link;
+                    });
+
                 await countPrice();
             });
 

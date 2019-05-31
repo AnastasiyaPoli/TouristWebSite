@@ -28,6 +28,32 @@ namespace TouristWebSite.Helpers
                         }
                         break;
 
+                    case "routes":
+                        {
+                            node.InnerHtml = "<strong> Маршрут: </strong>" + tour.Routes;
+                        }
+                        break;
+
+                    case "hotel":
+                        {
+                            node.InnerHtml = "<strong> Готель: </strong>" + tour.Hotel;
+                        }
+                        break;
+
+                    case "excursions":
+                        {
+                            node.InnerHtml = "<strong> Екскурсії: </strong>" + tour.Excursions;
+                        }
+                        break;
+
+
+                    case "backroutes":
+                        {
+                            node.InnerHtml = "<strong> Зворотній маршрут: </strong>" + tour.BackRoutes;
+                        }
+                        break;
+
+
                     case "dates":
                         {
                             node.InnerHtml = "<strong> Дати: </strong>" + tour.DateStart.ToShortDateString() + " - " + tour.DateEnd.ToShortDateString();

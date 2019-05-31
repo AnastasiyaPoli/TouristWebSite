@@ -119,6 +119,16 @@ namespace TouristWebSite.Models
         [Display(Name = "Екскурсія №5: ")]
         public long? Excursion5 { get; set; }
 
+        public string Excursion1Link { get; set; }
+
+        public string Excursion2Link { get; set; }
+
+        public string Excursion3Link { get; set; }
+
+        public string Excursion4Link { get; set; }
+
+        public string Excursion5Link { get; set; }
+
         [Display(Name = "Зворотний маршрут: ")]
         [Required(ErrorMessage = "Необхідно заповнити поле \"Зворотний маршрут\".")]
         public long BackRoute { get; set; }

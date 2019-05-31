@@ -59,6 +59,22 @@ namespace TouristWebSite.Models
         [MinLength(100, ErrorMessage = "Довжина опису туру повинна бути не менше 100 символів.")]
         public string Description { get; set; }
 
+        [Display(Name = "Маршрут: ")]
+        [Required(ErrorMessage = "Необхідно заповнити поле \"Маршрут\".")]
+        public string Routes { get; set; }
+
+        [Display(Name = "Готель: ")]
+        [Required(ErrorMessage = "Необхідно заповнити поле \"Готель\".")]
+        public string Hotel { get; set; }
+
+        [Display(Name = "Екскурсії: ")]
+        [Required(ErrorMessage = "Необхідно заповнити поле \"Екскурсії\".")]
+        public string Excursions { get; set; }
+
+        [Display(Name = "Зворотній маршрут: ")]
+        [Required(ErrorMessage = "Необхідно заповнити поле \"Зворотній маршрут\".")]
+        public string BackRoutes { get; set; }
+
         [Display(Name = "Дата початку туру: ")]
         [Required(ErrorMessage = "Необхідно заповнити поле \"Дата початку туру\".")]
         public DateTime DateStart { get; set; }

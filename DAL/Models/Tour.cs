@@ -16,6 +16,14 @@ namespace DAL.Models
 
         public string Description { get; set; }
 
+        public string Hotel { get; set; }
+
+        public string Excursions { get; set; }
+
+        public string Routes { get; set; }
+
+        public string BackRoutes { get; set; }
+
         public bool IsActive { get; set; }
 
         public DateTime DateStart { get; set; }

@@ -39,7 +39,7 @@ namespace DAL.DBHelpers
         }
 
         /// <summary>
-        /// Adding new tour
+        /// Adding new tour 
         /// </summary>
         /// <param name="tour"> Tour view model </param>
         public static void Add(TourViewModel tour)
@@ -51,6 +51,10 @@ namespace DAL.DBHelpers
                     Name = tour.Name,
                     Place = tour.Place,
                     Description = tour.Description,
+                    Routes = tour.Routes,
+                    Hotel = tour.Hotel,
+                    Excursions = tour.Excursions,
+                    BackRoutes = tour.BackRoutes,
                     DateStart = tour.DateStart,
                     DateEnd = tour.DateEnd,
                     Price = tour.Price,
@@ -77,6 +81,10 @@ namespace DAL.DBHelpers
                 tourForUpdating.Name = tour.Name;
                 tourForUpdating.Place = tour.Place;
                 tourForUpdating.Description = tour.Description;
+                tourForUpdating.Routes = tour.Routes;
+                tourForUpdating.Hotel = tour.Hotel;
+                tourForUpdating.Excursions = tour.Excursions;
+                tourForUpdating.BackRoutes = tour.BackRoutes;
                 tourForUpdating.DateStart = tour.DateStart;
                 tourForUpdating.DateEnd = tour.DateEnd;
                 tourForUpdating.Price = tour.Price;
