@@ -9,6 +9,10 @@
 
 <hr />
 <dl class="dl-horizontal">
+    <dt class="aligner-350">Загальна інформація:</dt>
+    <dd>
+        @Html.ActionLink("Переглянути та редагувати", "UserInfo", "Manage", new { itemId = User.Identity.GetUserId() }, new { title = "Перейти до сторінки редагування загальної інформації" })
+    </dd>
     <dt class="aligner-350">Додаткова інформація:</dt>
     <dd>
         @Html.ActionLink("Переглянути та редагувати", "AdditionalInfo", new { itemId = User.Identity.GetUserId() }, new { title = "Перейти до сторінки редагування додаткової інформації" })

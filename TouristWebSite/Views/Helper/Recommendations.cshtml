@@ -1,15 +1,31 @@
-﻿@model TouristWebSite.Models.ListConstructRateViewModels
+﻿@using Microsoft.AspNet.Identity
+@model TouristWebSite.Models.ListConstructRateViewModels
 <h2>Рекомендації унікальних турів</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
-<p class="text-danger">
-    @ViewBag.noRecommendations
-    @if (ViewBag.endNoRecommendations != null && ViewBag.endNoRecommendations != string.Empty)
+
+@if (ViewBag.endNoRecommendations != null && ViewBag.endNoRecommendations != string.Empty)
+{
+    <p class="text-danger">
+        @ViewBag.noRecommendations
+        @Html.ActionLink("посиланням", "HelpConstruct", null, new { title = "Надати рекомендації унікальних турів" }, new { @class = "text-danger", title = "Надати рекомендації унікальних турів" })
+        .
+    </p>
+}
+else
+{
+    if (ViewBag.noRecommendations != null && ViewBag.noRecommendations != string.Empty)
     {
-        @Html.ActionLink("посиланням", "HelpConstruct", null, new { title = "Надати рекомендації унікальних турів" }, new {@class = "text-danger", title= "Надати рекомендації унікальних турів" }) 
-        @ViewBag.унікальних
+        <p class="text-danger">
+            @ViewBag.noRecommendations
+            Необхідно доповнити та розширити
+            @Html.ActionLink("загальну", "UserInfo", "Manage", new { itemId = User.Identity.GetUserId() }, new { @class = "text-danger", title = "Перейти до сторінки редагування загальної інформації" })
+            і
+            @Html.ActionLink("додаткову", "AdditionalInfo", new { itemId = User.Identity.GetUserId() }, new { @class = "text-danger", title = "Перейти до сторінки редагування додаткової інформації" })
+            інформацію про себе або зачекати, доки у системі з'явиться більша кількість користувачів.
+        </p>
     }
-</p>
+}
 
 <h4>Переглядайте рекомендації унікальних турів, що були надані на основі попередніх замовлень інших користувачів та наданої про себе інформації (загальної та додаткової). </h4>
 <h4>Для продовження конструювання унікальних туру на основі рекомендації, натисніть на відповідну опцію біля обраного варіанту. </h4>

@@ -396,15 +396,30 @@ namespace TouristWebSite.Controllers
             try
             {
                 var currentUser = UsersDBHelper.GetById(User.Identity.GetUserId());
-                var usersFromSamePlace = UsersDBHelper.GetAllActive()
-                    .Where(x => x.Id != currentUser.Id &&
-                                x.Country == currentUser.Country).ToList();
+                var allusers = UsersDBHelper.GetAllActive()
+                    .Where(x => x.Id != currentUser.Id).ToList();
 
                 List<ApplicationUser> sameUsers = new List<ApplicationUser>();
 
-                foreach (var user in usersFromSamePlace)
+                foreach (var user in allusers)
                 {
                     var counter = 0;
+
+                    if (user.Country != null && currentUser.Country != null)
+                    {
+                        if (user.Country == currentUser.Country)
+                        {
+                            counter++;
+                        }
+                    }
+
+                    if (user.City != null && currentUser.City != null)
+                    {
+                        if (user.City == currentUser.City)
+                        {
+                            counter++;
+                        }
+                    }
 
                     if (user.DateOfBirth != null && currentUser.DateOfBirth != null)
                     {
@@ -627,7 +642,7 @@ namespace TouristWebSite.Controllers
                 {
                     if (noRecommend == true)
                     {
-                        ViewBag.noRecommendations = "На жаль, на основі наявної інформації жодних рекомендацій не може бути надано. Необхідно доповнити та розширити загальну і додаткову інформацію про себе або зачекати, доки у системі з'явиться більша кількість користувачів.";
+                        ViewBag.noRecommendations = "На жаль, на основі наявної інформації жодних рекомендацій не може бути надано.";
                     }
                     else
                     {

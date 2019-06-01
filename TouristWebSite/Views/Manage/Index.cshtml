@@ -17,6 +17,11 @@
             @Html.ActionLink("Переглянути та редагувати", "UserInfo", new { itemId = User.Identity.GetUserId() }, new { title = "Перейти до сторінки редагування загальної інформації" })
         </dd>
 
+        <dt class="aligner-350">Додаткова інформація:</dt>
+        <dd>
+            @Html.ActionLink("Переглянути та редагувати", "AdditionalInfo", "Helper", new { itemId = User.Identity.GetUserId() }, new { title = "Перейти до сторінки редагування додаткової інформації" })
+        </dd>
+
         <dt class="aligner-350">Електронна пошта:</dt>
         <dd>
             @if (Model.EmailConfirmed)
