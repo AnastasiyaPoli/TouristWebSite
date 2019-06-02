@@ -90,6 +90,8 @@ namespace TouristWebSite.Models
         [Required(ErrorMessage = "Необхідно заповнити поле \"Готель\".")]
         public long Hotel { get; set; }
 
+        public string HotelLink { get; set; }
+
         [Display(Name = "Кількість людей: ")]
         [Required(ErrorMessage = "Необхідно заповнити поле \"Кількість людей\".")]
         [Range(1, 20, ErrorMessage = "Кількість людей повинна бути числом від 1 до 20.")]

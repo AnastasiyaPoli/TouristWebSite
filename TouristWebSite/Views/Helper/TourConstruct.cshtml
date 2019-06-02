@@ -129,6 +129,7 @@
         <div class="col-md-9">
             @Html.DropDownListFor(model => model.Hotel, Enumerable.Empty<SelectListItem>(), new { @class = "form-control", @Id = "hotelsList" })
             @Html.ValidationMessageFor(m => m.Hotel, "", new { @class = "text-danger" })
+            <a id="hotelLink" href="@Model.HotelLink">Детальніше...</a>
         </div>
     </div>
 
@@ -253,6 +254,7 @@
         var urlbackroutes = '@Url.Action("GetBackRoutes", "Helper")';
         var urlprice = '@Url.Action("GetPrice", "Helper")';
         var urllink = '@Url.Action("GetLink", "Helper")';
+        var hotellink = '@Url.Action("GetHotelLink", "Helper")';
 
         var cities = $('#cityList');
         var points = $('#pointsList');
@@ -355,7 +357,8 @@
 
             await $.getJSON(urlhotels,
                 { destinationCityId: destinationCityId, HotelHint: HotelHint },
-                function(response) {
+                function (response) {
+                    document.getElementById("hotelLink").href = response[0].Link;
                     $.each(response,
                         function(index, item) {
                             hotels.append($('<option value="' + item.Id + '">' + item.Name + '</option>'));
@@ -673,6 +676,15 @@
             $("#hotelsList").change(async function() {
                 var id = $(this).val();
                 await fetchExcursions(id);
+
+                await $.getJSON(hotellink,
+                    {
+                        hotelId: document.getElementById("hotelsList").value
+                    },
+                    function (response) {
+                        document.getElementById("hotelLink").href = response.Link;
+                    });
+
                 await countPrice();
             });
 
@@ -692,7 +704,7 @@
                 await countPrice();
             });
 
-            $("#hotelClass").change(async function() {
+            $("#hotelClass").change(async function () {
                 await countPrice();
             });
 

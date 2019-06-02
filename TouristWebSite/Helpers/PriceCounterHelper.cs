@@ -1,4 +1,5 @@
-﻿using DAL.DBHelpers;
+﻿using System;
+using DAL.DBHelpers;
 
 namespace TouristWebSite.Helpers
 {
@@ -7,6 +8,9 @@ namespace TouristWebSite.Helpers
         public static long CountPrice(long routeId, bool isBusiness, long backRouteId, bool isBackBusiness, long hotelId, bool isLux, long ex1, long ex2, long ex3, long ex4, long ex5, long peopleCount)
         {
             long price = 0;
+            var start = RoutesDBHelper.GetRouteById(routeId).End;
+            var end = BackRoutesDBHelper.GetBackRouteById(backRouteId).Start;
+            long days = (long)Math.Ceiling((end - start).TotalDays);
 
             if (isBusiness)
             {
@@ -28,11 +32,11 @@ namespace TouristWebSite.Helpers
 
             if (isLux)
             {
-                price += HotelsDBHelper.GetHotelById(hotelId).PriceLux;
+                price += HotelsDBHelper.GetHotelById(hotelId).PriceLux * days;
             }
             else
             {
-                price += HotelsDBHelper.GetHotelById(hotelId).PriceStandart;
+                price += HotelsDBHelper.GetHotelById(hotelId).PriceStandart * days;
             }
 
             if (ex1 != 0)

@@ -39,7 +39,7 @@ namespace TouristWebSite.Helpers
                         mailClient.Send(msg);
                         break;
                     }
-                    catch (Exception)
+                    catch (Exception e)
                     {
                         numberOfTrial++;
                         if (numberOfTrial < numberOfRetrials)

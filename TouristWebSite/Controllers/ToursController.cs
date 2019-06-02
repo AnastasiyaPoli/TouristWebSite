@@ -58,7 +58,7 @@ namespace TouristWebSite.Controllers
                         tourPlaces.Add(new TourPlace()
                         {
                             Place = place,
-                            IsChosen = false
+                            IsChosen = true
                         });
                     }
                 }

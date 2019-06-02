@@ -160,6 +160,7 @@ namespace TouristWebSite.Controllers
                         Class = incomeTour.Class,
                         Hotel = incomeTour.HotelId,
                         HotelClass = incomeTour.HotelClass,
+                        HotelLink = HotelsDBHelper.GetHotelById(incomeTour.HotelId).Link,
                         PeopleCount = incomeTour.PeopleCount,
                         ExcursionsCount = excursions.Count,
                         Excursion1 = ex1,
@@ -335,11 +336,6 @@ namespace TouristWebSite.Controllers
                 hotels.Insert(0, hotel);
             }
 
-            foreach (var item in hotels)
-            {
-                item.Name = $"{item.Name} ({item.PriceStandart}грн./{item.PriceLux}грн.)";
-            }
-
             return Json(hotels, JsonRequestBehavior.AllowGet);
         }
 
@@ -391,6 +387,12 @@ namespace TouristWebSite.Controllers
         }
 
         [HttpGet]
+        public JsonResult GetHotelLink(long hotelId)
+        {
+            return Json(HotelsDBHelper.GetHotelById(hotelId), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
         public ActionResult HelpConstruct()
         {
             try
@@ -423,7 +425,7 @@ namespace TouristWebSite.Controllers
 
                     if (user.DateOfBirth != null && currentUser.DateOfBirth != null)
                     {
-                        if (Math.Abs((user.DateOfBirth - currentUser.DateOfBirth).Value.TotalDays / 365) <= 5)
+                        if (Math.Abs((user.DateOfBirth - currentUser.DateOfBirth).Value.TotalDays / 365) <= 7)
                         {
                             counter++;
                         }

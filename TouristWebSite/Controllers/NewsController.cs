@@ -1,5 +1,6 @@
 ﻿using DAL.DBHelpers;
 using System;
+using System.Linq;
 using System.Web.Mvc;
 using TouristWebSite.Helpers;
 using TouristWebSite.Models;
@@ -14,8 +15,8 @@ namespace TouristWebSite.Controllers
         {
             var model = new ActiveNewsViewModel()
             {
-                ActiveNews = NewsDBHelper.GetActive(),
-                ActiveDiscounts = DiscountsDBHelper.GetActive()
+                ActiveNews = NewsDBHelper.GetActive().OrderByDescending(x => x.Date).ToList(),
+                ActiveDiscounts = DiscountsDBHelper.GetActive().OrderByDescending(x => x.StartDate).ToList()
             };
 
             ViewBag.StatusMessage = message;

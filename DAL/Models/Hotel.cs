@@ -11,6 +11,8 @@ namespace DAL.Models
 
         public string Name { get; set; }
 
+        public string Link { get; set; }
+
         [ForeignKey("DestinationCity")]
         public long DestinationCityId { get; set; }
         public DestinationCity DestinationCity { get; set; }
